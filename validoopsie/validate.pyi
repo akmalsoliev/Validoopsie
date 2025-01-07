@@ -111,8 +111,8 @@ class Validate:
         @staticmethod
         def ColumnValuesToBeBetween(
             column: str,
-            min_value: int,
-            max_value: int,
+            min_value: float,
+            max_value: float,
             threshold: float = 0.00,
             impact: str = "low",
             **kwargs: KwargsType,
@@ -121,8 +121,8 @@ class Validate:
 
             Args:
                 column (str): Column to validate.
-                min_value (int): Minimum value.
-                max_value (int): Maximum value.
+                min_value (float): Minimum value.
+                max_value (float): Maximum value.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (str, optional): Impact level of validation. Defaults to "low".
                 kwargs:KwargsType (dict): Additional keyword arguments.
@@ -132,7 +132,7 @@ class Validate:
         @staticmethod
         def ColumnsSumToBeEqualTo(
             columns_list: list[str],
-            sum_value: int,
+            sum_value: float,
             threshold: float = 0.00,
             impact: str = "low",
             **kwargs: KwargsType,

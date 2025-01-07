@@ -1624,11 +1624,11 @@ wheels = [
 
 [[package]]
 name = "narwhals"
-version = "1.21.0"
+version = "1.21.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/56/9b/59c34cf7c008df466d522e098913e3144d755b21facbb84fa70130f94217/narwhals-1.21.0.tar.gz", hash = "sha256:3373469df8a360f2e3aafaac263a8181f802c17eea166c819e0483498fd347f8", size = 240811 }
+sdist = { url = "https://files.pythonhosted.org/packages/ad/6d/1a3a84b2c3186465aa5e95146e96610b875b7a5bb899f6dd1206f0444c0e/narwhals-1.21.1.tar.gz", hash = "sha256:44082c6273fd0125a2bde5baae6ddb7465e185c24fd6e1c5e71cab1d746c89cc", size = 242809 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/e5/151e7bc58060bc9d2290a1241a5ba969f995586e809eb0b99bdfc64c1468/narwhals-1.21.0-py3-none-any.whl", hash = "sha256:99943b477712f174cc79f7e6bc468b0abd2f0bd958483d3a476c84b16fdfd465", size = 281151 },
+    { url = "https://files.pythonhosted.org/packages/d0/4f/7c482d8fe70bc19e1e121ccd205fedac936bbb2ff3b789775294fdbe525b/narwhals-1.21.1-py3-none-any.whl", hash = "sha256:f5f2cd33a6fa636de74067f4050d6dd9a9343b39a5a911dc97810d55d8f24cdd", size = 282702 },
 ]
 
 [[package]]
@@ -2286,11 +2286,11 @@ wheels = [
 
 [[package]]
 name = "pygments"
-version = "2.19.0"
+version = "2.19.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d3/c0/9c9832e5be227c40e1ce774d493065f83a91d6430baa7e372094e9683a45/pygments-2.19.0.tar.gz", hash = "sha256:afc4146269910d4bdfabcd27c24923137a74d562a23a320a41a55ad303e19783", size = 4967733 }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/2d/c3338d48ea6cc0feb8446d8e6937e1408088a72a39937982cc6111d17f84/pygments-2.19.1.tar.gz", hash = "sha256:61c16d2a8576dc0649d9f39e089b5f02bcd27fba10d8fb4dcc28173f7a45151f", size = 4968581 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/dc/fde3e7ac4d279a331676829af4afafd113b34272393d73f610e8f0329221/pygments-2.19.0-py3-none-any.whl", hash = "sha256:4755e6e64d22161d5b61432c0600c923c5927214e7c956e31c23923c89251a9b", size = 1225305 },
+    { url = "https://files.pythonhosted.org/packages/8a/0b/9fcc47d19c48b59121088dd6da2488a49d5f72dacf8262e2790a1d2c7d15/pygments-2.19.1-py3-none-any.whl", hash = "sha256:9ea1544ad55cecf4b8242fab6dd35a93bbce657034b0611ee383099054ab6d8c", size = 1225293 },
 ]
 
 [[package]]
@@ -3254,7 +3254,7 @@ wheels = [
 
 [[package]]
 name = "validoopsie"
-version = "0.0.1.2"
+version = "0.0.6"
 source = { editable = "." }
 dependencies = [
     { name = "loguru" },
