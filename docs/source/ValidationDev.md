@@ -23,8 +23,8 @@ Since this is a value-based validation, you’ll create the file inside the
 ## Step 2: Create the Validation File
 
 1. Create a new file in `validoopsie/validation_catalogue/ValuesValidation`.
-2. Name the file using this convention:  
-   **File Name**: `column_values_to_be_between.py`  
+2. Name the file using this convention:
+   **File Name**: `column_values_to_be_between.py`
    **Class Name**: `ColumnValuesToBeBetween`
 
 ---
@@ -159,7 +159,7 @@ def lf() -> dict[str, list]:
 ```python
 def test_column_values_to_be_between(lf: Frame) -> None:
     test = ColumnValuesToBeBetween("A", 1, 2)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 ```
 
@@ -209,6 +209,6 @@ Congratulations! You’ve just created your first validation. 🎉
 If you have any questions or run into issues, feel free to reach out for help.
 Thank you for contributing!
 
---- 
+---
 
 Let me know how else I can make this better for you!

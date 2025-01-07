@@ -11,6 +11,9 @@
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml">
     <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml/badge.svg" alt="PyTest" />
   </a>
+  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml">
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml/badge.svg" alt="PyTest" />
+  </a>
 </p>
 
 # Validoopsie
@@ -44,16 +47,16 @@ powerful solution to make these tasks accessible and straightforward.
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Usage](#usage)
+2. [Getting Started](#getting-started)
 3. [License](#license)
 
-# Installation
+## Installation
 
 - pip
 
     `pip install Validoopsie`
 
-# Getting Started
+## Getting Started
 
 Validoopsie is incredibly easy to use, so much so that you could do it
 half-asleep. The simplicity of the library is enhanced by the BYOD (Bring Your
@@ -182,10 +185,11 @@ vd.EqualityValidation.PairColumnEquality(
 ).validate()
 ```
 
-Thanks to [loguru](https://github.com/Delgan/loguru) output will provide a very condenced information on validations and their status in a colorful way.
+Thanks to [loguru](https://github.com/Delgan/loguru) output will provide a very
+condenced information on validations and their status in a colorful way.
 
 <p align="left">
-	<img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
+    <img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
 </p>
 
 ## License
