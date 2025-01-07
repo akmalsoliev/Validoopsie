@@ -43,7 +43,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
     def __call__(self, frame: FrameT) -> FrameT:
         """Check if the values in a column are between a range.
 
-        Return will be used in the `execute_check` method in `column_check`
+        Return will be used in the `__execute_check__` method in `column_check`
         decorator.
         """
         return (

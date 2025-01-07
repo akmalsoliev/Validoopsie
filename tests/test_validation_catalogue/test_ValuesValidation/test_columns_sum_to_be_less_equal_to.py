@@ -19,7 +19,7 @@ def lf() -> dict[str, list]:
 
 def test_success_columns_sum_to_be_less_equal_to(lf: IntoFrame) -> None:
     test = ColumnsSumToBeLessEqualTo(["A", "B"], 7)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
 
 
@@ -27,25 +27,25 @@ def test_fail_but_threshold_success_columns_sum_to_be_less_equal_to(
     lf: IntoFrame,
 ) -> None:
     test = ColumnsSumToBeLessEqualTo(["A", "D"], 6, threshold=0.5)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
     assert result["result"]["threshold pass"] == True
 
 
 def test_error_columns_sum_to_be_less_equal_to(lf: IntoFrame) -> None:
     test = ColumnsSumToBeLessEqualTo(["A", "E"], 6, threshold=0.5)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_fail_threshold_columns_sum_to_be_less_equal_to(lf: IntoFrame) -> None:
     test = ColumnsSumToBeLessEqualTo(["A", "D"], 5, threshold=0.1)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_high_impact_columns_sum_to_be_less_equal_to(lf: IntoFrame) -> None:
     test = ColumnsSumToBeLessEqualTo(["A", "D"], 5, threshold=0.1, impact="High")
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
     assert result["impact"] == "high"

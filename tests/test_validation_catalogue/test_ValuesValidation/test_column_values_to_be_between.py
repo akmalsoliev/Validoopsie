@@ -16,23 +16,23 @@ def lf() -> dict[str, list]:
 
 def test_except_column_values_to_be_between(lf: Frame) -> None:
     test = ColumnValuesToBeBetween("A", 1, 2)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_except_column_values_to_be_between_threshold(lf: Frame) -> None:
     test = ColumnValuesToBeBetween("A", 1, 2, threshold=0.5)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_except_column_values_to_be_between_success_threshold(lf: Frame) -> None:
     test = ColumnValuesToBeBetween("A", 1, 2, threshold=0.6)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
 
 
 def test_except_column_values_to_be_between_success(lf: Frame) -> None:
     test = ColumnValuesToBeBetween("A", 1, 5)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"

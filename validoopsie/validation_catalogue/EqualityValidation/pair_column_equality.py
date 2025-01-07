@@ -43,7 +43,7 @@ class PairColumnEquality(BaseValidationParameters):
     def __call__(self, frame: FrameT) -> FrameT:
         """Check if the pair of columns are equal.
 
-        Return will be used in the `execute_check` method in `column_check`
+        Return will be used in the `__execute_check__` method in `column_check`
         decorator.
         """
         select_columns = [self.column, f"{self.column}-count"]

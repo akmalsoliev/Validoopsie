@@ -98,7 +98,7 @@ class Validate:
     ) -> Validate:
         args = args[1:]
         test = validation_class(*args, **kwargs)
-        result = test.execute_check(frame=self.frame)
+        result = test.__execute_check__(frame=self.frame)
         status = result["result"]["status"]
         name = f"{test.__class__.__name__}_{test.column}"
         # If the validation check failed, set the overall result to fail

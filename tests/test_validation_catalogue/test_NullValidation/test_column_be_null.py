@@ -17,31 +17,31 @@ def lf() -> dict[str, list]:
 
 def test_column_be_null_fail(lf: Frame) -> None:
     test = ColumnBeNull(column="A")
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_column_be_null_fail_all(lf: Frame) -> None:
     test = ColumnBeNull(column="B")
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_column_be_null_pass(lf: Frame) -> None:
     test = ColumnBeNull(column="C", impact="medium")
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
     assert result["impact"] == "medium"
 
 
 def test_column_be_null_fail_threshold(lf: Frame) -> None:
     test = ColumnBeNull(column="A", threshold=0.1)
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
 
 
 def test_column_be_null_fail_threshold_impact_medium(lf: Frame) -> None:
     test = ColumnBeNull("A", threshold=0.1, impact="medium")
-    result = test.execute_check(frame=lf)
+    result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Fail"
     assert result["impact"] == "medium"

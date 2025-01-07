@@ -39,7 +39,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
     def __call__(self, frame: FrameT) -> FrameT:
         """Check if the sum of the columns is equal to `sum_value`.
 
-        Return will be used in the `execute_check` method in `column_check`
+        Return will be used in the `__execute_check__` method in `column_check`
         decorator.
         """
         # This is just in case if there is some weird column name, such as "sum"

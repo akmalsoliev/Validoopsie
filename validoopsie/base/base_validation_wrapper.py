@@ -107,7 +107,7 @@ def base_validation_wrapper(
             check__impact(self.impact)
             check__threshold(self.threshold)
 
-        def execute_check(
+        def __execute_check__(
             self,
             frame: IntoFrame,
         ) -> dict[str, str | dict[str, Any]]:

@@ -20,7 +20,7 @@ class BaseValidationParameters:
         self.__dict__.update(kwargs)
 
     @abstractmethod
-    def execute_check(
+    def __execute_check__(
         self,
         frame: IntoFrame,
     ) -> dict:

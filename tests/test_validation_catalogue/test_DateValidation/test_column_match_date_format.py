@@ -20,7 +20,7 @@ def dataframe() -> dict[str, list]:
 
 def test_column_match_date_format(dataframe: IntoDataFrame) -> None:
     ds = ColumnMatchDateFormat("dates_column", date_format="YYYY-mm-dd")
-    result = ds.execute_check(frame=dataframe)
+    result = ds.__execute_check__(frame=dataframe)
     assert result["result"]["status"] == "Success"
 
 
@@ -33,7 +33,7 @@ def fail_dataframe() -> IntoDataFrame:
 
 def test_column_match_date_format_fail(fail_dataframe: IntoDataFrame) -> None:
     ds = ColumnMatchDateFormat(column="dates_column", date_format="YYYY-mm-dd")
-    result = ds.execute_check(frame=fail_dataframe)
+    result = ds.__execute_check__(frame=fail_dataframe)
     assert result["result"]["status"] == "Fail"
 
 
@@ -45,7 +45,7 @@ def test_column_match_date_format_success_threshold(
         date_format="YYYY-mm-dd",
         threshold=0.5,
     )
-    result = ds.execute_check(frame=fail_dataframe)
+    result = ds.__execute_check__(frame=fail_dataframe)
     assert result["result"]["status"] == "Success"
 
 
@@ -57,5 +57,5 @@ def test_column_match_date_format_fail_threshold(
         date_format="YYYY-mm-dd",
         threshold=0.1,
     )
-    result = ds.execute_check(frame=fail_dataframe)
+    result = ds.__execute_check__(frame=fail_dataframe)
     assert result["result"]["status"] == "Fail"

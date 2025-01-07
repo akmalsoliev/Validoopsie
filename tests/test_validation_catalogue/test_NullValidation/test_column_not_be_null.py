@@ -17,18 +17,18 @@ def sample_data() -> dict[str, list]:
 
 def test_except_column_values_to_not_be_null_fail(sample_data: Frame) -> None:
     test = ColumnNotBeNull(column="A")
-    result = test.execute_check(frame=sample_data)
+    result = test.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Fail"
 
 
 def test_except_column_values_to_not_be_null_fail_5(sample_data: Frame) -> None:
     test = ColumnNotBeNull(column="C")
-    result = test.execute_check(frame=sample_data)
+    result = test.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Fail"
     assert result["result"]["failed number"] == 5
 
 
 def test_except_column_values_to_not_be_null_success(sample_data: Frame) -> None:
     test = ColumnNotBeNull(column="B")
-    result = test.execute_check(frame=sample_data)
+    result = test.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Success"
