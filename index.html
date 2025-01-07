@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; Validoopsie  documentation</title>
+    <title>Validoopsie &#8212; Validoopsie  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/basic_mod.css?v=9b2032db" />
     <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -16,7 +16,7 @@
     <link rel="icon" href="_static/logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Validoopsie" href="README.html" /> 
+    <link rel="next" title="Contribution Guidelines" href="CONTRIBUTING.html" /> 
   </head><body data-dark_mode_code_blocks="true">
 
 <div id="top_nav">
@@ -30,7 +30,15 @@
         <p id="toggle_sidebar">
             <a href="#" title="Toggle sidebar">|||</a>
         </p>
-        <h1><a href="#" title="Go to homepage"><img src="_static/validoopsie-text.png"/></a></h1>
+        <h1><a href="#" title="Go to homepage">Validoopsie  documentation</a></h1>
+            <a id="source_link" href="https://github.com/akmalsoliev/Validoopsie">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+            <path fill="white" d="M 244.8,8 C 106.1,8 0,113.3 0,252 c 0,110.9 69.8,205.8 169.5,239.2 12.8,2.3 17.3,-5.6 17.3,-12.1 0,-6.2 -0.3,-40.4 -0.3,-61.4 0,0 -70,15 -84.7,-29.8 0,0 -11.4,-29.1 -27.8,-36.6 0,0 -22.9,-15.7 1.6,-15.4 0,0 24.9,2 38.6,25.8 21.9,38.6 58.6,27.5 72.9,20.9 2.3,-16 8.8,-27.1 16,-33.7 -55.9,-6.2 -112.3,-14.3 -112.3,-110.5 0,-27.5 7.6,-41.3 23.6,-58.9 -2.6,-6.5 -11.1,-33.3 2.6,-67.9 20.9,-6.5 69,27 69,27 20,-5.6 41.5,-8.5 62.8,-8.5 21.3,0 42.8,2.9 62.8,8.5 0,0 48.1,-33.6 69,-27 13.7,34.7 5.2,61.4 2.6,67.9 16,17.7 25.8,31.5 25.8,58.9 0,96.5 -58.9,104.2 -114.8,110.5 9.2,7.9 17,22.9 17,46.4 0,33.7 -0.3,75.4 -0.3,83.6 0,6.5 4.6,14.4 17.3,12.1 C 428.2,457.8 496,362.9 496,252 496,113.3 383.5,8 244.8,8 Z"/>
+        </svg>
+    
+</a>
+        
 
         <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
     <template v-if="mode == 'light'">
@@ -120,9 +128,6 @@
       <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">Validoopsie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#getting-started">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ValidationDev.html">How to Create a New Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ValidationCatalogue.html">Validation Catalogue</a></li>
@@ -137,16 +142,196 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+  <h1 align="center">
+    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validoopsie-text.png?raw=true">
+    <p style="font-size: 16px; font-weight: bold;">A simple and easy to use Data Validation library for Python.</p>
+    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/logo.png?raw=true">
+</h1>
+<p align="center">
+  <a href="https://badge.fury.io/py/Validoopsie">
+    <img src="https://badge.fury.io/py/Validoopsie.svg" alt="PyPI version" />
+  </a>
+  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml">
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml/badge.svg" alt="PyTest" />
+  </a>
+</p>
+<section id="validoopsie">
+<h1>Validoopsie<a class="headerlink" href="#validoopsie" title="Link to this heading">¶</a></h1>
+<p>Validoopsie is a remarkably lightweight and user-friendly data validation
+library for Python. It’s designed to help you easily declare classes and chain
+validations together, in a style reminiscent of popular DataFrame libraries.
+This makes it a familiar and intuitive tool for developers who regularly work
+with dataframes.</p>
+<p>Thanks to the excellent work by
+<a class="reference external" href="https://github.com/narwhals-dev/narwhals">Narwhals</a>, Validoopsie incorporates
+the “Bring Your Own DataFrame” (BYOD) concept. This flexibility allows you to
+use any DataFrame that Narwhals supports for your data validation tasks. To
+explore the full range of supported DataFrames, you can visit <a class="reference external" href="https://narwhals-dev.github.io/narwhals/extending/">this
+link</a>.</p>
+<p>The syntax of Validoopsie has been thoughtfully crafted to ensure ease of use.
+Every validation function is encapsulated in its own method, which can be
+seamlessly linked together. This method-specific design prioritizes simplicity
+and readability, freeing you from the need to adapt to a new API each time you
+switch libraries. It allows you to focus on maintaining clean and
+understandable code.</p>
+<p>Validoopsie draws significant inspiration from the Great Expectations library.
+It strives to distill the data validation process into something
+straightforward and efficient. Whether you’re checking data integrity or
+ensuring compliance with data standards, Validoopsie provides a streamlined yet
+powerful solution to make these tasks accessible and straightforward.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#installation"><span class="xref myst">Installation</span></a></p></li>
+<li><p><a class="reference internal" href="#getting-started"><span class="xref myst">Getting Started</span></a></p></li>
+<li><p><a class="reference internal" href="#license"><span class="xref myst">License</span></a></p></li>
+</ol>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">Validoopsie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#getting-started">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ValidationDev.html">How to Create a New Validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ValidationCatalogue.html">Validation Catalogue</a></li>
+<li><p>pip</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">Validoopsie</span></code></p>
+</li>
 </ul>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<p>Validoopsie is incredibly easy to use, so much so that you could do it
+half-asleep. The simplicity of the library is enhanced by the BYOD (Bring Your
+Own DataFrame) concept, where you merely need to utilize the <code class="docutils literal notranslate"><span class="pre">Validate</span></code> class
+and chain your desired validations together. This approach ensures that you can
+get started with minimal effort and without any unnecessary complexity.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validate</span>
+
+
+<span class="n">p_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;target_name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># `vd` stands for Validate Data</span>
+<span class="n">vd</span> <span class="o">=</span> <span class="n">Validate</span><span class="p">(</span><span class="n">p_df</span><span class="p">)</span>
+<span class="n">vd</span><span class="o">.</span><span class="n">EqualityValidation</span><span class="o">.</span><span class="n">PairColumnEquality</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
+<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnValuesToBeBetween</span><span class="p">(</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="mi">20</span><span class="p">,</span>
+    <span class="mi">40</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">vd</span><span class="o">.</span><span class="n">results</span>
+</pre></div>
+</div>
+<details>
+  <summary>
+    <strong>OUTPUT</strong>
+  </summary>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>```json
+{
+  &quot;Summary&quot;: {
+    &quot;passed&quot;: false,
+    &quot;validations&quot;: [
+      &quot;PairColumnEquality_name&quot;,
+      &quot;ColumnUniqueValuesToBeInList_last_name&quot;
+    ]
+  },
+  &quot;PairColumnEquality_name&quot;: {
+    &quot;validation&quot;: &quot;PairColumnEquality&quot;,
+    &quot;impact&quot;: &quot;low&quot;,
+    &quot;timestamp&quot;: &quot;2025-01-03T22:28:02.497324+01:00&quot;,
+    &quot;column&quot;: &quot;name&quot;,
+    &quot;result&quot;: {
+      &quot;status&quot;: &quot;Fail&quot;,
+      &quot;threshold pass&quot;: false,
+      &quot;message&quot;: &quot;The column &#39;name&#39; is not equal to the column&#39;age&#39;.&quot;,
+      &quot;failing items&quot;: [
+        &quot;Doe - column name - column age - 30&quot;,
+        &quot;Jane - column name - column age - 35&quot;,
+        &quot;John - column name - column age - 25&quot;
+      ],
+      &quot;failed number&quot;: 3,
+      &quot;frame row number&quot;: 3,
+      &quot;threshold&quot;: 0.0,
+      &quot;failed percentage&quot;: 1.0
+    }
+  },
+  &quot;ColumnUniqueValuesToBeInList_last_name&quot;: {
+    &quot;validation&quot;: &quot;ColumnUniqueValuesToBeInList&quot;,
+    &quot;impact&quot;: &quot;low&quot;,
+    &quot;timestamp&quot;: &quot;2025-01-03T22:28:02.499192+01:00&quot;,
+    &quot;column&quot;: &quot;last_name&quot;,
+    &quot;result&quot;: {
+      &quot;status&quot;: &quot;Success&quot;,
+      &quot;threshold pass&quot;: true,
+      &quot;message&quot;: &quot;All items passed the validation.&quot;,
+      &quot;frame row number&quot;: 3,
+      &quot;threshold&quot;: 0.0
+    }
+  }
+}
+```
+</pre></div>
+</div>
+</details>
+<p>To ensure that all your validations have been correctly executed and to handle
+any potential errors that may arise during the validation process, you can use
+the <code class="docutils literal notranslate"><span class="pre">validate</span></code> method. However, it’s important to note that errors will only be
+raised if the <code class="docutils literal notranslate"><span class="pre">impact</span></code> level is set to <code class="docutils literal notranslate"><span class="pre">high</span></code>. Without this setting, potential
+issues may not trigger an error message.</p>
+<p><strong>NOTE:</strong> Raised error is <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code>.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validate</span>
+
+
+<span class="n">p_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;target_name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># `vd` stands for Validate Data</span>
+<span class="n">vd</span> <span class="o">=</span> <span class="n">Validate</span><span class="p">(</span><span class="n">p_df</span><span class="p">)</span>
+<span class="n">vd</span><span class="o">.</span><span class="n">EqualityValidation</span><span class="o">.</span><span class="n">PairColumnEquality</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">impact</span><span class="o">=</span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
+    <span class="n">column</span><span class="o">=</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
+<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnValuesToBeBetween</span><span class="p">(</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="mi">20</span><span class="p">,</span>
+    <span class="mi">40</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Thanks to <a class="reference external" href="https://github.com/Delgan/loguru">loguru</a> output will provide a very
+condenced information on validations and their status in a colorful way.</p>
+<p align="left">
+    <img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
+</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>MIT © Validoopsie</p>
+<p>Original Creator - <a class="reference external" href="https://github.com/akmalsoliev">Akmal Soliev</a></p>
+</section>
+</section>
+<div class="toctree-wrapper compound">
 </div>
 
 
@@ -154,6 +339,26 @@
           </div>
         </div>
       </div>
+    
+        <div id="show_right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&lt;</span><span>Page contents</span></a></p>
+        </div>
+
+        <div id="right_sidebar">
+            <p><a class="toggle_right_sidebar" href="#"><span class="icon">&gt;</span><span>Page contents:</span></a></p>
+            <div class="page_toc">
+                <ul>
+<li><a class="reference internal" href="#">Validoopsie</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+        </div>
     
 
       <div class="clearer"></div>
@@ -166,7 +371,7 @@
 
             <div class="right">
                 
-                    <a href="README.html"><span>Validoopsie</span><span class="icon">&gt;</span></a>
+                    <a href="CONTRIBUTING.html"><span>Contribution Guidelines</span><span class="icon">&gt;</span></a>
                 
             </div>
         </div>

@@ -30,7 +30,15 @@
         <p id="toggle_sidebar">
             <a href="#" title="Toggle sidebar">|||</a>
         </p>
-        <h1><a href="index.html" title="Go to homepage"><img src="_static/validoopsie-text.png"/></a></h1>
+        <h1><a href="index.html" title="Go to homepage">Validoopsie  documentation</a></h1>
+            <a id="source_link" href="https://github.com/akmalsoliev/Validoopsie">
+    
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+            <path fill="white" d="M 244.8,8 C 106.1,8 0,113.3 0,252 c 0,110.9 69.8,205.8 169.5,239.2 12.8,2.3 17.3,-5.6 17.3,-12.1 0,-6.2 -0.3,-40.4 -0.3,-61.4 0,0 -70,15 -84.7,-29.8 0,0 -11.4,-29.1 -27.8,-36.6 0,0 -22.9,-15.7 1.6,-15.4 0,0 24.9,2 38.6,25.8 21.9,38.6 58.6,27.5 72.9,20.9 2.3,-16 8.8,-27.1 16,-33.7 -55.9,-6.2 -112.3,-14.3 -112.3,-110.5 0,-27.5 7.6,-41.3 23.6,-58.9 -2.6,-6.5 -11.1,-33.3 2.6,-67.9 20.9,-6.5 69,27 69,27 20,-5.6 41.5,-8.5 62.8,-8.5 21.3,0 42.8,2.9 62.8,8.5 0,0 48.1,-33.6 69,-27 13.7,34.7 5.2,61.4 2.6,67.9 16,17.7 25.8,31.5 25.8,58.9 0,96.5 -58.9,104.2 -114.8,110.5 9.2,7.9 17,22.9 17,46.4 0,33.7 -0.3,75.4 -0.3,83.6 0,6.5 4.6,14.4 17.3,12.1 C 428.2,457.8 496,362.9 496,252 496,113.3 383.5,8 244.8,8 Z"/>
+        </svg>
+    
+</a>
+        
 
         <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
     <template v-if="mode == 'light'">
@@ -120,9 +128,6 @@
       <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="README.html">Validoopsie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#getting-started">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ValidationDev.html">How to Create a New Validation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Validation Catalogue</a></li>
@@ -157,12 +162,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.DateValidation.ColumnMatchDateFormat.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.DateValidation.ColumnMatchDateFormat.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -185,12 +184,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.EqualityValidation.PairColumnEquality.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.EqualityValidation.PairColumnEquality.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -211,12 +204,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.NullValidation.ColumnBeNull.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.NullValidation.ColumnBeNull.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -234,12 +221,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -261,12 +242,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnUniqueValuesToBeInList.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnUniqueValuesToBeInList.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -286,12 +261,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnValuesToBeBetween.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnValuesToBeBetween.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -310,12 +279,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeEqualTo.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeEqualTo.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -334,12 +297,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -358,12 +315,6 @@
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo.execute_check">
-<span class="sig-name descname"><span class="pre">execute_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IntoFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo.execute_check" title="Link to this definition">¶</a></dt>
-<dd><p>Execute the validation check on the provided frame.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -385,51 +336,24 @@
                 <ul>
 <li><a class="reference internal" href="#">Validation Catalogue</a><ul>
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.DateValidation">Date Validation</a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.DateValidation.ColumnMatchDateFormat"><code class="docutils literal notranslate"><span class="pre">ColumnMatchDateFormat</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.DateValidation.ColumnMatchDateFormat.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnMatchDateFormat.execute_check()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.DateValidation.ColumnMatchDateFormat"><code class="docutils literal notranslate"><span class="pre">ColumnMatchDateFormat</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.EqualityValidation">Equality Validation</a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.EqualityValidation.PairColumnEquality"><code class="docutils literal notranslate"><span class="pre">PairColumnEquality</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.EqualityValidation.PairColumnEquality.execute_check"><code class="docutils literal notranslate"><span class="pre">PairColumnEquality.execute_check()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.EqualityValidation.PairColumnEquality"><code class="docutils literal notranslate"><span class="pre">PairColumnEquality</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.NullValidation">Null Validation</a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnBeNull</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnBeNull.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnBeNull.execute_check()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnNotBeNull</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnNotBeNull.execute_check()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnBeNull</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnNotBeNull</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.ValuesValidation">Values Validation</a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnUniqueValuesToBeInList"><code class="docutils literal notranslate"><span class="pre">ColumnUniqueValuesToBeInList</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnUniqueValuesToBeInList.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnUniqueValuesToBeInList.execute_check()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnValuesToBeBetween"><code class="docutils literal notranslate"><span class="pre">ColumnValuesToBeBetween</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnValuesToBeBetween.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnValuesToBeBetween.execute_check()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeEqualTo</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeEqualTo.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeEqualTo.execute_check()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeGreaterEqualTo</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeGreaterEqualTo.execute_check()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeLessEqualTo</span></code></a><ul>
-<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo.execute_check"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeLessEqualTo.execute_check()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnUniqueValuesToBeInList"><code class="docutils literal notranslate"><span class="pre">ColumnUniqueValuesToBeInList</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnValuesToBeBetween"><code class="docutils literal notranslate"><span class="pre">ColumnValuesToBeBetween</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeEqualTo</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeGreaterEqualTo</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo"><code class="docutils literal notranslate"><span class="pre">ColumnsSumToBeLessEqualTo</span></code></a></li>
 </ul>
 </li>
 </ul>
