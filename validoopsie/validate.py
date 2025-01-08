@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 import inspect
 from pathlib import Path
-from typing import Callable, Self
+from typing import Callable
 
 import narwhals as nw
 from loguru import logger
@@ -95,7 +95,7 @@ class Validate:
         validation_class: type,
         *args: str | list[str | int] | int,
         **kwargs: str | list[str | int] | int,
-    ) -> Self:
+    ) -> Validate:
         args = args[1:]
         test = validation_class(*args, **kwargs)
         result = test.__execute_check__(frame=self.frame)
@@ -117,7 +117,7 @@ class Validate:
         self.results.update({name: result})
         return self
 
-    def validate(self) -> Self:
+    def validate(self) -> Validate:
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
