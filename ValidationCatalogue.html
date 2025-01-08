@@ -224,6 +224,120 @@
 </dd></dl>
 
 </section>
+<section id="module-validoopsie.validation_catalogue.StringValidation">
+<span id="string-validation"></span><h2>String Validation<a class="headerlink" href="#module-validoopsie.validation_catalogue.StringValidation" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.LengthToBeBetween">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">LengthToBeBetween</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeBetween" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LengthToBeBetween</span></code></p>
+<p>Column string to be between <cite>min_value</cite> and <cite>max_value</cite> number of characters.</p>
+<p>If either <cite>min_value</cite> or <cite>max_value</cite> is None, the check will only consider the other
+value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – The minimum value for a column entry length.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – The maximum value for a column entry length.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.LengthToBeEqualTo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">LengthToBeEqualTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeEqualTo" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LengthToBeEqualTo</span></code></p>
+<p>Expect the column entries to be strings with length equal to <cite>value</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – The expected value for a column entry length.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.LengthToBeGreaterThanOrEqualTo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">LengthToBeGreaterThanOrEqualTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeGreaterThanOrEqualTo" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LengthToBeGreaterThanOrEqualTo</span></code></p>
+<p>Column string length to be greater than or equal to <cite>min_value</cite> chars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – The minimum value for a column entry length.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – Impact level of validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.LengthToBeLessThanOrEqualTo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">LengthToBeLessThanOrEqualTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeLessThanOrEqualTo" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LengthToBeLessThanOrEqualTo</span></code></p>
+<p>Column string length to be less than or equal to <cite>max_value</cite> characters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – The maximum value for a column entry length.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.NotPatternMatch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">NotPatternMatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.NotPatternMatch" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NotPatternMatch</span></code></p>
+<p>Expect the column entries to be strings that match a given like pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>) – The pattern expression the column should match.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.PatternMatch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">PatternMatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.PatternMatch" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PatternMatch</span></code></p>
+<p>Expect the column entries to be strings that match a given like pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>) – The pattern expression the column should match.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-validoopsie.validation_catalogue.ValuesValidation">
 <span id="values-validation"></span><h2>Values Validation<a class="headerlink" href="#module-validoopsie.validation_catalogue.ValuesValidation" title="Link to this heading">¶</a></h2>
 <dl class="py class">
@@ -346,6 +460,15 @@
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.NullValidation">Null Validation</a><ul>
 <li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnBeNull</span></code></a></li>
 <li><a class="reference internal" href="#validoopsie.validation_catalogue.NullValidation.ColumnNotBeNull"><code class="docutils literal notranslate"><span class="pre">ColumnNotBeNull</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-validoopsie.validation_catalogue.StringValidation">String Validation</a><ul>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeBetween"><code class="docutils literal notranslate"><span class="pre">LengthToBeBetween</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeEqualTo"><code class="docutils literal notranslate"><span class="pre">LengthToBeEqualTo</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeGreaterThanOrEqualTo"><code class="docutils literal notranslate"><span class="pre">LengthToBeGreaterThanOrEqualTo</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeLessThanOrEqualTo"><code class="docutils literal notranslate"><span class="pre">LengthToBeLessThanOrEqualTo</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.NotPatternMatch"><code class="docutils literal notranslate"><span class="pre">NotPatternMatch</span></code></a></li>
+<li><a class="reference internal" href="#validoopsie.validation_catalogue.StringValidation.PatternMatch"><code class="docutils literal notranslate"><span class="pre">PatternMatch</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-validoopsie.validation_catalogue.ValuesValidation">Values Validation</a><ul>
