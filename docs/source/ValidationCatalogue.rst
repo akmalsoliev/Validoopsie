@@ -22,9 +22,17 @@ Null Validation
    :undoc-members:
    :show-inheritance:
 
+String Validation
+-----------------
+.. automodule:: validoopsie.validation_catalogue.StringValidation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Values Validation
 -----------------
 .. automodule:: validoopsie.validation_catalogue.ValuesValidation
    :members:
    :undoc-members:
    :show-inheritance:
+
