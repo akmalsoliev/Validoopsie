@@ -8,6 +8,9 @@
   <a href="https://badge.fury.io/py/Validoopsie">
     <img src="https://badge.fury.io/py/Validoopsie.svg" alt="PyPI version" />
   </a>
+  <a href="https://pepy.tech/projects/validoopsie">
+    <img src="https://static.pepy.tech/badge/validoopsie" alt="PyPI Downloads">
+  </a>
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml">
     <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml/badge.svg" alt="PyTest" />
   </a>
