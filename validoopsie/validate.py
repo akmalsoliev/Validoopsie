@@ -156,3 +156,4 @@ class Validate:
         if failed_validations:
             value_error_msg = f"FAILED VALIDATION(S): {failed_validations}"
             raise SystemExit(value_error_msg)
+        return self
