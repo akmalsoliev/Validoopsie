@@ -9,6 +9,13 @@ class Validate:
     results: dict[str, Any]
     def __init__(self, frame: IntoFrame) -> None: ...
     def validate(self) -> Self: ...
+    def add_validation(self, validation: type) -> Self:
+        """Add custom generated validation check to the Validate class instance.
+
+        Args:
+            validation (type): Custom generated validation check
+
+        """
 
     class DateValidation:
         @staticmethod

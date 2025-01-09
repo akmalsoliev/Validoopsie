@@ -9,6 +9,8 @@ import narwhals as nw
 from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
+from validoopsie.types import KwargsType
+
 
 class Validate:
     def __into_narwahlframe__(self, frame: IntoFrame) -> Frame:
@@ -90,22 +92,17 @@ class Validate:
 
         return validation_method
 
-    def __create_validation_class__(
-        self,
-        validation_class: type,
-        *args: str | list[str | int] | int,
-        **kwargs: str | list[str | int] | int,
-    ) -> Validate:
-        args = args[1:]
-        test = validation_class(*args, **kwargs)
-        result = test.__execute_check__(frame=self.frame)
+    def __parse_results__(self, result: dict, name: str) -> None:
         status = result["result"]["status"]
-        name = f"{test.__class__.__name__}_{test.column}"
         # If the validation check failed, set the overall result to fail
         # If No validations are added, the result will be None
         # If all validations pass, the result will be PASS
         if status == "Fail":
             self.results["Summary"]["passed"] = False
+            if "Failed Validation" not in self.results["Summary"]:
+                self.results["Summary"]["Failed Validation"] = [name]
+            else:
+                self.results["Summary"]["Failed Validation"].append(name)
         elif self.results["Summary"]["passed"] is None and status == "Success":
             self.results["Summary"]["passed"] = True
 
@@ -115,6 +112,49 @@ class Validate:
             self.results["Summary"]["validations"].append(name)
 
         self.results.update({name: result})
+
+    def __create_validation_class__(
+        self,
+        validation_class: type,
+        *args: str | list[str | int] | int,
+        **kwargs: KwargsType,
+    ) -> Validate:
+        args = args[1:]
+        validation = validation_class(*args, **kwargs)
+        result = validation.__execute_check__(frame=self.frame)
+        name = f"{validation.__class__.__name__}_{validation.column}"
+        self.__parse_results__(result, name)
+        return self
+
+    def add_validation(
+        self,
+        validation: type,
+    ) -> Validate:
+        """Add custom generated validation check to the Validate class instance.
+
+        Args:
+            validation (type): Custom generated validation check
+
+        """
+        if inspect.isclass(validation):
+            # This should be a failure
+            class_name = validation.__name__
+        else:
+            class_name = validation.__class__.__name__
+
+        output_name = class_name
+        try:
+            result = validation.__execute_check__(frame=self.frame)
+            column_name = validation.column
+            output_name = f"{class_name}_{column_name}"
+        except Exception as e:
+            result = {
+                "result": {
+                    "status": "Fail",
+                    "message": f"An error occured while executing {class_name} - {e!s}",
+                },
+            }
+        self.__parse_results__(result, output_name)
         return self
 
     def validate(self) -> Validate:
@@ -128,11 +168,13 @@ class Validate:
             if key == "Summary":
                 continue
 
+            impact = self.results[key].get("impact", "high")
+
             # Check if the validation failed and if it is high impact then it
             # should raise an error
             failed = self.results[key]["result"]["status"] == "Fail"
-            high_impact = self.results[key]["impact"].lower() == "high"
-            medium_impact = self.results[key]["impact"].lower() == "medium"
+            high_impact = impact.lower() == "high"
+            medium_impact = impact.lower() == "medium"
 
             if failed and high_impact:
                 failed_validations.append(key)
