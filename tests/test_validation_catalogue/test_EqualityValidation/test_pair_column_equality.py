@@ -1,6 +1,3 @@
-import narwhals as nw
-import polars as pl
-import pytest
 from narwhals.typing import IntoFrame
 
 from tests.utils.create_frames import create_frame_fixture
@@ -8,7 +5,7 @@ from validoopsie.validation_catalogue.EqualityValidation import PairColumnEquali
 
 
 @create_frame_fixture
-def lf() -> IntoFrame:
+def lf() -> dict[str, list]:
     return {
         "A": [1, 2, 3, 4, 5],
         "B": [1, 2, 3, 4, 5],
