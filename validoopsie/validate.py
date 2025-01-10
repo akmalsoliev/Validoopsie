@@ -2,14 +2,16 @@ from __future__ import annotations
 
 import importlib
 import inspect
+import random
 from pathlib import Path
-from typing import Callable
+from typing import TYPE_CHECKING, Callable
 
 import narwhals as nw
 from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
-from validoopsie.types import KwargsType
+if TYPE_CHECKING:
+    from validoopsie.types import KwargsType
 
 
 class Validate:
@@ -136,24 +138,30 @@ class Validate:
             validation (type): Custom generated validation check
 
         """
-        if inspect.isclass(validation):
-            # This should be a failure
-            class_name = validation.__name__
-        else:
+        output_name: str = "InvalidValidationCheck"
+        if hasattr(validation, "__execute_check__"):
             class_name = validation.__class__.__name__
-
-        output_name = class_name
-        try:
-            result = validation.__execute_check__(frame=self.frame)
-            column_name = validation.column
-            output_name = f"{class_name}_{column_name}"
-        except Exception as e:
+            try:
+                result = validation.__execute_check__(frame=self.frame)
+                column_name = validation.column
+                output_name = f"{class_name}_{column_name}"
+            except Exception as e:
+                result = {
+                    "result": {
+                        "status": "Fail",
+                        "message": f"An error occured while executing {class_name} - {e!s}",
+                    },
+                }
+        else:
             result = {
                 "result": {
                     "status": "Fail",
-                    "message": f"An error occured while executing {class_name} - {e!s}",
+                    "message": f"{validation.__name__} is not a valid validation check.",
                 },
             }
+            if inspect.isclass(validation):
+                output_name = validation.__name__
+
         self.__parse_results__(result, output_name)
         return self
 

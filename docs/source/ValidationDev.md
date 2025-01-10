@@ -1,4 +1,4 @@
-# How to Create a New Validation
+# Contributing a new Validation to Validoopsie
 
 Creating a new validation might seem complex at first, but don’t worry—we’ve
 made the process as straightforward as possible. Validations are dynamically
@@ -40,6 +40,7 @@ Here’s an example:
 
 ```python
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from narwhals.typing import FrameT
 
 @base_validation_wrapper
 class ColumnValuesToBeBetween(BaseValidationParameters):
@@ -208,7 +209,3 @@ Congratulations! You’ve just created your first validation. 🎉
 
 If you have any questions or run into issues, feel free to reach out for help.
 Thank you for contributing!
-
----
-
-Let me know how else I can make this better for you!

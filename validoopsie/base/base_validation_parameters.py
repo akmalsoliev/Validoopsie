@@ -103,9 +103,13 @@ class BaseValidationParameters:
     ) -> None:
         self.column = column
         self.impact = impact.lower() if impact else "low"
-        self.threshold = threshold
-        self.fail_message: str
+        self.threshold = threshold if threshold else 0.00
         self.__dict__.update(kwargs)
+
+    @property
+    @abstractmethod
+    def fail_message(self) -> str:
+        """Return the fail message used in the report."""
 
     def __execute_check__(
         self,
