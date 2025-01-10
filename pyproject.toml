@@ -15,7 +15,6 @@ requires-python = ">=3.9"
 dependencies = [
     "loguru>=0.7.3",
     "narwhals>1.20.1",
-    "pendulum>=3.0.0",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -49,6 +48,7 @@ dev-dependencies = [
   "twine>=6.0.1",
   "pyarrow>=18.1.0",
   "modin[all]>=0.32.0",
+  "pendulum>=3.0.0",
 ]
 
 [dependency-groups]

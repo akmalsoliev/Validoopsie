@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+from datetime import datetime as dt
+from datetime import timezone
 from typing import TYPE_CHECKING, Any, TypeVar
 
 import narwhals as nw
-import pendulum
 from loguru import logger
 from narwhals.typing import IntoFrame
 
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
     from validoopsie.types import KwargsType
 
 T = TypeVar("T")
+
 
 def get_items(
     nw_frame: IntoFrame,
@@ -61,11 +63,12 @@ def build_error_message(
     impact: str,
     column: str,
     error_str: str,
+    current_time_str: str,
 ) -> dict[str, str | dict[str, str]]:
     return {
         "validation": class_name,
         "impact": impact,
-        "timestamp": pendulum.now().isoformat(),
+        "timestamp": current_time_str,
         "column": column,
         "result": {
             "status": "Fail",
@@ -112,6 +115,7 @@ def base_validation_wrapper(
             self,
             frame: IntoFrame,
         ) -> dict[str, str | dict[str, Any]]:
+            current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
             try:
                 frame = nw.from_native(frame)
                 validated_frame = get_frame(self, frame)
@@ -128,6 +132,7 @@ def base_validation_wrapper(
                     impact=self.impact,
                     column=self.column,
                     error_str=error_str,
+                    current_time_str=current_time_str,
                 )
 
             failed_percentage: float = (
@@ -181,7 +186,7 @@ def base_validation_wrapper(
             return {
                 "validation": str(cls.__name__),
                 "impact": self.impact,
-                "timestamp": pendulum.now().isoformat(),
+                "timestamp": current_time_str,
                 "column": self.column,
                 **result,
             }
