@@ -105,7 +105,7 @@ def __call__(self, frame: FrameT) -> FrameT:
         frame.group_by(self.column)
         .agg(nw.col("temperature").mean().alias("mean_temperature_farenheit"))
         .with_columns(
-            ((nw.col("mean_temperature_farenheit") - 35) * 5 / 9).alias(
+            ((nw.col("mean_temperature_farenheit") - 32) * 5 / 9).alias(
                 "mean_temperature_celsius",
             ),
         )
@@ -125,7 +125,6 @@ def __call__(self, frame: FrameT) -> FrameT:
 **Notes:**
 
 - Ensure that the logic correctly identifies and returns only the failing records.
-- The temperature conversion formula is corrected to `((Fahrenheit - 32) * 5/9)`.
 
 ## 6. Add the Validation to the Pipeline
 

@@ -8,4 +8,5 @@
 
    CONTRIBUTING
    ValidationDev
+   DevelopingCustomValidation
    ValidationCatalogue
