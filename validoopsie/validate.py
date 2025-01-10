@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib
 import inspect
-import random
 from pathlib import Path
 from typing import TYPE_CHECKING, Callable
 
@@ -11,6 +10,7 @@ from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
+    from validoopsie.base.base_validation_parameters import BaseValidationParameters
     from validoopsie.types import KwargsType
 
 
@@ -130,7 +130,7 @@ class Validate:
 
     def add_validation(
         self,
-        validation: type,
+        validation: BaseValidationParameters,
     ) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 

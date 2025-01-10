@@ -2,6 +2,7 @@ from typing import Any, Self, Union
 
 from narwhals.typing import IntoFrame
 
+from validoopsie.base.base_validation_parameters import BaseValidationParameters
 from validoopsie.types import KwargsType
 
 class Validate:
@@ -9,7 +10,7 @@ class Validate:
     results: dict[str, Any]
     def __init__(self, frame: IntoFrame) -> None: ...
     def validate(self) -> Self: ...
-    def add_validation(self, validation: type) -> Self:
+    def add_validation(self, validation:BaseValidationParameters) -> Self:
         """Add custom generated validation check to the Validate class instance.
 
         Args:
