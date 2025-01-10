@@ -13,10 +13,11 @@ class PairColumnEquality(BaseValidationParameters):
     Args:
         column (str): Column to validate.
         target_column (str): Column to compare.
-        group_by_combined (bool, optional): Group by combined columns. Defaults to True.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        group_by_combined (bool, optional): Group by combine columns. Default True.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -41,11 +42,7 @@ class PairColumnEquality(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the pair of columns are equal.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the pair of columns are equal."""
         select_columns = [self.column, f"{self.column}-count"]
         gb_cols = (
             [self.column, self.target_column] if self.group_by_combined else [self.column]

@@ -8,18 +8,17 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
 @base_validation_wrapper
 class LengthToBeBetween(BaseValidationParameters):
-    """Column string to be between `min_value` and `max_value` number of characters.
-
-    If either `min_value` or `max_value` is None, the check will only consider the other
-    value.
+    """Check if the string lengths are between the specified range.
 
     Args:
-        column (str): The column name.
-        min_value (float): The minimum value for a column entry length.
-        max_value (float): The maximum value for a column entry length.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        column (str): Column to validate.
+        min_value (float): Minimum value for a column entry length.
+        max_value (float): Maximum value for a column entry length.
+        closed (str, optional): Closed interval. Defaults to "both".
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -46,11 +45,7 @@ class LengthToBeBetween(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the string lengths are between the specified range.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the string lengths are between the specified range."""
         return (
             frame.filter(
                 nw.col(self.column)

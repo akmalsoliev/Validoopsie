@@ -8,14 +8,16 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
 @base_validation_wrapper
 class ColumnsSumToBeGreaterEqualTo(BaseValidationParameters):
-    """Check if the sum of columns greater or equal than `max_sum`.
+    """Check if the sum of columns is greater than or equal to `max_sum`.
 
     Args:
         columns_list (list[str]): List of columns to sum.
-        max_sum (float): Max sum value that column should less or equal to.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        kwargs (dict): Additional keyword arguments.
+        max_sum (float): Minimum sum value that columns should be greater than
+            or equal to.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -40,11 +42,7 @@ class ColumnsSumToBeGreaterEqualTo(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the sum of the columns is grater or equal to `sum_value`.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the sum of columns is greater than or equal to `max_sum`."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         return (

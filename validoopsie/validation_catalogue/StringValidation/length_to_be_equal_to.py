@@ -11,11 +11,12 @@ class LengthToBeEqualTo(BaseValidationParameters):
     """Expect the column entries to be strings with length equal to `value`.
 
     Args:
-        column (str): The column name.
+        column (str): Column to validate.
         value (int): The expected value for a column entry length.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -38,11 +39,7 @@ class LengthToBeEqualTo(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Expect the column entries to be strings with length equal to `value`.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Expect the column entries to be strings with length equal to `value`."""
         return (
             frame.filter(
                 nw.col(self.column).str.len_chars() != self.value,

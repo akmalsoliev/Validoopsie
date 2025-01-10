@@ -12,9 +12,10 @@ class ColumnNotBeNull(BaseValidationParameters):
 
     Args:
         column (str): Column to validate.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -24,11 +25,7 @@ class ColumnNotBeNull(BaseValidationParameters):
         return f"The column '{self.column}' has values that are null."
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the unique values are in the list.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the values in a column are not null."""
         null_count_col = f"{self.column}-count"
         return (
             frame.filter(

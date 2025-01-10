@@ -12,11 +12,12 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
 
     Args:
         column (str): Column to validate.
-        min_value (int): Minimum value.
-        max_value (int): Maximum value.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        min_value (float): Minimum value.
+        max_value (float): Maximum value.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -41,11 +42,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the values in a column are between a range.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the values in a column are between a range."""
         return (
             frame.group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))

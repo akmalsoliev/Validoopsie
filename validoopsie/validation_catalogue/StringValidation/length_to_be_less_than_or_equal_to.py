@@ -13,9 +13,10 @@ class LengthToBeLessThanOrEqualTo(BaseValidationParameters):
     Args:
         column (str): The column name.
         max_value (float): The maximum value for a column entry length.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -38,11 +39,7 @@ class LengthToBeLessThanOrEqualTo(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the string lengths are less than or equal to the specified value.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Column string length to be less than or equal to `max_value` characters."""
         return (
             frame.filter(
                 nw.col(self.column).str.len_chars() > self.max_value,

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional
+from typing import Literal, Optional
 
 from narwhals.typing import IntoFrame
 
@@ -10,7 +10,7 @@ class BaseValidationParameters:
     def __init__(
         self,
         column: str,
-        impact: Optional[str] = "low",
+        impact: Literal["low", "medium", "high"] = "low",
         threshold: Optional[float] = 0.00,
         **kwargs: object,
     ) -> None:

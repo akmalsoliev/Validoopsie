@@ -8,14 +8,15 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
 @base_validation_wrapper
 class ColumnsSumToBeLessEqualTo(BaseValidationParameters):
-    """Check if the sum of columns less or equal than `min_sum`.
+    """Check if the sum of columns is less than or equal to `min_sum`.
 
     Args:
         columns_list (list[str]): List of columns to sum.
-        min_sum (float): Min sum value that column should greater or equal to.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        kwargs (dict): Additional keyword arguments.
+        min_sum (float): Maximum sum value that columns should be less than or equal to.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -40,11 +41,7 @@ class ColumnsSumToBeLessEqualTo(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the sum of the columns is less or equal to `sum_value`.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the sum of columns is less than or equal to `min_sum`."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         return (

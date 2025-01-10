@@ -8,14 +8,15 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
 @base_validation_wrapper
 class PatternMatch(BaseValidationParameters):
-    """Expect the column entries to be strings that match a given like pattern.
+    """Expect the column entries to be strings that pattern matches.
 
     Args:
         column (str): The column name.
         pattern (str): The pattern expression the column should match.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -38,11 +39,7 @@ class PatternMatch(BaseValidationParameters):
         )
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Expect the column entries to be strings that match a given like pattern.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Expect the column entries to be strings that pattern matches."""
         return (
             frame.filter(
                 nw.col(self.column).str.contains(self.pattern) == False,

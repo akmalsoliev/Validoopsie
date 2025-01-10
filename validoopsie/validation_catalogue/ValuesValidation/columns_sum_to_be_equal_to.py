@@ -13,9 +13,10 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
     Args:
         columns_list (list[str]): List of columns to sum.
         sum_value (float): Value that the columns should sum to.
-        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
-        impact (str, optional): The impact level of the validation. Defaults to "low".
-        kwargs (dict): Additional keyword arguments.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
+            Defaults to "low".
+        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -37,11 +38,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
         return f"The columns {self.columns_list} do not sum to {self.sum_value}."
 
     def __call__(self, frame: FrameT) -> FrameT:
-        """Check if the sum of the columns is equal to `sum_value`.
-
-        Return will be used in the `__execute_check__` method in `column_check`
-        decorator.
-        """
+        """Check if the sum of the columns is equal to a specific value."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         return (
