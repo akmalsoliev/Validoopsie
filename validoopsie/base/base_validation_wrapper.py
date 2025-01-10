@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, TypeVar
 
 import narwhals as nw
 import pendulum
@@ -10,6 +10,7 @@ from narwhals.typing import IntoFrame
 if TYPE_CHECKING:
     from validoopsie.types import KwargsType
 
+T = TypeVar("T")
 
 def get_items(
     nw_frame: IntoFrame,
@@ -91,8 +92,8 @@ def get_frame(self: type, frame: IntoFrame) -> nw.DataFrame:
 
 
 def base_validation_wrapper(
-    cls: type,
-) -> type:
+    cls: type[T],
+) -> type[T]:
     class Wrapper(cls):
         def __init__(
             self,
