@@ -157,9 +157,10 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
 <li><p><strong>date_format</strong> (<em>str</em>) – Date format to check.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -178,10 +179,11 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
 <li><p><strong>target_column</strong> (<em>str</em>) – Column to compare.</p></li>
-<li><p><strong>group_by_combined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Group by combined columns. Defaults to True.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>group_by_combined</strong> (<em>bool</em><em>, </em><em>optional</em>) – Group by combine columns. Default True.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -199,9 +201,10 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -216,9 +219,10 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -231,18 +235,18 @@
 <dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.LengthToBeBetween">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">LengthToBeBetween</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.LengthToBeBetween" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LengthToBeBetween</span></code></p>
-<p>Column string to be between <cite>min_value</cite> and <cite>max_value</cite> number of characters.</p>
-<p>If either <cite>min_value</cite> or <cite>max_value</cite> is None, the check will only consider the other
-value.</p>
+<p>Check if the string lengths are between the specified range.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
-<li><p><strong>min_value</strong> (<em>float</em>) – The minimum value for a column entry length.</p></li>
-<li><p><strong>max_value</strong> (<em>float</em>) – The maximum value for a column entry length.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – Minimum value for a column entry length.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – Maximum value for a column entry length.</p></li>
+<li><p><strong>closed</strong> (<em>str</em><em>, </em><em>optional</em>) – Closed interval. Defaults to “both”.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -256,11 +260,12 @@ value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
+<li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
 <li><p><strong>value</strong> (<em>int</em>) – The expected value for a column entry length.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -277,7 +282,8 @@ value.</p>
 <li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
 <li><p><strong>min_value</strong> (<em>float</em>) – The minimum value for a column entry length.</p></li>
 <li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – Impact level of validation. Defaults to “low”.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
 <li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
@@ -294,9 +300,10 @@ value.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
 <li><p><strong>max_value</strong> (<em>float</em>) – The maximum value for a column entry length.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -306,15 +313,16 @@ value.</p>
 <dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.NotPatternMatch">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">NotPatternMatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.NotPatternMatch" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">NotPatternMatch</span></code></p>
-<p>Expect the column entries to be strings that match a given like pattern.</p>
+<p>Expect the column entries to be strings that do not pattern match.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
-<li><p><strong>pattern</strong> (<em>str</em>) – The pattern expression the column should match.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>) – The pattern expression the column should not match.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -324,15 +332,16 @@ value.</p>
 <dt class="sig sig-object py" id="validoopsie.validation_catalogue.StringValidation.PatternMatch">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.StringValidation.</span></span><span class="sig-name descname"><span class="pre">PatternMatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.StringValidation.PatternMatch" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PatternMatch</span></code></p>
-<p>Expect the column entries to be strings that match a given like pattern.</p>
+<p>Expect the column entries to be strings that pattern matches.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – The column name.</p></li>
 <li><p><strong>pattern</strong> (<em>str</em>) – The pattern expression the column should match.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -350,10 +359,11 @@ value.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
-<li><p><strong>values</strong> (<em>list</em><em>[</em><em>str</em><em> | </em><em>float</em><em> | </em><em>int</em><em>]</em>) – List of values to check.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>values</strong> (<em>list</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>float</em><em>, </em><em>int</em><em>]</em><em>]</em>) – List of values to check.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -368,11 +378,12 @@ value.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>column</strong> (<em>str</em>) – Column to validate.</p></li>
-<li><p><strong>min_value</strong> (<em>int</em>) – Minimum value.</p></li>
-<li><p><strong>max_value</strong> (<em>int</em>) – Maximum value.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – Minimum value.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – Maximum value.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -388,9 +399,10 @@ value.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>columns_list</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of columns to sum.</p></li>
 <li><p><strong>sum_value</strong> (<em>float</em>) – Value that the columns should sum to.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -400,15 +412,17 @@ value.</p>
 <dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.ValuesValidation.</span></span><span class="sig-name descname"><span class="pre">ColumnsSumToBeGreaterEqualTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeGreaterEqualTo" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnsSumToBeGreaterEqualTo</span></code></p>
-<p>Check if the sum of columns greater or equal than <cite>max_sum</cite>.</p>
+<p>Check if the sum of columns is greater than or equal to <cite>max_sum</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>columns_list</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of columns to sum.</p></li>
-<li><p><strong>max_sum</strong> (<em>float</em>) – Max sum value that column should less or equal to.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>max_sum</strong> (<em>float</em>) – Minimum sum value that columns should be greater than
+or equal to.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
@@ -418,15 +432,16 @@ value.</p>
 <dt class="sig sig-object py" id="validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">validoopsie.validation_catalogue.ValuesValidation.</span></span><span class="sig-name descname"><span class="pre">ColumnsSumToBeLessEqualTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KwargsType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#validoopsie.validation_catalogue.ValuesValidation.ColumnsSumToBeLessEqualTo" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnsSumToBeLessEqualTo</span></code></p>
-<p>Check if the sum of columns less or equal than <cite>min_sum</cite>.</p>
+<p>Check if the sum of columns is less than or equal to <cite>min_sum</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>columns_list</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – List of columns to sum.</p></li>
-<li><p><strong>min_sum</strong> (<em>float</em>) – Min sum value that column should greater or equal to.</p></li>
-<li><p><strong>impact</strong> (<em>str</em><em>, </em><em>optional</em>) – The impact level of the validation. Defaults to “low”.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for the validation. Defaults to 0.0.</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+<li><p><strong>min_sum</strong> (<em>float</em>) – Maximum sum value that columns should be less than or equal to.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – Threshold for validation. Defaults to 0.0.</p></li>
+<li><p><strong>impact</strong> (<em>Literal</em><em>[</em><em>&quot;low&quot;</em><em>, </em><em>&quot;medium&quot;</em><em>, </em><em>&quot;high&quot;</em><em>]</em><em>, </em><em>optional</em>) – Impact level of validation.
+Defaults to “low”.</p></li>
+<li><p><strong>kwargs</strong> – KwargsType (dict): Additional keyword arguments.</p></li>
 </ul>
 </dd>
 </dl>
