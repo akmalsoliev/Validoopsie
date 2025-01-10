@@ -40,6 +40,7 @@ Here’s an example:
 
 ```python
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from narwhals.typing import FrameT
 
 @base_validation_wrapper
 class ColumnValuesToBeBetween(BaseValidationParameters):

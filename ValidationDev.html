@@ -179,6 +179,7 @@ values in a column fall between two numbers.</p>
 </ul>
 <p>Here’s an example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseValidationParameters</span><span class="p">,</span> <span class="n">base_validation_wrapper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">narwhals.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrameT</span>
 
 <span class="nd">@base_validation_wrapper</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ColumnValuesToBeBetween</span><span class="p">(</span><span class="n">BaseValidationParameters</span><span class="p">):</span>
