@@ -61,6 +61,12 @@ powerful solution to make these tasks accessible and straightforward.
 
 ## Getting Started
 
+- [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
+- [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/CONTRIBUTING.html)
+- [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/ValidationDev.html)
+- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingCustomValidation.html)
+- [🗂️ Validation Catalog](https://akmalsoliev.github.io/Validoopsie/ValidationCatalogue.html)
+
 Validoopsie is incredibly easy to use, so much so that you could do it
 half-asleep. The simplicity of the library is enhanced by the BYOD (Bring Your
 Own DataFrame) concept, where you merely need to utilize the `Validate` class
