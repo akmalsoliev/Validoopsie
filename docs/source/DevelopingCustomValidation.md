@@ -27,11 +27,14 @@ To create a custom validation, start by defining a new class that:
 
 Here's how you can begin:
 
-```python from validoopsie.base import BaseValidationParameters,
-base_validation_wrapper from narwhals.typing import FrameT
+```python 
+from validoopsie.base import BaseValidationParameters, base_validation_wrapper 
+from narwhals.typing import FrameT
 
-@base_validation_wrapper class MyCustomValidation(BaseValidationParameters):
-pass ```
+@base_validation_wrapper 
+class MyCustomValidation(BaseValidationParameters):
+pass 
+```
 
 ## 2. Add a Docstring
 
