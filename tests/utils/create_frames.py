@@ -16,7 +16,7 @@ from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import lit
 from narwhals.typing import Frame
 
-ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table]
+ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table, Frame]
 
 
 def polars_lf(data: dict[str, list]) -> pl.DataFrame:
