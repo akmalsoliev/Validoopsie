@@ -12,7 +12,7 @@ import pytest
 from _pytest.fixtures import SubRequest
 from narwhals.typing import Frame
 
-ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table]
+ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table, Frame]
 
 
 def polars_lf(data: dict[str, list]) -> pl.DataFrame:
