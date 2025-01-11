@@ -172,21 +172,22 @@ using the Validoopsie library.</p>
 <li><p>Uses the <code class="docutils literal notranslate"><span class="pre">&#64;base_validation_wrapper</span></code> decorator.</p></li>
 </ul>
 <p>Here’s how you can begin:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">base_validation_wrapper</span> <span class="kn">from</span><span class="w"> </span><span class="nn">narwhals.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrameT</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseValidationParameters</span><span class="p">,</span>
+<span class="n">base_validation_wrapper</span> <span class="kn">from</span><span class="w"> </span><span class="nn">narwhals.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">FrameT</span>
 
-<span class="nd">@base_validation_wrapper</span> <span class="k">class</span><span class="w"> </span><span class="nc">MyCustomValidation</span><span class="p">(</span><span class="n">BaseValidationParameters</span><span class="p">):</span>
-<span class="k">pass</span> <span class="err">```</span>
-
-<span class="c1">## 2. Add a Docstring</span>
-
-<span class="n">While</span> <span class="ow">not</span> <span class="n">strictly</span> <span class="n">required</span><span class="p">,</span> <span class="n">adding</span> <span class="n">a</span> <span class="n">docstring</span> <span class="ow">is</span> <span class="n">best</span> <span class="n">practice</span><span class="p">,</span> <span class="n">especially</span>
-<span class="k">for</span> <span class="n">team</span> <span class="n">collaboration</span> <span class="ow">and</span> <span class="n">future</span> <span class="n">maintenance</span><span class="o">.</span> <span class="n">The</span> <span class="n">docstring</span> <span class="n">should</span> <span class="n">describe</span>
-<span class="n">the</span> <span class="n">purpose</span> <span class="n">of</span> <span class="n">the</span> <span class="n">validation</span> <span class="ow">and</span> <span class="n">explain</span> <span class="n">the</span> <span class="n">parameters</span><span class="o">.</span>
-
-<span class="n">Example</span><span class="p">:</span>
-
-<span class="err">```</span><span class="n">python</span>
-<span class="sd">&quot;&quot;&quot;Custom validation that filters temperature data based on grouped dates.</span>
+<span class="nd">@base_validation_wrapper</span> 
+<span class="k">class</span><span class="w"> </span><span class="nc">MyCustomValidation</span><span class="p">(</span><span class="n">BaseValidationParameters</span><span class="p">):</span>
+<span class="k">pass</span> 
+</pre></div>
+</div>
+</section>
+<section id="add-a-docstring">
+<h2>2. Add a Docstring<a class="headerlink" href="#add-a-docstring" title="Link to this heading">¶</a></h2>
+<p>While not strictly required, adding a docstring is best practice, especially
+for team collaboration and future maintenance. The docstring should describe
+the purpose of the validation and explain the parameters.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Custom validation that filters temperature data based on grouped dates.</span>
 
 <span class="sd">Args:</span>
 <span class="sd">    column (str): The column name used in the validation and as an identifier in results.</span>
@@ -341,6 +342,7 @@ custom validation to ensure it behaves as expected in all scenarios.</p>
 <li><a class="reference internal" href="#">Developing a Custom Validation</a><ul>
 <li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li><a class="reference internal" href="#define-the-validation-class">1. Define the Validation Class</a></li>
+<li><a class="reference internal" href="#add-a-docstring">2. Add a Docstring</a></li>
 <li><a class="reference internal" href="#define-the-init-method">3. Define the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method</a></li>
 <li><a class="reference internal" href="#add-a-fail-message">4. Add a Fail Message</a></li>
 <li><a class="reference internal" href="#define-the-validation-logic-call-method">5. Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)</a></li>
