@@ -105,20 +105,24 @@ class Validate:
         @staticmethod
         def LengthToBeBetween(
             column: str,
-            min_value: float,
-            max_value: float,
-            closed: str = "both",
+            min_value: int | None = None,
+            max_value: int | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
             **kwargs: KwargsType,
         ) -> Validate:
             """Check if the string lengths are between the specified range.
 
+            If the `min_value` or `max_value` is not provided then other will be used as
+            the threshold.
+
+            If neither `min_value` nor `max_value` is provided, then the validation will
+            result in failure.
+
             Args:
                 column (str): Column to validate.
-                min_value (float): Minimum value for a column entry length.
-                max_value (float): Maximum value for a column entry length.
-                closed (str, optional): Closed interval. Defaults to "both".
+                min_value (float | None): Minimum value for a column entry length.
+                max_value (float | None): Maximum value for a column entry length.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
@@ -139,46 +143,6 @@ class Validate:
             Args:
                 column (str): Column to validate.
                 value (int): The expected value for a column entry length.
-                threshold (float, optional): Threshold for validation. Defaults to 0.0.
-                impact (Literal["low", "medium", "high"], optional): Impact level of
-                    validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
-
-            """
-
-        @staticmethod
-        def LengthToBeGreaterThanOrEqualTo(
-            column: str,
-            min_value: float,
-            threshold: float = 0.00,
-            impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
-        ) -> Validate:
-            """Column string length to be greater than or equal to `min_value` chars.
-
-            Args:
-                column (str): The column name.
-                min_value (float): The minimum value for a column entry length.
-                threshold (float, optional): Threshold for validation. Defaults to 0.0.
-                impact (Literal["low", "medium", "high"], optional): Impact level of
-                    validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
-
-            """
-
-        @staticmethod
-        def LengthToBeLessThanOrEqualTo(
-            column: str,
-            max_value: float,
-            threshold: float = 0.00,
-            impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
-        ) -> Validate:
-            """Column string length to be less than or equal to `max_value` characters.
-
-            Args:
-                column (str): The column name.
-                max_value (float): The maximum value for a column entry length.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
@@ -226,7 +190,35 @@ class Validate:
 
             """
 
-    class ValuesValidation:
+    class UniqueValidation:
+        @staticmethod
+        def ColumnUniqueValueCountToBeBetween(
+            column: str,
+            min_value: int | None = None,
+            max_value: int | None = None,
+            threshold: float = 0.00,
+            impact: Literal["low", "medium", "high"] = "low",
+            **kwargs: KwargsType,
+        ) -> Validate:
+            """Check the number of unique values in a column to be between min and max.
+
+            If the `min_value` or `max_value` is not provided then other will be used as
+            the threshold.
+
+            If neither `min_value` nor `max_value` is provided, then the validation will
+            result in failure.
+
+            Args:
+                column (str): The column to validate.
+                min_value (int or None): The minimum number of unique values allowed.
+                max_value (int or None): The maximum number of unique values allowed.
+                threshold (float, optional): Threshold for validation. Defaults to 0.0.
+                impact (Literal["low", "medium", "high"], optional): Impact level of
+                    validation. Defaults to "low".
+                kwargs: KwargsType (dict): Additional keyword arguments.
+
+            """
+
         @staticmethod
         def ColumnUniqueValuesToBeInList(
             column: str,
@@ -247,21 +239,29 @@ class Validate:
 
             """
 
+    class ValuesValidation:
         @staticmethod
         def ColumnValuesToBeBetween(
             column: str,
-            min_value: float,
-            max_value: float,
+            min_value: float | None = None,
+            max_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
             **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are between a range.
 
+            If the `min_value` or `max_value` is not provided then other will be used as
+            the threshold.
+
+            If neither `min_value` nor `max_value` is provided, then the validation will
+            result in failure.
+
+
             Args:
                 column (str): Column to validate.
-                min_value (float): Minimum value.
-                max_value (float): Maximum value.
+                min_value (float | None): Minimum value for a column entry length.
+                max_value (float | None): Maximum value for a column entry length.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
@@ -290,40 +290,28 @@ class Validate:
             """
 
         @staticmethod
-        def ColumnsSumToBeGreaterEqualTo(
+        def ColumnsSumToBeBetween(
             columns_list: list[str],
-            max_sum: float,
+            min_sum_value: float | None = None,
+            max_sum_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
             **kwargs: KwargsType,
         ) -> Validate:
             """Check if the sum of columns is greater than or equal to `max_sum`.
 
-            Args:
-                columns_list (list[str]): List of columns to sum.
-                max_sum (float): Minimum sum value that columns should be greater than
-                    or equal to.
-                threshold (float, optional): Threshold for validation. Defaults to 0.0.
-                impact (Literal["low", "medium", "high"], optional): Impact level of
-                    validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
+            If the `min_value` or `max_value` is not provided then other will be used as
+            the threshold.
 
-            """
-
-        @staticmethod
-        def ColumnsSumToBeLessEqualTo(
-            columns_list: list[str],
-            min_sum: float,
-            threshold: float = 0.00,
-            impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
-        ) -> Validate:
-            """Check if the sum of columns is less than or equal to `min_sum`.
+            If neither `min_value` nor `max_value` is provided, then the validation will
+            result in failure.
 
             Args:
                 columns_list (list[str]): List of columns to sum.
-                min_sum (float): Maximum sum value that columns should be less than or
-                    equal to.
+                max_sum_value (float | None): Minimum sum value that columns should be
+                    greater than or equal to.
+                min_sum_value (float | None): Maximum sum value that columns should be
+                    less than or equal to.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".

@@ -29,7 +29,7 @@ def test_vd_result(sample_data: ReturnT) -> None:
         test1_col,
         1,
         5,
-    ).ValuesValidation.ColumnUniqueValuesToBeInList(
+    ).UniqueValidation.ColumnUniqueValuesToBeInList(
         column=test2_col,
         values=["a", "b", "c", "d", "e"],
     )
@@ -40,7 +40,7 @@ def test_vd_result(sample_data: ReturnT) -> None:
 
 def test_vd_validation(sample_data: ReturnT) -> None:
     vd = Validate(frame=sample_data)
-    vd.ValuesValidation.ColumnUniqueValuesToBeInList(
+    vd.UniqueValidation.ColumnUniqueValuesToBeInList(
         column="column2",
         values=["a", "b", "c", "d"],
         impact="high",
@@ -56,7 +56,7 @@ def test_vd_validation(sample_data: ReturnT) -> None:
 
 def test_validation_failure(sample_data: ReturnT) -> None:
     vd = Validate(sample_data)
-    vd.ValuesValidation.ColumnUniqueValuesToBeInList(
+    vd.UniqueValidation.ColumnUniqueValuesToBeInList(
         "column1",
         [1],
         impact="high",

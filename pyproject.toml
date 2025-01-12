@@ -98,6 +98,7 @@ lint.ignore = [
   "TC003",
   "TD003",
   "UP007",
+  "FBT003", # Added for min max check where needed `nw.lit(True)` and `nw.lit(False)`
 ]
 
 [tool.mypy]

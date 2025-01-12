@@ -8,8 +8,8 @@ from validoopsie.util import min_max_arg_check, min_max_filter
 
 
 @base_validation_wrapper
-class LengthToBeBetween(BaseValidationParameters):
-    """Check if the string lengths are between the specified range.
+class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
+    """Check the number of unique values in a column to be between min and max.
 
     If the `min_value` or `max_value` is not provided then other will be used as the
     threshold.
@@ -18,9 +18,9 @@ class LengthToBeBetween(BaseValidationParameters):
     in failure.
 
     Args:
-        column (str): Column to validate.
-        min_value (int | None): Minimum value for a column entry length.
-        max_value (int | None): Maximum value for a column entry length.
+        column (str): The column to validate.
+        min_value (int or None): The minimum number of unique values allowed.
+        max_value (int or None): The maximum number of unique values allowed.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
@@ -46,23 +46,19 @@ class LengthToBeBetween(BaseValidationParameters):
     def fail_message(self) -> str:
         """Return the fail message, that will be used in the report."""
         return (
-            f"The column '{self.column}' has string lengths outside the range"
-            f"[{self.min_value}, {self.max_value}]."
+            f"The column '{self.column}' has a number of unique values that "
+            f"is not between {self.min_value} and {self.max_value}."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT | ValueError:
-        """Check if the string lengths are between the specified range."""
-        transformed_frame = frame.with_columns(
-            nw.col(self.column).str.len_chars().alias(f"{self.column}-length"),
+    def __call__(self, frame: FrameT) -> FrameT:
+        """Validate the number of unique values in the column."""
+        unique_value_counts = frame.group_by(self.column).agg(
+            nw.col(self.column).count().alias(f"{self.column}-count"),
         )
 
-        return (
-            min_max_filter(
-                transformed_frame,
-                f"{self.column}-length",
-                self.min_value,
-                self.max_value,
-            )
-            .group_by(self.column)
-            .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
+        return min_max_filter(
+            unique_value_counts,
+            f"{self.column}-count",
+            self.min_value,
+            self.max_value,
         )

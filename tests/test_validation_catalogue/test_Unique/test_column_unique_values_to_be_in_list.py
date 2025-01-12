@@ -3,7 +3,7 @@ from __future__ import annotations
 from narwhals.typing import Frame
 
 from tests.utils.create_frames import create_frame_fixture
-from validoopsie.validation_catalogue.ValuesValidation import ColumnUniqueValuesToBeInList
+from validoopsie.validation_catalogue.UniqueValidation import ColumnUniqueValuesToBeInList
 
 
 @create_frame_fixture
