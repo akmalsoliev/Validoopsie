@@ -220,11 +220,11 @@ get started with minimal effort and without any unnecessary complexity.</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validate</span>
 
-
 <span class="n">p_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
         <span class="s2">&quot;target_name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
         <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">],</span>
     <span class="p">},</span>
 <span class="p">)</span>
@@ -234,7 +234,8 @@ get started with minimal effort and without any unnecessary complexity.</p>
 <span class="n">vd</span><span class="o">.</span><span class="n">EqualityValidation</span><span class="o">.</span><span class="n">PairColumnEquality</span><span class="p">(</span>
     <span class="n">column</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
     <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
+    <span class="n">impact</span><span class="o">=</span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">UniqueValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
     <span class="n">column</span><span class="o">=</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
     <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnValuesToBeBetween</span><span class="p">(</span>
@@ -307,7 +308,6 @@ issues may not trigger an error message.</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validate</span>
 
-
 <span class="n">p_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Jane&quot;</span><span class="p">],</span>
@@ -323,7 +323,7 @@ issues may not trigger an error message.</p>
     <span class="n">column</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
     <span class="n">target_column</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
     <span class="n">impact</span><span class="o">=</span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
-<span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
+<span class="p">)</span><span class="o">.</span><span class="n">UniqueValidation</span><span class="o">.</span><span class="n">ColumnUniqueValuesToBeInList</span><span class="p">(</span>
     <span class="n">column</span><span class="o">=</span><span class="s2">&quot;last_name&quot;</span><span class="p">,</span>
     <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Smith&quot;</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">ValuesValidation</span><span class="o">.</span><span class="n">ColumnValuesToBeBetween</span><span class="p">(</span>
