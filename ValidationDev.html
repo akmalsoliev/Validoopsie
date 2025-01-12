@@ -151,9 +151,23 @@ made the process as straightforward as possible. Validations are dynamically
 imported from the <code class="docutils literal notranslate"><span class="pre">validoopsie/validation_catalogue</span></code> directory, and once you
 create your first one, everything will start to make sense!</p>
 <p>Follow these steps to create a new validation:</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#1-organize-your-validation"><span class="xref myst">Organize Your Validation</span></a></p></li>
+<li><p><a class="reference internal" href="#2-create-the-validation-file"><span class="xref myst">Create the Validation File</span></a></p></li>
+<li><p><a class="reference internal" href="#3-define-the-validation-class"><span class="xref myst">Define the Validation Class</span></a></p></li>
+<li><p><a class="reference internal" href="#4-add-a-docstring"><span class="xref myst">Add a Docstring</span></a></p></li>
+<li><p><a class="reference internal" href="#5-implement-the-__init__-method"><span class="xref myst">Implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method</span></a></p></li>
+<li><p><a class="reference internal" href="#6-add-a-fail-message"><span class="xref myst">Add a Fail Message</span></a></p></li>
+<li><p><a class="reference internal" href="#7-define-the-validation-logic-__call__-method"><span class="xref myst">Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)</span></a></p></li>
+<li><p><a class="reference internal" href="#8-test-your-validation"><span class="xref myst">Test Your Validation</span></a></p></li>
+<li><p><a class="reference internal" href="#9-update-the-stub-file-for-type-hinting"><span class="xref myst">Update the Stub File for Type Hinting</span></a></p></li>
+</ol>
+</section>
 <hr class="docutils" />
-<section id="step-1-organize-your-validation">
-<h2>Step 1: Organize Your Validation<a class="headerlink" href="#step-1-organize-your-validation" title="Link to this heading">¶</a></h2>
+<section id="organize-your-validation">
+<h2>1. Organize Your Validation<a class="headerlink" href="#organize-your-validation" title="Link to this heading">¶</a></h2>
 <p>In the <code class="docutils literal notranslate"><span class="pre">validoopsie/validation_catalogue</span></code> directory, validations are organized
 by category. For this example, we’ll create a validation to check whether
 values in a column fall between two numbers.</p>
@@ -161,8 +175,8 @@ values in a column fall between two numbers.</p>
 <code class="docutils literal notranslate"><span class="pre">ValuesValidation</span></code> folder.</p>
 </section>
 <hr class="docutils" />
-<section id="step-2-create-the-validation-file">
-<h2>Step 2: Create the Validation File<a class="headerlink" href="#step-2-create-the-validation-file" title="Link to this heading">¶</a></h2>
+<section id="create-the-validation-file">
+<h2>2. Create the Validation File<a class="headerlink" href="#create-the-validation-file" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Create a new file in <code class="docutils literal notranslate"><span class="pre">validoopsie/validation_catalogue/ValuesValidation</span></code>.</p></li>
 <li><p>Name the file using this convention:
@@ -171,8 +185,8 @@ values in a column fall between two numbers.</p>
 </ol>
 </section>
 <hr class="docutils" />
-<section id="step-3-define-the-validation-class">
-<h2>Step 3: Define the Validation Class<a class="headerlink" href="#step-3-define-the-validation-class" title="Link to this heading">¶</a></h2>
+<section id="define-the-validation-class">
+<h2>3. Define the Validation Class<a class="headerlink" href="#define-the-validation-class" title="Link to this heading">¶</a></h2>
 <p>Your class should:</p>
 <ul class="simple">
 <li><p>Inherit from <code class="docutils literal notranslate"><span class="pre">BaseValidationParameters</span></code>.</p></li>
@@ -188,8 +202,8 @@ values in a column fall between two numbers.</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-4-add-a-docstring">
-<h2>Step 4: Add a Docstring<a class="headerlink" href="#step-4-add-a-docstring" title="Link to this heading">¶</a></h2>
+<section id="add-a-docstring">
+<h2>4. Add a Docstring<a class="headerlink" href="#add-a-docstring" title="Link to this heading">¶</a></h2>
 <p>Include a clear docstring for both the class and its methods, docstring will also be reused
 for the stub file later on. Here’s an example structure:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Check if the values in a column are within a specific range.</span>
@@ -207,8 +221,8 @@ for the stub file later on. Here’s an example structure:</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-5-implement-the-init-method">
-<h2>Step 5: Implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method<a class="headerlink" href="#step-5-implement-the-init-method" title="Link to this heading">¶</a></h2>
+<section id="implement-the-init-method">
+<h2>5. Implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method<a class="headerlink" href="#implement-the-init-method" title="Link to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method must include at least these parameters: <code class="docutils literal notranslate"><span class="pre">column</span></code>, <code class="docutils literal notranslate"><span class="pre">min_value</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_value</span></code>.
 Note that column is passed to the parent class (<code class="docutils literal notranslate"><span class="pre">BaseValidationParameters</span></code>).</p>
 <ul class="simple">
@@ -231,8 +245,8 @@ Note that column is passed to the parent class (<code class="docutils literal no
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-6-add-a-fail-message">
-<h2>Step 6: Add a Fail Message<a class="headerlink" href="#step-6-add-a-fail-message" title="Link to this heading">¶</a></h2>
+<section id="add-a-fail-message">
+<h2>6. Add a Fail Message<a class="headerlink" href="#add-a-fail-message" title="Link to this heading">¶</a></h2>
 <p>The fail message is included in the output report if the validation fails.
 Define it using a property:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@property</span>
@@ -246,8 +260,8 @@ Define it using a property:</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-7-define-the-validation-logic-call-method">
-<h2>Step 7: Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)<a class="headerlink" href="#step-7-define-the-validation-logic-call-method" title="Link to this heading">¶</a></h2>
+<section id="define-the-validation-logic-call-method">
+<h2>7. Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)<a class="headerlink" href="#define-the-validation-logic-call-method" title="Link to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method contains the core logic of your validation. It should
 return only the failed values.</p>
 <p>Example:</p>
@@ -267,8 +281,8 @@ return only the failed values.</p>
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-8-test-your-validation">
-<h2>Step 8: Test Your Validation<a class="headerlink" href="#step-8-test-your-validation" title="Link to this heading">¶</a></h2>
+<section id="test-your-validation">
+<h2>8. Test Your Validation<a class="headerlink" href="#test-your-validation" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>Create a test file under <code class="docutils literal notranslate"><span class="pre">tests/test_validation_catalogue/test_ValuesValidation</span></code>.</p></li>
 <li><p>Use the <code class="docutils literal notranslate"><span class="pre">&#64;create_frame_fixture</span></code> decorator to define test data for different
@@ -296,8 +310,8 @@ DataFrame libraries (<code class="docutils literal notranslate"><span class="pre
 </div>
 </section>
 <hr class="docutils" />
-<section id="step-9-update-the-stub-file-for-type-hinting">
-<h2>Step 9: Update the Stub File for Type Hinting<a class="headerlink" href="#step-9-update-the-stub-file-for-type-hinting" title="Link to this heading">¶</a></h2>
+<section id="update-the-stub-file-for-type-hinting">
+<h2>9. Update the Stub File for Type Hinting<a class="headerlink" href="#update-the-stub-file-for-type-hinting" title="Link to this heading">¶</a></h2>
 <p>To enable proper type hinting for your new validation, update the stub file
 (<code class="docutils literal notranslate"><span class="pre">validate.pyi</span></code>). This step is essential because validations are dynamically
 imported.</p>
@@ -352,15 +366,16 @@ Thank you for contributing!</p>
             <div class="page_toc">
                 <ul>
 <li><a class="reference internal" href="#">Contributing a new Validation to Validoopsie</a><ul>
-<li><a class="reference internal" href="#step-1-organize-your-validation">Step 1: Organize Your Validation</a></li>
-<li><a class="reference internal" href="#step-2-create-the-validation-file">Step 2: Create the Validation File</a></li>
-<li><a class="reference internal" href="#step-3-define-the-validation-class">Step 3: Define the Validation Class</a></li>
-<li><a class="reference internal" href="#step-4-add-a-docstring">Step 4: Add a Docstring</a></li>
-<li><a class="reference internal" href="#step-5-implement-the-init-method">Step 5: Implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method</a></li>
-<li><a class="reference internal" href="#step-6-add-a-fail-message">Step 6: Add a Fail Message</a></li>
-<li><a class="reference internal" href="#step-7-define-the-validation-logic-call-method">Step 7: Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)</a></li>
-<li><a class="reference internal" href="#step-8-test-your-validation">Step 8: Test Your Validation</a></li>
-<li><a class="reference internal" href="#step-9-update-the-stub-file-for-type-hinting">Step 9: Update the Stub File for Type Hinting</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li><a class="reference internal" href="#organize-your-validation">1. Organize Your Validation</a></li>
+<li><a class="reference internal" href="#create-the-validation-file">2. Create the Validation File</a></li>
+<li><a class="reference internal" href="#define-the-validation-class">3. Define the Validation Class</a></li>
+<li><a class="reference internal" href="#add-a-docstring">4. Add a Docstring</a></li>
+<li><a class="reference internal" href="#implement-the-init-method">5. Implement the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> Method</a></li>
+<li><a class="reference internal" href="#add-a-fail-message">6. Add a Fail Message</a></li>
+<li><a class="reference internal" href="#define-the-validation-logic-call-method">7. Define the Validation Logic (<code class="docutils literal notranslate"><span class="pre">__call__</span></code> Method)</a></li>
+<li><a class="reference internal" href="#test-your-validation">8. Test Your Validation</a></li>
+<li><a class="reference internal" href="#update-the-stub-file-for-type-hinting">9. Update the Stub File for Type Hinting</a></li>
 <li><a class="reference internal" href="#all-done">All Done!</a></li>
 </ul>
 </li>
