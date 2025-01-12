@@ -78,11 +78,11 @@ import pandas as pd
 
 from validoopsie import Validate
 
-
 p_df = pd.DataFrame(
     {
         "name": ["John", "Doe", "Jane"],
         "target_name": ["John", "Doe", "Jane"],
+        "last_name": ["Smith", "Smith", "Smith"],
         "age": [25, 30, 35],
     },
 )
@@ -92,7 +92,8 @@ vd = Validate(p_df)
 vd.EqualityValidation.PairColumnEquality(
     column="name",
     target_column="age",
-).ValuesValidation.ColumnUniqueValuesToBeInList(
+    impact="high",
+).UniqueValidation.ColumnUniqueValuesToBeInList(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
@@ -168,7 +169,6 @@ import pandas as pd
 
 from validoopsie import Validate
 
-
 p_df = pd.DataFrame(
     {
         "name": ["John", "Doe", "Jane"],
@@ -184,7 +184,7 @@ vd.EqualityValidation.PairColumnEquality(
     column="name",
     target_column="age",
     impact="high",
-).ValuesValidation.ColumnUniqueValuesToBeInList(
+).UniqueValidation.ColumnUniqueValuesToBeInList(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
