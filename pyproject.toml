@@ -52,6 +52,7 @@ dev-dependencies = [
   "pendulum>=3.0.0",
   "pyspark>=3.5.4",
   "marimo>=0.10.17",
+  "duckdb>=1.1.3",
 ]
 
 [dependency-groups]
