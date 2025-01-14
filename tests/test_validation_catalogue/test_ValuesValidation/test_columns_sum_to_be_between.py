@@ -76,7 +76,7 @@ def test_columns_sum_to_be_with_threshold_success(lf: IntoFrame) -> None:
 def test_columns_sum_to_be_greater_than_fail_integration(lf: IntoFrame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnsSumToBeBetween(["A", "B"], min_sum_value=25, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -112,7 +112,7 @@ def test_columns_sum_to_be_between_fail_integration(lf: IntoFrame) -> None:
         max_sum_value=15,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

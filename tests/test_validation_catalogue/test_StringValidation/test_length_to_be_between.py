@@ -52,7 +52,7 @@ def test_length_to_be_between_success(sample_data: Frame) -> None:
 def test_length_to_be_between_fail_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeBetween("test", min_value=1, max_value=4, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -129,7 +129,7 @@ def test_min_length_to_be_between_fail_integration(less_data: Frame) -> None:
         min_value=6,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -212,7 +212,7 @@ def test_string_length_to_be_less_than_or_equal_to_fail_integration(
 ) -> None:
     vd = Validate(greater_data)
     vd.StringValidation.LengthToBeBetween("strings", max_value=4, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

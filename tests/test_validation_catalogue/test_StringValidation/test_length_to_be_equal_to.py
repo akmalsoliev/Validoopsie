@@ -54,7 +54,7 @@ def test_string_length_to_be_equal_to_fail_non_string_column(sample_data: Frame)
 def test_string_length_to_be_equal_to_fail_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeEqualTo("test", 4, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

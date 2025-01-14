@@ -71,7 +71,7 @@ def test_column_values_less_than_success(lf: Frame) -> None:
 def test_column_values_to_be_between_fail_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", 1, 2, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -95,7 +95,7 @@ def test_column_values_to_be_between_success_threshold_integration(lf: Frame) ->
 def test_column_values_greater_than_fail_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", min_value=6, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -111,7 +111,7 @@ def test_column_values_greater_than_success_integration(lf: Frame) -> None:
 def test_column_values_less_than_fail_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", max_value=3, impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

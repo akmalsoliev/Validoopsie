@@ -84,5 +84,5 @@ def test_adding_failed_validation(sample_data: IntoFrame) -> None:
 
     assert results[validation_name]["result"]["status"] == "Fail"
 
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()

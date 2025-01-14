@@ -162,7 +162,7 @@ the `validate` method. However, it's important to note that errors will only be
 raised if the `impact` level is set to `high`. Without this setting, potential
 issues may not trigger an error message.
 
-**NOTE:** Raised error is `SystemExit`.
+**NOTE:** Raised error is a custom `ValueError`.
 
 ```py
 import pandas as pd

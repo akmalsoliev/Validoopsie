@@ -55,7 +55,7 @@ def test_column_values_to_match_pattern_fail_integration(sample_data: Frame) -> 
 def test_column_values_to_match_pattern_success_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.NotPatternMatch("codes", pattern="^[A-Z]+[0-9]+$", impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

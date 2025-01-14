@@ -86,7 +86,7 @@ def test_column_unique_value_count_to_be_between_fail_integration(
         max_value=2,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -138,7 +138,7 @@ def test_column_unique_value_count_greater_than_fail_integration(
         min_value=6,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -162,7 +162,7 @@ def test_column_unique_value_count_less_than_fail_integration(
         max_value=2,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

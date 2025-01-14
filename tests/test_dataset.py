@@ -50,7 +50,7 @@ def test_vd_validation(sample_data: ReturnT) -> None:
         max_value=2,
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
@@ -61,7 +61,7 @@ def test_validation_failure(sample_data: ReturnT) -> None:
         [1],
         impact="high",
     )
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 

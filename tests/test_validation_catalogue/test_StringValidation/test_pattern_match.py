@@ -46,7 +46,7 @@ def test_column_values_to_match_pattern_success_threshold(
 def test_column_values_to_match_pattern_fail_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.PatternMatch("codes", pattern="ABC", impact="high")
-    with pytest.raises(SystemExit):
+    with pytest.raises(ValueError):
         vd.validate()
 
 
