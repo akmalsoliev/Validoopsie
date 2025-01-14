@@ -303,7 +303,7 @@ any potential errors that may arise during the validation process, you can use
 the <code class="docutils literal notranslate"><span class="pre">validate</span></code> method. However, it’s important to note that errors will only be
 raised if the <code class="docutils literal notranslate"><span class="pre">impact</span></code> level is set to <code class="docutils literal notranslate"><span class="pre">high</span></code>. Without this setting, potential
 issues may not trigger an error message.</p>
-<p><strong>NOTE:</strong> Raised error is <code class="docutils literal notranslate"><span class="pre">SystemExit</span></code>.</p>
+<p><strong>NOTE:</strong> Raised error is a custom <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">validoopsie</span><span class="w"> </span><span class="kn">import</span> <span class="n">Validate</span>
