@@ -29,6 +29,20 @@ String Validation
    :undoc-members:
    :show-inheritance:
 
+Type Validation
+---------------
+.. automodule:: validoopsie.validation_catalogue.TypeValidation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Unique Validation
+-----------------
+.. automodule:: validoopsie.validation_catalogue.UniqueValidation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Values Validation
 -----------------
 .. automodule:: validoopsie.validation_catalogue.ValuesValidation

@@ -3,7 +3,7 @@ from typing import Any, Literal, Self, Union
 from narwhals.typing import IntoFrame
 
 from validoopsie.base.base_validation_parameters import BaseValidationParameters
-from validoopsie.types import KwargsType
+from validoopsie.typing import KwargsType
 
 class Validate:
     frame: IntoFrame
@@ -183,6 +183,51 @@ class Validate:
             Args:
                 column (str): The column name.
                 pattern (str): The pattern expression the column should match.
+                threshold (float, optional): Threshold for validation. Defaults to 0.0.
+                impact (Literal["low", "medium", "high"], optional): Impact level of
+                    validation. Defaults to "low".
+                kwargs: KwargsType (dict): Additional keyword arguments.
+
+            """
+
+    class TypeValidation:
+        @staticmethod
+        def TypeCheck(
+            column: str | None = None,
+            column_type: type | None = None,
+            frame_schema_definition: dict[str, type] | None = None,
+            threshold: float = 0.00,
+            impact: Literal["low", "medium", "high"] = "low",
+            **kwargs: KwargsType,
+        ) -> Validate:
+            """Validate the data type of the column(s).
+
+            If the column and `validation_type` is not provided then
+            `column_type_definitions` dictionary should be required to validate multiple
+            columns.
+
+            Operator can use the generic column data type provided by Validoopsie
+            (e.g. `IntegerType`) or more specific type provided by Narwhals
+            (e.g. `narwhals.Int64`).
+
+
+            Example of the `column_type_definitions`:
+            ```python
+            from validoopsie.types import IntegerType
+            import narwhals
+
+            {
+                "column1": IntegerType,
+                "column2": narwhals.Int64,
+            }
+            ```
+
+            Args:
+                column (str | None): The column to validate.
+                column_type (type | None): The type of validation to
+                    perform.
+                frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary
+                    of column names and their respective validation types.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".

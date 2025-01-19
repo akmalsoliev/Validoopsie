@@ -11,7 +11,7 @@ from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
     from validoopsie.base.base_validation_parameters import BaseValidationParameters
-    from validoopsie.types import KwargsType
+    from validoopsie.typing import KwargsType
 
 
 class Validate:

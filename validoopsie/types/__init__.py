@@ -1,1 +1,0 @@
-KwargsType = dict[str, object]

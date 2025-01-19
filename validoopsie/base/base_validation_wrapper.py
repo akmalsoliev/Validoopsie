@@ -6,10 +6,11 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 import narwhals as nw
 from loguru import logger
+from narwhals.dataframe import DataFrame
 from narwhals.typing import IntoFrame
 
 if TYPE_CHECKING:
-    from validoopsie.types import KwargsType
+    from validoopsie.typing import KwargsType
 
 T = TypeVar("T")
 
@@ -108,6 +109,8 @@ def base_validation_wrapper(
             self.impact: str
             self.threshold: float
             self.fail_message: str
+            if hasattr(self, "schema_lenght"):
+                self.schema_lenght: int
             check__impact(self.impact)
             check__threshold(self.threshold)
 
@@ -117,11 +120,19 @@ def base_validation_wrapper(
         ) -> dict[str, str | dict[str, Any]]:
             current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
             try:
+                # Just in case if the frame is not converted into Narwhals
                 frame = nw.from_native(frame)
-                validated_frame = get_frame(self, frame)
-                og_frame_rows_number: int = get_length(frame)
-                vf_count_number: int = get_count(validated_frame, self.column)
+
+                # Execution of the validation
+                validated_frame: DataFrame = get_frame(self, frame)
+
+                if hasattr(self, "schema_lenght"):
+                    og_frame_rows_number = self.schema_lenght
+                else:
+                    og_frame_rows_number: int = get_length(frame)
+
                 vf_row_number: int = get_length(validated_frame)
+                vf_count_number: int = get_count(validated_frame, self.column)
             except Exception as e:
                 class_name = cls.__name__
                 name = type(e).__name__
