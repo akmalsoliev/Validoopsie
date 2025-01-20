@@ -14,7 +14,7 @@ keyword = ["python", "data", "validation", "data validation"]
 requires-python = ">=3.9"
 dependencies = [
     "loguru>=0.7.3",
-    "narwhals>=1.22.0",
+    "narwhals>=1.23.0",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
