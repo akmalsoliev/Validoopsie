@@ -53,6 +53,9 @@ dev-dependencies = [
 
 [dependency-groups]
 docs = [
+    "markdown-exec>=1.10.0",
+    "mkdocs-material[imaging]>=9.5.50",
+    "mkdocstrings>=0.27.0",
     "myst-parser>=3.0.1",
     "piccolo-theme>=0.24.0",
     "sphinx>=7.4.7",
