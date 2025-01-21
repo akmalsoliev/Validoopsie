@@ -17,7 +17,7 @@ class LengthToBeBetween(BaseValidationParameters):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         min_value (int | None): Minimum value for a column entry length.
         max_value (int | None): Maximum value for a column entry length.

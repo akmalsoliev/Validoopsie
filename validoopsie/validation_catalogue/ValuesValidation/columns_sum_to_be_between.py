@@ -17,7 +17,7 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Args:
+    Parameters:
         columns_list (list[str]): List of columns to sum.
         max_sum_value (float | None): Minimum sum value that columns should be greater
             than or equal to.

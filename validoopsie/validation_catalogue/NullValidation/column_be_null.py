@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class ColumnBeNull(BaseValidationParameters):
     """Check if the values in a column are null.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.

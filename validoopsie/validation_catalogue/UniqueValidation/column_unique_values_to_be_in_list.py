@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class ColumnUniqueValuesToBeInList(BaseValidationParameters):
     """Check if the unique values are in the list.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         values (list[Union[str, float, int]]): List of values to check.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.

@@ -17,7 +17,7 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Args:
+    Parameters:
         column (str): The column to validate.
         min_value (int or None): The minimum number of unique values allowed.
         max_value (int or None): The maximum number of unique values allowed.

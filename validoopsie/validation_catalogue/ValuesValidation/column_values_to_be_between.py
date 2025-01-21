@@ -18,7 +18,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
     in failure.
 
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         min_value (float | None): Minimum value for a column entry length.
         max_value (float | None): Maximum value for a column entry length.

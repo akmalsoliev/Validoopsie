@@ -3,6 +3,8 @@ from typing import Literal, Optional
 
 from narwhals.typing import IntoFrame
 
+from validoopsie.typing import KwargsType
+
 
 class BaseValidationParameters:
     """Base class for validation parameters."""
@@ -12,7 +14,7 @@ class BaseValidationParameters:
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: Optional[float] = 0.00,
-        **kwargs: object,
+        **kwargs: KwargsType,
     ) -> None:
         self.column = column
         self.impact = impact.lower() if impact else impact

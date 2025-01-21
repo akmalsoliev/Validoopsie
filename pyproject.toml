@@ -55,7 +55,7 @@ dev-dependencies = [
 docs = [
     "markdown-exec>=1.10.0",
     "mkdocs-material[imaging]>=9.5.50",
-    "mkdocstrings>=0.27.0",
+    "mkdocstrings[python]>=0.18",
     "myst-parser>=3.0.1",
     "piccolo-theme>=0.24.0",
     "sphinx>=7.4.7",
@@ -103,6 +103,9 @@ lint.ignore = [
   "UP007",
   "FBT003", # Added for min max check where needed `nw.lit(True)` and `nw.lit(False)`
 ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.mypy]
 strict = true

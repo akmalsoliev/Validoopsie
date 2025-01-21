@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class ColumnsSumToBeEqualTo(BaseValidationParameters):
     """Check if the sum of the columns is equal to a specific value.
 
-    Args:
+    Parameters:
         columns_list (list[str]): List of columns to sum.
         sum_value (float): Value that the columns should sum to.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.

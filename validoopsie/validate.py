@@ -134,7 +134,7 @@ class Validate:
     ) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
-        Args:
+        Parameters:
             validation (type): Custom generated validation check
 
         """

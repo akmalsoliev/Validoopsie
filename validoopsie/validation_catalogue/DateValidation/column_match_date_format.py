@@ -1,18 +1,22 @@
 from __future__ import annotations
 
 import re
+from typing import TYPE_CHECKING
 
 import narwhals as nw
 from narwhals.typing import FrameT
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
+if TYPE_CHECKING:
+    from validoopsie.typing import KwargsType
+
 
 @base_validation_wrapper
 class ColumnMatchDateFormat(BaseValidationParameters):
     """Check if the values in a column match the date format.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         date_format (str): Date format to check.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
@@ -27,7 +31,7 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         column: str,
         date_format: str,
         *args,
-        **kwargs,
+        **kwargs: KwargsType,
     ) -> None:
         self.date_format = date_format
         super().__init__(column, *args, **kwargs)

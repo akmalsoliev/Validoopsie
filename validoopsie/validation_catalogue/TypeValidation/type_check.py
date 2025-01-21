@@ -32,7 +32,7 @@ class TypeCheck(BaseValidationParameters):
     }
     ```
 
-    Args:
+    Parameters:
         column (str | None): The column to validate.
         column_type (type | None): The type of validation to perform.
         frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary of
