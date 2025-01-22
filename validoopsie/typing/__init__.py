@@ -12,6 +12,7 @@ class ValidationType(DTypes):
     """ValidoopsieType represents a valid type.
 
     It can be one of the following:
+
     - ArrayType: Array type
     - BooleanType: Boolean type
     - CategoryType: Categorical type
@@ -31,6 +32,7 @@ class FloatType(ValidationType, narwhals.Float32, narwhals.Float64, narwhals.Dec
     """FloatType represents a floating-point type.
 
     It can be one of the following:
+
     - Float32: 32-bit floating-point number
     - Float64: 64-bit floating-point number
     - Decimal: Arbitrary-precision decimal number
@@ -48,6 +50,7 @@ class IntType(
     """IntType represents an integer type.
 
     It can be one of the following:
+
     - Int8: 8-bit signed integer
     - Int16: 16-bit signed integer
     - Int32: 32-bit signed integer
@@ -67,6 +70,7 @@ class UIntType(
     """UIntType represents an unsigned integer type.
 
     It can be one of the following:
+
     - UInt8: 8-bit unsigned integer
     - UInt16: 16-bit unsigned integer
     - UInt32: 32-bit unsigned integer

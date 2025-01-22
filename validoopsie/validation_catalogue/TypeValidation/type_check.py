@@ -18,6 +18,10 @@ class TypeCheck(BaseValidationParameters):
     (e.g. `IntegerType`) or more specific type provided by Narwhals
     (e.g. `narwhals.Int64`).
 
+    For a full list of types refer to:
+
+    * [Validoopsie Generic Types](https://akmalsoliev.github.io/Validoopsie/typing.html#typing.FloatType)
+    * [Narwhals Specific Types](https://narwhals-dev.github.io/narwhals/api-reference/dtypes/)
 
     Example of the `column_type_definitions`:
 
