@@ -4,7 +4,7 @@ from __future__ import annotations
 def min_max_arg_check(min_value: float | None, max_value: float | None) -> None:
     """Check if either min or max is provided.
 
-    Args:
+    Parameters:
         min_value (float | None): Minimum value.
         max_value (float | None): Maximum value.
 

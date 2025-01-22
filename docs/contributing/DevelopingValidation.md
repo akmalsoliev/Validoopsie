@@ -7,17 +7,6 @@ create your first one, everything will start to make sense!
 
 Follow these steps to create a new validation:
 
-## Table of Contents
-1. [Organize Your Validation](#1-organize-your-validation)
-2. [Create the Validation File](#2-create-the-validation-file)
-3. [Define the Validation Class](#3-define-the-validation-class)
-4. [Add a Docstring](#4-add-a-docstring)
-5. [Implement the `__init__` Method](#5-implement-the-__init__-method)
-6. [Add a Fail Message](#6-add-a-fail-message)
-7. [Define the Validation Logic (`__call__` Method)](#7-define-the-validation-logic-__call__-method)
-8. [Test Your Validation](#8-test-your-validation)
-9. [Update the Stub File for Type Hinting](#9-update-the-stub-file-for-type-hinting)
-
 ---
 
 ## 1. Organize Your Validation

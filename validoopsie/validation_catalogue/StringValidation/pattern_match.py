@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class PatternMatch(BaseValidationParameters):
     """Expect the column entries to be strings that pattern matches.
 
-    Args:
+    Parameters:
         column (str): The column name.
         pattern (str): The pattern expression the column should match.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.

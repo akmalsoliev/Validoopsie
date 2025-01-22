@@ -1,0 +1,90 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+site_name: Validoopsie
+site_url: https://akmalsoliev.github.io/Validoopsie/
+repo_url: https://github.com/akmalsoliev/Validoopsie
+copyright: Copyright &copy; 2025 Akmal Soliev
+watch:
+  - validoopsie
+plugins:
+  - awesome-pages
+  - offline
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          load_external_modules: true
+          paths: ["validoopsie"]
+          options:
+            heading_level: 2
+            separate_signature: true
+            show_bases: false
+            show_inherited_members: false
+            show_private_members: false
+            show_root_heading: false
+            show_root_full_path: false
+            show_source: true
+            show_special_members: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            verbose: false
+            filters:
+              - "!^_"
+              - "!^__"
+              - "!fail_message"
+
+theme:
+  name: material
+  palette:
+    - primary: indigo
+    # Default palette
+    - media: "(prefers-color-scheme)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - navigation.footer
+    - navigation.indexes
+    - navigation.indexes
+    - navigation.tracking
+    - search.suggest
+extra:
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/akmal-soliev/
+markdown_extensions:
+  - admonition
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: python
+          class: python
+          validator: !!python/name:markdown_exec.validator
+          format: !!python/name:markdown_exec.formatter
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+extra_javascript:
+  - javascripts/katex.js
+  - javascripts/extra.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js

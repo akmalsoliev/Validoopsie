@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class PairColumnEquality(BaseValidationParameters):
     """Check if the pair of columns are equal.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         target_column (str): Column to compare.
         group_by_combined (bool, optional): Group by combine columns. Default True.

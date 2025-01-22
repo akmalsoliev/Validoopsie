@@ -8,16 +8,6 @@ the specific logic required for your data quality checks.
 This guide will walk you through the process of developing a custom validation
 using the Validoopsie library.
 
-## Table of Contents
-
-1. [Define the Validation Class](#1-define-the-validation-class)
-2. [Add a Docstring](#2-add-a-docstring)
-3. [Define the `__init__` Method](#3-define-the-__init__-method)
-4. [Add a Fail Message](#4-add-a-fail-message)
-5. [Define the Validation Logic (`__call__` Method)](#5-define-the-validation-logic-__call__-method)
-6. [Add the Validation to the Pipeline](#6-add-the-validation-to-the-pipeline)
-7. [Example Output](#7-example-output)
-
 ## 1. Define the Validation Class
 
 To create a custom validation, start by defining a new class that:
@@ -27,13 +17,13 @@ To create a custom validation, start by defining a new class that:
 
 Here's how you can begin:
 
-```python 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper 
+```python
+from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 from narwhals.typing import FrameT
 
-@base_validation_wrapper 
+@base_validation_wrapper
 class MyCustomValidation(BaseValidationParameters):
-pass 
+pass
 ```
 
 ## 2. Add a Docstring
@@ -162,6 +152,10 @@ print(result)
 
 After running the validation, you can expect an output similar to the following:
 
+<details>
+  <summary>
+    <strong>OUTPUT</strong>
+  </summary>
 ```json
 {
     "Summary": {
@@ -185,6 +179,7 @@ After running the validation, you can expect an output similar to the following:
     }
 }
 ```
+</details>
 
 ---
 

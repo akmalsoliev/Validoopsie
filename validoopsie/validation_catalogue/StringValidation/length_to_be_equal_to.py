@@ -10,7 +10,7 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class LengthToBeEqualTo(BaseValidationParameters):
     """Expect the column entries to be strings with length equal to `value`.
 
-    Args:
+    Parameters:
         column (str): Column to validate.
         value (int): The expected value for a column entry length.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
