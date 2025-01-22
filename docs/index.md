@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 <h1 align="center">
     <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validoopsie-text.png?raw=true">
     <p style="font-size: 16px; font-weight: bold;">A simple and easy to use Data Validation library for Python.</p>

@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Developing a Custom Validation
 
 In certain situations, the default validations may not be sufficient to check

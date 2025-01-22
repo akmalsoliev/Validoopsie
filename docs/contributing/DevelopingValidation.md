@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Contributing a new Validation to Validoopsie
 
 Creating a new validation might seem complex at first, but don’t worry—we’ve

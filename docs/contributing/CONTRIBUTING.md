@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Contribution Guidelines
 
 Thank you for considering contributing to Validoopsie! The idea of one spending their time

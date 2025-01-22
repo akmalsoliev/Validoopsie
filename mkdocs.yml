@@ -6,6 +6,7 @@ copyright: Copyright &copy; 2025 Akmal Soliev
 watch:
   - validoopsie
 plugins:
+  - awesome-pages
   - offline
   - search
   - mkdocstrings:
@@ -14,20 +15,23 @@ plugins:
           load_external_modules: true
           paths: ["validoopsie"]
           options:
-            show_source: false
-            show_private_members: false
-            show_special_members: false
-            show_inherited_members: false
-            verbose: false
-            show_bases: false
             heading_level: 2
-            show_root_heading: true
-            show_symbol_type_toc: true
+            separate_signature: true
+            show_bases: false
+            show_inherited_members: false
+            show_private_members: false
+            show_root_heading: false
+            show_root_full_path: false
+            show_source: true
+            show_special_members: false
             show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            verbose: false
             filters:
               - "!^_"
               - "!^__"
               - "!fail_message"
+
 theme:
   name: material
   palette:
@@ -56,9 +60,6 @@ theme:
     - navigation.footer
     - navigation.indexes
     - navigation.indexes
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.top
     - navigation.tracking
     - search.suggest
 extra:
