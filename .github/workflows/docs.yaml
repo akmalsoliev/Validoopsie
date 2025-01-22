@@ -2,7 +2,7 @@ name: Documentation
 on:
   push:
     branches:
-      - 3-better-documentation
+      - main
 jobs:
   Build:
     name: Build
