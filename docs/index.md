@@ -56,10 +56,10 @@ powerful solution to make these tasks accessible and straightforward.
 ## Getting Started
 
 - [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
-- [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/CONTRIBUTING.html)
-- [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/ValidationDev.html)
-- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingCustomValidation.html)
-- [🗂️ Validation Catalog](https://akmalsoliev.github.io/Validoopsie/ValidationCatalogue.html)
+- [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
+- [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
+- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingValidationCustom.html)
+- [🗂️ Validation Catalog](https://akmalsoliev.github.io/Validoopsie/validation_catalogue/Date%20Validation.html)
 
 Validoopsie is incredibly easy to use, so much so that you could do it
 half-asleep. The simplicity of the library is enhanced by the BYOD (Bring Your
