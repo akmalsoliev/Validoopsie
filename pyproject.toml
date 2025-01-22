@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "Validoopsie"
-version = "0.0.13"
+version = "1.0.0"
 description = "validoopsie is a simple and light data validation library."
 readme = "README.md"
 authors = [
