@@ -31,26 +31,16 @@ plugins:
               - "!^_"
               - "!^__"
               - "!fail_message"
-
 theme:
   name: material
   palette:
-    - primary: indigo
-    # Default palette
-    - media: "(prefers-color-scheme)"
-      scheme: default
+    - scheme: slate
+      primary: indigo
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
-    # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: slate
-      toggle:
-        icon: material/weather-night
-        name: Switch to dark mode
-    # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    - scheme: default
+      primary: indigo
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -58,7 +48,6 @@ theme:
     - content.code.annotate
     - content.code.copy
     - navigation.footer
-    - navigation.indexes
     - navigation.indexes
     - navigation.tracking
     - search.suggest
