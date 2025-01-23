@@ -267,7 +267,7 @@ class Validate:
         @staticmethod
         def ColumnUniqueValuesToBeInList(
             column: str,
-            values: list[Union[str, float, int]],
+            values: list[Union[str, float, int, None]],
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
             **kwargs: KwargsType,
@@ -276,7 +276,7 @@ class Validate:
 
             Args:
                 column (str): Column to validate.
-                values (list[Union[str, float, int]]): List of values to check.
+                values (list[Union[str, float, int, None]]): List of values to check.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".

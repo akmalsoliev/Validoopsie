@@ -12,7 +12,7 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
 
     Parameters:
         column (str): Column to validate.
-        values (list[Union[str, float, int]]): List of values to check.
+        values (list[Union[str, float, int, None]]): List of values to check.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
@@ -23,7 +23,7 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
     def __init__(
         self,
         column: str,
-        values: list[str | int | float],
+        values: list[str | int | float | None],
         *args,
         **kwargs,
     ) -> None:
