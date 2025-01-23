@@ -3,11 +3,14 @@ from __future__ import annotations
 from typing import Callable, Union
 
 import modin.pandas as mpd
+import narwhals
 import pandas as pd
 import polars as pl
 import pyarrow as pa
 import pytest
 from _pytest.fixtures import SubRequest
+from narwhals.typing import IntoFrame
+from pyspark.sql import SparkSession
 
 ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table]
 
@@ -32,6 +35,17 @@ def modin_df(data: dict[str, list]) -> mpd.DataFrame:
     return mpd.DataFrame(data)
 
 
+def spark_df(data: dict[str, list]) -> IntoFrame:
+    spark = (
+        SparkSession.builder.appName("DataFrameCreation")
+        .master("local[*]")
+        .config("spark.driver.memory", "1g")
+        .getOrCreate()
+    )
+    pdf = pd.DataFrame(data)
+    return spark.createDataFrame(pdf)
+
+
 def create_frame_fixture(func: Callable) -> Callable:
     @pytest.fixture(
         params=[
@@ -39,8 +53,9 @@ def create_frame_fixture(func: Callable) -> Callable:
             ("polars_df", polars_df),
             ("polars_lf", polars_lf),
             ("pyarrow_array", pyarrow_array),
+            ("pyspark", spark_df),
         ],
-        ids=["pandas", "polars_df", "polars_lf", "pyarrow_array"],
+        ids=["pandas", "polars_df", "polars_lf", "pyarrow_array", "pyspark"],
     )
     def wrapper(request: SubRequest) -> ReturnType:
         _, df_factory = request.param
