@@ -1,14 +1,19 @@
 from __future__ import annotations
 
+from datetime import date, datetime
 
-def min_max_arg_check(min_value: float | None, max_value: float | None) -> None:
+
+def min_max_arg_check(
+    min_: float | date | datetime | None,
+    max_: float | date | datetime | None,
+) -> None:
     """Check if either min or max is provided.
 
     Parameters:
-        min_value (float | None): Minimum value.
-        max_value (float | None): Maximum value.
+        min_ (float | None): Minimum
+        max_ (float | None): Maximum
 
     """
-    if min_value is None and max_value is None:
+    if min_ is None and max_ is None:
         error_msg = "Either min or max must be provided."
         raise ValueError(error_msg)
