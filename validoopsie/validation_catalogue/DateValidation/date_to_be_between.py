@@ -11,7 +11,7 @@ from validoopsie.util import min_max_arg_check, min_max_filter
 
 @base_validation_wrapper
 class DateToBeBetween(BaseValidationParameters):
-    """Check if the string lengths are between the specified range.
+    """Check if the column date is between min-max range.
 
     If the `min_date` or `max_date` is not provided then other will be used as the
     threshold.
