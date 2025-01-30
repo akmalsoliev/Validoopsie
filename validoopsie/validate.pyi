@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from typing import Any, Literal, Self, Union
 
 from narwhals.typing import IntoFrame
@@ -33,6 +34,28 @@ class Validate:
             Args:
                 column (str): Column to validate.
                 date_format (str): Date format to check.
+                threshold (float, optional): Threshold for validation. Defaults to 0.0.
+                impact (Literal["low", "medium", "high"], optional): Impact level of
+                    validation. Defaults to "low".
+                kwargs: KwargsType (dict): Additional keyword arguments.
+
+            """
+
+        @staticmethod
+        def DateToBeBetween(
+            column: str,
+            min_date: date | datetime | None = None,
+            max_date: date | datetime | None = None,
+            threshold: float = 0.00,
+            impact: Literal["low", "medium", "high"] = "low",
+            **kwargs: KwargsType,
+        ) -> Validate:
+            """Check if the values in a column are between the specified dates.
+
+            Args:
+                column (str): Column to validate.
+                min_date (date | datetime | None): Minimum date for a column entry length.
+                max_date (date | datetime | None): Maximum date for a column entry length.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
