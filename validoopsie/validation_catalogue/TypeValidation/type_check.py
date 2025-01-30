@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import narwhals as nw
+import pyarrow as pa
 from narwhals.dtypes import DType
 from narwhals.typing import Frame
 
@@ -127,10 +128,6 @@ class TypeCheck(BaseValidationParameters):
             if not issubclass(defined_type, column_type.__class__):
                 failed_columns.append(column_name)
 
-        native_namespace = nw.get_native_namespace(frame)
-        return nw.from_dict(
-            {self.column: failed_columns},
-            native_namespace=native_namespace,
-        ).with_columns(
+        return nw.from_native(pa.table({self.column: failed_columns})).with_columns(
             nw.lit(1).alias(f"{self.column}-count"),
         )
