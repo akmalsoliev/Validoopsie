@@ -5,6 +5,7 @@ on:
     paths:
       - "tests/**"
       - "validoopsie/**"
+      - ".github/**"
   pull_request:
     paths:
       - "tests/**"
@@ -16,6 +17,8 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
         os: ["ubuntu-latest", "windows-latest"]
     runs-on: ${{ matrix.os }}
+    env:
+      PYSPARK_PYTHON: python
     steps:
       - uses: actions/checkout@v4
       - name: Install uv
