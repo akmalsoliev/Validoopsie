@@ -3,15 +3,12 @@ exclude-labels:
   - release
   - wip
   - bump
-
 name-template: 'Validoopsie unreleased'
 version-template: unreleased
-
-change-template: '- $TITLE (#$NUMBER)' 
-
+change-template: '- $TITLE (#$NUMBER)'
 categories:
   - title: 🏆 Highlights
-    labels: 
+    labels:
       - new
       - feature
   - title: 💥 Breaking changes
@@ -20,14 +17,15 @@ categories:
   - title: ⚠️ Deprecations
     labels: deprecation
   - title: 🐛 Bug fixes
-    labels: fix
+    labels:
+      - fix
   - title: 🚀 Performance
-    labels: 
+    labels:
       - performance
       - improvement
   - title: 📚 Documentation
-    labels: docs
-
+    labels:
+      - docs
 template: |
   ## Changes
 
