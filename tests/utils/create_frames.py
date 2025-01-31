@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from typing import Callable, Union
 
 import modin.pandas as mpd
@@ -62,15 +63,18 @@ def spark_df(data: dict[str, list]) -> DataFrame:
 
 
 def create_frame_fixture(func: Callable) -> Callable:
+    params=[
+        ("pandas", pandas_df),
+        ("polars_df", polars_df),
+        ("polars_lf", polars_lf),
+        ("pyarrow_array", pyarrow_array),
+    ]
+    if sys.version_info < (3, 12) or not sys.platform.startswith("win"):
+        params.append(("pyspark", spark_df))
+
     @pytest.fixture(
-        params=[
-            ("pandas", pandas_df),
-            ("polars_df", polars_df),
-            ("polars_lf", polars_lf),
-            ("pyarrow_array", pyarrow_array),
-            ("pyspark", spark_df),
-        ],
-        ids=["pandas", "polars_df", "polars_lf", "pyarrow_array", "pyspark"],
+        params=params,
+        ids=[param[0] for param in params],
     )
     def wrapper(request: SubRequest) -> ReturnType:
         _, df_factory = request.param
