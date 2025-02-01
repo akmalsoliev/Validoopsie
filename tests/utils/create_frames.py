@@ -3,7 +3,9 @@ from __future__ import annotations
 import sys
 from typing import Callable, Union
 
+import duckdb
 import modin.pandas as mpd
+import narwhals as nw
 import pandas as pd
 import polars as pl
 import pyarrow as pa
@@ -12,8 +14,9 @@ from _pytest.fixtures import SubRequest
 from narwhals import generate_temporary_column_name
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import lit
+from narwhals.typing import Frame
 
-ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table]
+ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table, Frame]
 
 
 def polars_lf(data: dict[str, list]) -> pl.DataFrame:
@@ -61,6 +64,9 @@ def spark_df(data: dict[str, list]) -> DataFrame:
 
     return sp_df
 
+def duckdb_df(data: dict[str, list]) -> Frame:
+    duckdb.register("df", pd.DataFrame(data))
+    return nw.from_native(duckdb.table("df"))
 
 def create_frame_fixture(func: Callable) -> Callable:
     params=[
@@ -68,6 +74,7 @@ def create_frame_fixture(func: Callable) -> Callable:
         ("polars_df", polars_df),
         ("polars_lf", polars_lf),
         ("pyarrow_array", pyarrow_array),
+        ("duckdb_df", duckdb_df),
     ]
     if sys.version_info < (3, 12) or not sys.platform.startswith("win"):
         params.append(("pyspark", spark_df))
