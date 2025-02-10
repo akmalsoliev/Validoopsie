@@ -28,11 +28,11 @@ class TypeCheck(BaseValidationParameters):
 
     ```python
 
-    from validoopsie.types import IntegerType
+    from validoopsie.types import IntType
     import narwhals
 
     {
-        "column1": IntegerType,
+        "column1": IntType,
         "column2": narwhals.Int64,
     }
     ```
