@@ -165,7 +165,7 @@ class Validate:
         self.__parse_results__(result, output_name)
         return self
 
-    def validate(self) -> Validate:
+    def validate(self, raise_results:bool=False) -> Validate:
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
@@ -204,6 +204,14 @@ class Validate:
                 info_msg = f"Passed validation: {key}"
                 logger.info(info_msg)
         if failed_validations:
-            value_error_msg = f"FAILED VALIDATION(S): {failed_validations}"
+            value_error_msg = f"Failed Validation(s): {failed_validations}"
+
+            if raise_results:
+                import json
+                keys = ["Summary", *failed_validations]
+                filtered_results = {key: self.results[key] for key in keys}
+                json_results = json.dumps(filtered_results, indent=4)
+                value_error_msg = f"{value_error_msg}\n{json_results}"
+
             raise ValueError(value_error_msg)
         return self

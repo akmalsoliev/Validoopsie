@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from typing import Any, Literal, Self, Union
+from typing import Any, Literal, Union
 
 from narwhals.typing import IntoFrame
 
@@ -11,8 +11,8 @@ class Validate:
     results: dict[str, Any]
 
     def __init__(self, frame: IntoFrame) -> None: ...
-    def validate(self) -> Self: ...
-    def add_validation(self, validation: BaseValidationParameters) -> Self:
+    def validate(self, raise_results:bool=False) -> Validate: ...
+    def add_validation(self, validation: BaseValidationParameters) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
         Args:
