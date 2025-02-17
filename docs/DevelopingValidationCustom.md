@@ -23,7 +23,7 @@ from narwhals.typing import FrameT
 
 @base_validation_wrapper
 class MyCustomValidation(BaseValidationParameters):
-pass
+    pass
 ```
 
 ## 2. Add a Docstring
