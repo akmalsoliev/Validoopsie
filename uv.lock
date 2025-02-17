@@ -1447,7 +1447,7 @@ wheels = [
 
 [[package]]
 name = "marimo"
-version = "0.11.5"
+version = "0.11.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -1469,9 +1469,9 @@ dependencies = [
     { name = "uvicorn" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/36/a5/529f211194f6776f8d62321ef529e1f87205163bc8bf63e49e71eb93b07e/marimo-0.11.5.tar.gz", hash = "sha256:4842e82fdc9c7d101eab8edd56209cbad67a960e4b51d52d7096e3f7737a8a0e", size = 10609017 }
+sdist = { url = "https://files.pythonhosted.org/packages/08/6d/078848a3dd6a0c7494a41395d2adbbace2662937a6df75117d7d68b10f91/marimo-0.11.6.tar.gz", hash = "sha256:e0c8390ab91f19a65d0b3a4a85468597c5b16e43a42659105531c3c56aec6bfa", size = 10612190 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/30/9a/e6863cfb68473d5500178505c93bd4e4920eaf1613912f4e7e584a202039/marimo-0.11.5-py3-none-any.whl", hash = "sha256:e8e0c2b94b868c106de86b0a0b176405d8da436c407748c52a51a2e8d8b22aff", size = 10947930 },
+    { url = "https://files.pythonhosted.org/packages/97/f4/0eecdf87f543f293a1ca93a7ae60e91a4e1e18715fe207b5d68d42b08259/marimo-0.11.6-py3-none-any.whl", hash = "sha256:98c2be11fdf959ee5769808be71e613a40b0b07dc52a4f11834e2f9ec605c547", size = 10951396 },
 ]
 
 [[package]]
@@ -1761,7 +1761,7 @@ python = [
 
 [[package]]
 name = "mkdocstrings-python"
-version = "1.15.0"
+version = "1.16.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "griffe" },
@@ -1769,9 +1769,9 @@ dependencies = [
     { name = "mkdocstrings" },
     { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/28/5e/ea531f1798d6b614f87b7a1191f8bfda864767adecef3c75ec87f30e0a3d/mkdocstrings_python-1.15.0.tar.gz", hash = "sha256:2bfecbbe1252c67281408a6567d59545f4979931110f01ab625aa8c227c06edc", size = 422613 }
+sdist = { url = "https://files.pythonhosted.org/packages/41/d9/7e4900326cd3c27aed05379ff4c4b5f10435845ea26b1f764353405f3b75/mkdocstrings_python-1.16.0.tar.gz", hash = "sha256:546d53c7d559941abc726b2f78a41c0183480a95ba0a87ccc63b9b08740126f9", size = 423102 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6f/d7/1d35cce198f76e8ae4010a71ff5acabe8b75aeb35f8c3d920e175a6476ca/mkdocstrings_python-1.15.0-py3-none-any.whl", hash = "sha256:77aced1bb28840d7d3510f77353319eeb450961880d87f9c53fdab331ba0120d", size = 449068 },
+    { url = "https://files.pythonhosted.org/packages/66/54/8a2eeddc77a68eae88bd3d4a04638797e172bd462344a9a883aacee18aac/mkdocstrings_python-1.16.0-py3-none-any.whl", hash = "sha256:80ecbcca67fe29eb5a853ab7be0457231f6eefb5d079bcdf7dbae16962fc3f51", size = 449114 },
 ]
 
 [[package]]
@@ -1891,11 +1891,11 @@ wheels = [
 
 [[package]]
 name = "narwhals"
-version = "1.26.0"
+version = "1.27.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/18/6f/75929abaac73088fe34c788ecb40db20252174bcd00b8612381aebb954ee/narwhals-1.26.0.tar.gz", hash = "sha256:b9d7605bf1d97a9d87783a69748c39150964e2a1ab0e5a6fef3e59e56772639e", size = 248933 }
+sdist = { url = "https://files.pythonhosted.org/packages/5a/d6/1dadff863b95e4ec74eaba7979278e446699532136c74183a398778b1949/narwhals-1.27.1.tar.gz", hash = "sha256:68505d0cee1e6c00382ac8b65e922f8b694a11cbe482a057fa63139de8d0ea03", size = 251670 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/fc/420680ad8b0cf81372eee7a213a7b7173ec5a628f0d5b2426047fe55c3b3/narwhals-1.26.0-py3-none-any.whl", hash = "sha256:4af8bbdea9e45638bb9a981568a8dfa880e40eb7dcf740d19fd32aea79223c6f", size = 306574 },
+    { url = "https://files.pythonhosted.org/packages/ed/ea/dc14822a0a75e027562f081eb638417b1b7845e1e01dd85c5b6573ebf1b2/narwhals-1.27.1-py3-none-any.whl", hash = "sha256:71e4a126007886e3dd9d71d0d5921ebd2e8c1f9be9c405fe11850ece2b066c59", size = 308837 },
 ]
 
 [[package]]
@@ -2758,6 +2758,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/05/35/30e0d83068951d90a01852cb1cef56e5d8a09d20c7f511634cc2f7e0372a/pytest-8.3.4.tar.gz", hash = "sha256:965370d062bce11e73868e0335abac31b4d3de0e82f4007408d242b4f8610761", size = 1445919 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/11/92/76a1c94d3afee238333bc0a42b82935dd8f9cf8ce9e336ff87ee14d9e1cf/pytest-8.3.4-py3-none-any.whl", hash = "sha256:50e16d954148559c9a74109af1eaf0c945ba2d8f30f0a3d3335edde19788b6f6", size = 343083 },
+]
+
+[[package]]
+name = "pytest-env"
+version = "1.1.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1f/31/27f28431a16b83cab7a636dce59cf397517807d247caa38ee67d65e71ef8/pytest_env-1.1.5.tar.gz", hash = "sha256:91209840aa0e43385073ac464a554ad2947cc2fd663a9debf88d03b01e0cc1cf", size = 8911 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/b8/87cfb16045c9d4092cfcf526135d73b88101aac83bc1adcf82dfb5fd3833/pytest_env-1.1.5-py3-none-any.whl", hash = "sha256:ce90cf8772878515c24b31cd97c7fa1f4481cd68d588419fd45f10ecaee6bc30", size = 6141 },
 ]
 
 [[package]]
@@ -3732,6 +3745,7 @@ dev = [
     { name = "pyarrow" },
     { name = "pyspark" },
     { name = "pytest" },
+    { name = "pytest-env" },
     { name = "ruff" },
     { name = "twine" },
 ]
@@ -3745,7 +3759,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "loguru", specifier = ">=0.7.3" },
-    { name = "narwhals", specifier = ">=1.24.0" },
+    { name = "narwhals", specifier = ">=1.27.1" },
     { name = "pyarrow", specifier = ">=11.0.0" },
 ]
 
@@ -3762,6 +3776,7 @@ dev = [
     { name = "pyarrow", specifier = ">=18.1.0" },
     { name = "pyspark", specifier = ">=3.5.4" },
     { name = "pytest", specifier = ">=8.3.3" },
+    { name = "pytest-env", specifier = ">=1.1.5" },
     { name = "ruff", specifier = ">=0.2.2" },
     { name = "twine", specifier = ">=6.0.1" },
 ]
