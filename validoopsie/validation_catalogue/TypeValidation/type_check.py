@@ -12,31 +12,6 @@ from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 class TypeCheck(BaseValidationParameters):
     """Validate the data type of the column(s).
 
-    If the column and `validation_type` is not provided then `column_type_definitions`
-    dictionary should be required to validate multiple columns.
-
-    Operator can use the generic column data type provided by Validoopsie
-    (e.g. `IntegerType`) or more specific type provided by Narwhals
-    (e.g. `narwhals.Int64`).
-
-    For a full list of types refer to:
-
-    * [Validoopsie Generic Types](https://akmalsoliev.github.io/Validoopsie/typing.html#typing.FloatType)
-    * [Narwhals Specific Types](https://narwhals-dev.github.io/narwhals/api-reference/dtypes/)
-
-    Example of the `column_type_definitions`:
-
-    ```python
-
-    from validoopsie.types import IntType
-    import narwhals
-
-    {
-        "column1": IntType,
-        "column2": narwhals.Int64,
-    }
-    ```
-
     Parameters:
         column (str | None): The column to validate.
         column_type (type | None): The type of validation to perform.
@@ -46,6 +21,43 @@ class TypeCheck(BaseValidationParameters):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
         kwargs: KwargsType (dict): Additional keyword arguments.
+
+
+    ```python
+    import pandas as pd
+    from narwhals.dtypes import (
+        FloatType,
+        IntegerType,
+        String,
+    )
+
+    from validoopsie import Validate
+
+    df = pd.DataFrame(
+        {
+            "IntType": [1, -15],
+            "FloatType": [1.23, -45.67],
+            "String": ["hello", "world"],
+        },
+    )
+
+    # Single validation check
+    vd = Validate(df)
+    vd.TypeValidation.TypeCheck(
+        column="IntType",
+        column_type=IntegerType,
+    )
+
+    # or you can always use the dictionary
+    column_type_definitions = {
+        "IntType": IntegerType,
+        "FloatType": FloatType,
+        "String": String,
+    }
+    vd.TypeValidation.TypeCheck(
+        frame_schema_definition=column_type_definitions,
+    )
+    ```
 
     """
 

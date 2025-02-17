@@ -78,7 +78,7 @@ class Validate:
                         self.__make_validation_method__(class_obj),
                     )
 
-            # Attach the subclass to the DataSet instance
+            # Attach the subclass to the Validate instance
             setattr(self, subclass_name, subclass())
 
     def __make_validation_method__(self, class_obj: type) -> Callable[..., Validate]:

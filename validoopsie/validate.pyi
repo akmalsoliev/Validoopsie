@@ -11,7 +11,7 @@ class Validate:
     results: dict[str, Any]
 
     def __init__(self, frame: IntoFrame) -> None: ...
-    def validate(self, raise_results:bool=False) -> Validate: ...
+    def validate(self, raise_results: bool = False) -> Validate: ...
     def add_validation(self, validation: BaseValidationParameters) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
@@ -225,36 +225,51 @@ class Validate:
         ) -> Validate:
             """Validate the data type of the column(s).
 
-            If the column and `validation_type` is not provided then
-            `column_type_definitions` dictionary should be required to validate multiple
-            columns.
-
-            Operator can use the generic column data type provided by Validoopsie
-            (e.g. `IntegerType`) or more specific type provided by Narwhals
-            (e.g. `narwhals.Int64`).
-
-
-            Example of the `column_type_definitions`:
-            ```python
-            from validoopsie.types import IntegerType
-            import narwhals
-
-            {
-                "column1": IntegerType,
-                "column2": narwhals.Int64,
-            }
-            ```
-
-            Args:
+            Parameters:
                 column (str | None): The column to validate.
-                column_type (type | None): The type of validation to
-                    perform.
+                column_type (type | None): The type of validation to perform.
                 frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary
                     of column names and their respective validation types.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
                 kwargs: KwargsType (dict): Additional keyword arguments.
+
+
+            ```python
+            import narwhals
+            from narwhals.dtypes import (
+                IntegerType,
+                FloatType,
+                StringType,
+            )
+            import pandas as pd
+            from validoopsie import Validate
+
+
+            df = pd.DataFrame({
+                "IntType": [1, -15],
+                "FloatType": [1.23, -45.67],
+                "String": ["hello", "world"],
+            })
+
+            vd = Validate(df)
+            vd.TypeValidation.TypeCheck(
+                column="IntType",
+                column_type=IntegerType,
+            )
+
+            # or you can always use the dictionary
+            column_type_definitions = {
+                "IntType": IntegerType,
+                "FloatType": FloatType,
+                "String": StringType,
+            }
+            vd.TypeValidation.TypeCheck(
+                frame_schema_definition=column_type_definitions,
+            )
+
+            ```
 
             """
 
