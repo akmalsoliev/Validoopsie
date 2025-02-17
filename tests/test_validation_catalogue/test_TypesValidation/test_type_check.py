@@ -3,19 +3,28 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 
 import pytest
-from narwhals.dtypes import Boolean, Date, Datetime, Duration, List, String
+from narwhals.dtypes import (
+    Boolean,
+    Date,
+    Datetime,
+    Duration,
+    FloatType,
+    Int64,
+    IntegerType,
+    List,
+    String,
+)
 from narwhals.typing import Frame
 
 from tests.utils.create_frames import create_frame_fixture
 from validoopsie import Validate
-from validoopsie.typing import FloatType, IntType
 from validoopsie.validation_catalogue.TypeValidation import TypeCheck
 
 
 @create_frame_fixture
 def sample_data() -> dict[str, list]:
     return {
-        "IntType": [
+        "IntegerType": [
             1,
             -15,
             32,
@@ -31,7 +40,7 @@ def sample_data() -> dict[str, list]:
         ],  # Example data for Float32, Float64, Decimal
         "String": ["hello", "world", "narwhals", "data", "type"],  # Example strings
         "Boolean": [True, False, True, False, True],  # Example booleans
-        "UIntType": [
+        "UIntegerType": [
             0,
             15,
             32,
@@ -80,13 +89,19 @@ def sample_data() -> dict[str, list]:
 
 # Unit Tests
 def test_type_check_success_single_column(sample_data: Frame) -> None:
-    ds = TypeCheck("IntType", IntType)
+    ds = TypeCheck("IntegerType", IntegerType)
+    result = ds.__execute_check__(frame=sample_data)
+    assert result["result"]["status"] == "Success"
+
+
+def test_type_check_success_single_column_specific_type(sample_data: Frame) -> None:
+    ds = TypeCheck("IntegerType", Int64)
     result = ds.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Success"
 
 
 def test_type_check_failure_single_column(sample_data: Frame) -> None:
-    ds = TypeCheck("IntType", FloatType)
+    ds = TypeCheck("IntegerType", FloatType)
     result = ds.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Fail"
 
@@ -104,7 +119,7 @@ def test_date_check_success_single_column(
 
 def test_type_check_success_multiple_columns(sample_data: Frame) -> None:
     frame_schema_definition = {
-        "IntType": IntType,
+        "IntegerType": IntegerType,
         "FloatType": FloatType,
         "String": String,
         "Boolean": Boolean,
@@ -116,7 +131,7 @@ def test_type_check_success_multiple_columns(sample_data: Frame) -> None:
 
 def test_type_check_failure_multiple_columns(sample_data: Frame) -> None:
     frame_schema_definition = {
-        "IntType": IntType,
+        "IntegerType": IntegerType,
         "FloatType": FloatType,
         "String": FloatType,
     }
@@ -128,7 +143,7 @@ def test_type_check_failure_multiple_columns(sample_data: Frame) -> None:
 
 def test_type_check_threshold_success(sample_data: Frame) -> None:
     frame_schema_definition = {
-        "IntType": IntType,
+        "IntegerType": IntegerType,
         "FloatType": FloatType,
         "String": String,
         "Boolean": Boolean,
@@ -148,7 +163,7 @@ def test_type_check_threshold_success(sample_data: Frame) -> None:
 
 def test_type_check_threshold_failure(sample_data: Frame) -> None:
     frame_schema_definition = {
-        "IntType": FloatType,  # Intentional error
+        "IntegerType": FloatType,  # Intentional error
         "FloatType": String,  # Intentional error
         "String": FloatType,  # Intentional error
         "Boolean": Boolean,
@@ -168,7 +183,7 @@ def test_type_check_threshold_failure(sample_data: Frame) -> None:
 
 def test_type_check_integration_success(sample_data: Frame) -> None:
     vd = Validate(sample_data)
-    vd.TypeValidation.TypeCheck("IntType", IntType)
+    vd.TypeValidation.TypeCheck("IntegerType", IntegerType)
     result = vd.validate().results
     key = list(vd.results.keys())[-1]
     assert result[key]["result"]["status"] == "Success"
@@ -176,14 +191,14 @@ def test_type_check_integration_success(sample_data: Frame) -> None:
 
 def test_type_check_integration_failure_high_impact(sample_data: Frame) -> None:
     vd = Validate(sample_data)
-    vd.TypeValidation.TypeCheck("IntType", FloatType, impact="high")
+    vd.TypeValidation.TypeCheck("IntegerType", FloatType, impact="high")
     with pytest.raises(ValueError):
         vd.validate()
 
 
 def test_type_check_integration_failure_low_impact(sample_data: Frame) -> None:
     vd = Validate(sample_data)
-    vd.TypeValidation.TypeCheck("IntType", FloatType, impact="low")
+    vd.TypeValidation.TypeCheck("IntegerType", FloatType, impact="low")
     result = vd.validate().results
     key = list(vd.results.keys())[-1]
     assert result[key]["result"]["status"] == "Fail"
@@ -192,7 +207,7 @@ def test_type_check_integration_failure_low_impact(sample_data: Frame) -> None:
 def test_type_check_integration_threshold_success(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     frame_schema_definition = {
-        "IntType": IntType,
+        "IntegerType": IntegerType,
         "FloatType": FloatType,
         "Boolean": Boolean,
         "String": String,
@@ -213,7 +228,7 @@ def test_type_check_integration_threshold_success(sample_data: Frame) -> None:
 def test_type_check_integration_threshold_failure(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     frame_schema_definition = {
-        "IntType": FloatType,  # Intentional error
+        "IntegerType": FloatType,  # Intentional error
         "FloatType": String,  # Intentional error
         "Boolean": Boolean,
         "String": FloatType,  # Intentional error
