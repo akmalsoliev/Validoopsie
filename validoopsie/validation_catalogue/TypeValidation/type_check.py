@@ -137,7 +137,7 @@ class TypeCheck(BaseValidationParameters):
             column_type = schema[column_name]
             defined_type = self.frame_schema_definition[column_name]
 
-            if not issubclass(defined_type, column_type.__class__):
+            if not issubclass(column_type.__class__, defined_type):
                 failed_columns.append(column_name)
 
         return nw.from_native(pa.table({self.column: failed_columns})).with_columns(
