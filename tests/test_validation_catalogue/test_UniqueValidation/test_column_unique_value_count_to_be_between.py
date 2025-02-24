@@ -64,9 +64,6 @@ def test_column_unique_value_count_greater_than_success(sample_data: Frame) -> N
 def test_column_unique_value_count_less_than_fail(sample_data: Frame) -> None:
     ds = ColumnUniqueValueCountToBeBetween("strings", max_value=2)
     result = ds.__execute_check__(frame=sample_data)
-    import json
-
-    print(json.dumps(result, indent=4))
     assert result["result"]["status"] == "Fail"
 
 

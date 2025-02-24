@@ -12,9 +12,9 @@ import pyarrow as pa
 import pytest
 from _pytest.fixtures import SubRequest
 from narwhals import generate_temporary_column_name
+from narwhals.typing import Frame
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql.functions import lit
-from narwhals.typing import Frame
 
 ReturnType = Union[pl.DataFrame, pd.DataFrame, pl.LazyFrame, pa.Table, Frame]
 
@@ -64,12 +64,14 @@ def spark_df(data: dict[str, list]) -> DataFrame:
 
     return sp_df
 
+
 def duckdb_df(data: dict[str, list]) -> Frame:
     duckdb.register("df", pd.DataFrame(data))
     return nw.from_native(duckdb.table("df"))
 
+
 def create_frame_fixture(func: Callable) -> Callable:
-    params=[
+    params = [
         ("pandas", pandas_df),
         ("polars_df", polars_df),
         ("polars_lf", polars_lf),
@@ -86,6 +88,8 @@ def create_frame_fixture(func: Callable) -> Callable:
     def wrapper(request: SubRequest) -> ReturnType:
         _, df_factory = request.param
         data = func()
+        if request.param[0] == "pyspark" and all(len(v) == 0 for v in data.values()):
+            pytest.skip("Empty frames not supported in PySpark")
         return df_factory(data)
 
     return wrapper
