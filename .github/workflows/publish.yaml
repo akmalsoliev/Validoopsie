@@ -1,6 +1,3 @@
-# This is taken from https://github.com/narwhals-dev/narwhals/blob/main/.github/workflows/publish_to_pypi.yml#L15
-# Don't tell anyone that I took it from there. It's a secret.
-
 name: Publish Python 🐍 distribution 📦 to PyPI
 on:
   push:
@@ -26,7 +23,6 @@ jobs:
   publish-to-pypi:
     name: >-
       Publish Python 🐍 distribution 📦 to PyPI
-    # if: startsWith(github.ref, 'refs/tags/') # only publish to PyPI on tag pushes
     needs:
       - build
     runs-on: ubuntu-latest
@@ -50,8 +46,8 @@ jobs:
       - publish-to-pypi
     runs-on: ubuntu-latest
     permissions:
-      contents: write # IMPORTANT: mandatory for making GitHub Releases
-      id-token: write # IMPORTANT: mandatory for sigstore
+      contents: write # Needed for making GitHub Releases
+      id-token: write # Needed for Sigstore
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4
@@ -63,16 +59,23 @@ jobs:
         with:
           inputs: >-
             ./dist/*.tar.gz ./dist/*.whl
-      - name: Create GitHub Release
+      - name: Create GitHub Release (draft)
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes ""
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes "" --draft
       - name: Upload artifact signatures to GitHub Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-        # Upload to GitHub Release using the `gh` CLI.
-        # `dist/` contains the built packages, and the
-        # sigstore-produced signatures and certificates.
-        run: >-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           gh release upload "$GITHUB_REF_NAME" dist/** --repo "$GITHUB_REPOSITORY"
+      - name: Update Release Notes with Release Drafter
+        uses: release-drafter/release-drafter@v6
+        with:
+          version: ${{ github.ref_name }}
+          tag-name: ${{ github.ref_name }}
+          config-name: 'release-drafter.yml'
+          name: 'Validoopsie v${{ github.ref_name }}'
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
