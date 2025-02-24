@@ -275,6 +275,27 @@ class Validate:
 
     class UniqueValidation:
         @staticmethod
+        def ColumnUniquePair(
+            column_list: list | tuple,
+            threshold: float = 0.00,
+            impact: Literal["low", "medium", "high"] = "low",
+        ) -> Validate:
+            """Validates the uniqueness of combined values from multiple columns.
+
+            This class checks if the combination of values from specified columns creates
+            unique entries in the dataset. For example, if checking columns ['first_name',
+            'last_name'], the combination of these values should be unique for each row.
+
+            Parameters
+              column_list (list | tuple): List or tuple of column names to check for
+                  unique combinations.
+              threshold (float, optional): Threshold for validation. Defaults to 0.0.
+              impact (Literal["low", "medium", "high"], optional): Impact level of
+                  validation. Defaults to "low".
+
+            """
+
+        @staticmethod
         def ColumnUniqueValueCountToBeBetween(
             column: str,
             min_value: int | None = None,
