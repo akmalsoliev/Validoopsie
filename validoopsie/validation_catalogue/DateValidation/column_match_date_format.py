@@ -53,7 +53,7 @@ class ColumnMatchDateFormat(BaseValidationParameters):
                 pattern_parts.append(re.escape(separators[i]))
 
         pattern = "^" + "".join(pattern_parts) + "$"
-        exp = nw.col(self.column).str.contains(pattern).alias("contains")
+        exp = nw.col(self.column).cast(nw.String).str.contains(pattern).alias("contains")
         return (
             frame.with_columns(exp)
             .filter(nw.col("contains") == False)

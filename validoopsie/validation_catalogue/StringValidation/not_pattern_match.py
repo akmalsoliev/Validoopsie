@@ -42,7 +42,7 @@ class NotPatternMatch(BaseValidationParameters):
         """Expect the column entries to be strings that do not pattern match."""
         return (
             frame.filter(
-                nw.col(self.column).str.contains(self.pattern) == True,
+                nw.col(self.column).cast(nw.String).str.contains(self.pattern) == True,
             )
             .group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
