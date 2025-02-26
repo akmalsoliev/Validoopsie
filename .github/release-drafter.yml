@@ -1,7 +1,6 @@
-name-template: 'Validoopsie v$RESOLVED_VERSION'
-tag-template: v$RESOLVED_VERSION
+name-template: 'Validoopsie $RESOLVED_VERSION'
 version-template: $RESOLVED_VERSION
-draft: false
+draft: true
 prerelease: false
 reuse-release: true
 

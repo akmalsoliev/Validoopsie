@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false # Don't allow the GITHUB_TOKEN to be used
+          persist-credentials: false
       - name: Setup uv
         uses: astral-sh/setup-uv@v5
       - name: Build a binary wheel and a source tarball
@@ -46,8 +46,8 @@ jobs:
       - publish-to-pypi
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Needed for making GitHub Releases
-      id-token: write # Needed for Sigstore
+      contents: write
+      id-token: write
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4
@@ -59,16 +59,6 @@ jobs:
         with:
           inputs: >-
             ./dist/*.tar.gz ./dist/*.whl
-      - name: Create GitHub Release (draft)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --notes "" --draft
-      - name: Upload artifact signatures to GitHub Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release upload "$GITHUB_REF_NAME" dist/** --repo "$GITHUB_REPOSITORY"
       - name: Update Release Notes with Release Drafter
         uses: release-drafter/release-drafter@v6
         with:
