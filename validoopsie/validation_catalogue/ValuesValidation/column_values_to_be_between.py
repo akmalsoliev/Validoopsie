@@ -35,7 +35,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
         min_value: float | None = None,
         max_value: float | None = None,
         *args,
-        **kwargs: object,
+        **kwargs,
     ) -> None:
         min_max_arg_check(min_value, max_value)
 
