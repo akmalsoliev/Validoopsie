@@ -14,8 +14,8 @@ def min_max_filter(
 ) -> FrameT:
     if min_ is not None and max_ is not None:
         return frame.filter(nw.col(column).is_between(min_, max_, closed="both") == False)
-    if min_:
+    if min_ is not None:
         return frame.filter((nw.col(column) >= min_) == False)
-    if max_:
+    if max_ is not None:
         return frame.filter((nw.col(column) <= max_) == False)
     return frame
