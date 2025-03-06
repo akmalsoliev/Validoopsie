@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
-from narwhals.typing import IntoFrame
+from narwhals.typing import DataFrameT, IntoFrame
 
 if TYPE_CHECKING:
     from validoopsie.typing import KwargsType
@@ -37,21 +37,31 @@ def get_items(
 
 
 def get_length(nw_frame: IntoFrame) -> int:
-    if isinstance(nw_frame, nw.LazyFrame):
-        return nw.to_py_scalar(nw_frame.select(nw.len()).collect().item())
-    if isinstance(nw_frame, nw.DataFrame):
-        return nw.to_py_scalar(nw_frame.select(nw.len()).item())
-    msg = (
-        f"The frame is not a valid type. {type(nw_frame)}, if "
-        "you reached this point please open an issue."
+    if isinstance(nw_frame, (nw.LazyFrame, nw.DataFrame)):
+        if isinstance(nw_frame, nw.LazyFrame):
+            nw_frame = nw_frame.collect()
+
+        result = nw.to_py_scalar(nw_frame.select(nw.len()).item())
+
+        if not isinstance(result, int):
+            error_msg = f"Expected an integer result, but got {type(result)}: {result}"
+            raise TypeError(error_msg)
+
+        return result
+
+    error_msg = (
+        f"Expected a LazyFrame or DataFrame, but got {type(nw_frame)}. "
+        "If you believe this is a bug, please open an issue."
     )
-    raise TypeError(msg)
+    raise TypeError(error_msg)
 
 
-def get_count(nw_input_frame: nw.DataFrame, column: str) -> int:
-    return nw.to_py_scalar(
+def get_count(nw_input_frame: DataFrame[Any], column: str) -> int:
+    result = nw.to_py_scalar(
         nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
     )
+    assert isinstance(result, int), "The result is not an integer."
+    return result
 
 
 def log_exception_summary(class_name: str, name: str, error_str: str) -> None:
@@ -88,17 +98,19 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def get_frame(self: type, frame: IntoFrame) -> nw.DataFrame:
+def get_frame(self: type, frame: IntoFrame) -> DataFrame[Any]:
     validated_frame = self(frame)
     if isinstance(validated_frame, nw.LazyFrame):
         return validated_frame.collect()
+    error_msg = "The frame is not a valid type."
+    assert isinstance(validated_frame, nw.DataFrame), error_msg
     return validated_frame
 
 
 def base_validation_wrapper(
     cls: type[T],
 ) -> type[T]:
-    class Wrapper(cls):
+    class Wrapper(cls):  # type: ignore[valid-type, misc]
         def __init__(
             self,
             *args: list[object],
@@ -124,12 +136,13 @@ def base_validation_wrapper(
                 frame = nw.from_native(frame)
 
                 # Execution of the validation
-                validated_frame: DataFrame = get_frame(self, frame)
+                validated_frame: DataFrame[Any] = get_frame(self, frame)
 
+                og_frame_rows_number: int
                 if hasattr(self, "schema_lenght"):
                     og_frame_rows_number = self.schema_lenght
                 else:
-                    og_frame_rows_number: int = get_length(frame)
+                    og_frame_rows_number = get_length(frame)
 
                 vf_row_number: int = get_length(validated_frame)
                 vf_count_number: int = get_count(validated_frame, self.column)
