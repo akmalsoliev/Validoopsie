@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, TypeVar
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
-from narwhals.typing import DataFrameT, IntoFrame
+from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
     from validoopsie.typing import KwargsType
@@ -37,22 +37,15 @@ def get_items(
 
 
 def get_length(nw_frame: IntoFrame) -> int:
-    if isinstance(nw_frame, (nw.LazyFrame, nw.DataFrame)):
-        if isinstance(nw_frame, nw.LazyFrame):
-            nw_frame = nw_frame.collect()
-
+    result: int
+    if isinstance(nw_frame, nw.LazyFrame):
+        result = nw.to_py_scalar(nw_frame.select(nw.len()).collect().item())
+        return result
+    if isinstance(nw_frame, nw.DataFrame):
         result = nw.to_py_scalar(nw_frame.select(nw.len()).item())
-
-        if not isinstance(result, int):
-            error_msg = f"Expected an integer result, but got {type(result)}: {result}"
-            raise TypeError(error_msg)
-
         return result
 
-    error_msg = (
-        f"Expected a LazyFrame or DataFrame, but got {type(nw_frame)}. "
-        "If you believe this is a bug, please open an issue."
-    )
+    error_msg = "The frame is not a valid type."
     raise TypeError(error_msg)
 
 
@@ -98,13 +91,12 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def get_frame(self: type, frame: IntoFrame) -> DataFrame[Any]:
-    validated_frame = self(frame)
-    if isinstance(validated_frame, nw.LazyFrame):
-        return validated_frame.collect()
+def collect_frame(frame: IntoFrame) -> DataFrame[Any]:
+    if isinstance(frame, nw.LazyFrame):
+        return frame.collect()
     error_msg = "The frame is not a valid type."
-    assert isinstance(validated_frame, nw.DataFrame), error_msg
-    return validated_frame
+    assert isinstance(frame, nw.DataFrame), error_msg
+    return frame
 
 
 def base_validation_wrapper(
@@ -136,7 +128,8 @@ def base_validation_wrapper(
                 frame = nw.from_native(frame)
 
                 # Execution of the validation
-                validated_frame: DataFrame[Any] = get_frame(self, frame)
+                validated_frame: Frame = self(frame)
+                collected_frame: DataFrame[Any] = collect_frame(validated_frame)
 
                 og_frame_rows_number: int
                 if hasattr(self, "schema_lenght"):
@@ -144,8 +137,9 @@ def base_validation_wrapper(
                 else:
                     og_frame_rows_number = get_length(frame)
 
-                vf_row_number: int = get_length(validated_frame)
-                vf_count_number: int = get_count(validated_frame, self.column)
+                vf_row_number: int = get_length(collected_frame)
+                vf_count_number: int = get_count(collected_frame, self.column)
+
             except Exception as e:
                 class_name = cls.__name__
                 name = type(e).__name__
@@ -166,7 +160,7 @@ def base_validation_wrapper(
 
             result = {}
             if vf_row_number > 0:
-                items: list[str | int | float] = get_items(validated_frame, self.column)
+                items: list[str | int | float] = get_items(collected_frame, self.column)
                 if not threshold_pass:
                     result = {
                         "result": {
