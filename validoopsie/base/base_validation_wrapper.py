@@ -2,15 +2,12 @@ from __future__ import annotations
 
 from datetime import datetime as dt
 from datetime import timezone
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar
 
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
 from narwhals.typing import Frame, IntoFrame
-
-if TYPE_CHECKING:
-    from validoopsie.typing import KwargsType
 
 T = TypeVar("T")
 
@@ -106,7 +103,7 @@ def base_validation_wrapper(
         def __init__(
             self,
             *args: list[object],
-            **kwargs: KwargsType,
+            **kwargs: dict[str, object],
         ) -> None:
             super().__init__(*args, **kwargs)
             self.column: str

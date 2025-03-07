@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 from abc import abstractmethod
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 from narwhals.typing import IntoFrame
-
-from validoopsie.typing import KwargsType
 
 
 class BaseValidationParameters:
@@ -14,7 +14,7 @@ class BaseValidationParameters:
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: Optional[float] = 0.00,
-        **kwargs: KwargsType,
+        **kwargs: dict[str, object],
     ) -> None:
         self.column = column
         self.impact = impact.lower() if impact else impact
@@ -30,5 +30,5 @@ class BaseValidationParameters:
     def __execute_check__(
         self,
         frame: IntoFrame,
-    ) -> dict:
+    ) -> dict[str, str | dict[str, Any]]:
         """Execute the validation check on the provided frame."""
