@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 from validoopsie.util import min_max_arg_check, min_max_filter
@@ -24,7 +26,6 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -33,12 +34,13 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
         column: str,
         min_value: int | None = None,
         max_value: int | None = None,
-        *args,
-        **kwargs,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_value, max_value)
 
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
         self.min_value = min_value
         self.max_value = max_value
 
@@ -50,7 +52,7 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
             f"is not between {self.min_value} and {self.max_value}."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Validate the number of unique values in the column."""
         unique_value_counts = frame.group_by(self.column).agg(
             nw.col(self.column).count().alias(f"{self.column}-count"),

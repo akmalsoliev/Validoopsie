@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
@@ -16,7 +18,6 @@ class NotPatternMatch(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -24,10 +25,11 @@ class NotPatternMatch(BaseValidationParameters):
         self,
         column: str,
         pattern: str,
-        *args,
-        **kwargs,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
         self.pattern = pattern
 
     @property
@@ -38,7 +40,7 @@ class NotPatternMatch(BaseValidationParameters):
             f"the pattern '{self.pattern}'."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Expect the column entries to be strings that do not pattern match."""
         return (
             frame.filter(

@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from datetime import date, datetime
+from typing import Literal, Optional
 
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 from validoopsie.util import min_max_arg_check, min_max_filter
@@ -26,7 +27,6 @@ class DateToBeBetween(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -35,12 +35,13 @@ class DateToBeBetween(BaseValidationParameters):
         column: str,
         min_date: date | datetime | None = None,
         max_date: date | datetime | None = None,
-        *args,
-        **kwargs,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_date, max_date)
 
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
         self.min_date = min_date
         self.max_date = max_date
 
@@ -52,7 +53,7 @@ class DateToBeBetween(BaseValidationParameters):
             f"[{self.min_date}, {self.max_date}]."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT | ValueError:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Check if the string lengths are between the specified range."""
         return (
             min_max_filter(

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
@@ -16,7 +18,6 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -24,10 +25,11 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
         self,
         column: str,
         values: list[str | int | float | None],
-        *args,
-        **kwargs,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
         self.values = values
 
     @property
@@ -35,7 +37,7 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The column '{self.column}' has unique values that are not in the list."
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Check if the unique values are in the list."""
         return (
             frame.group_by(self.column)

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 from validoopsie.util import min_max_arg_check, min_max_filter
@@ -26,7 +28,6 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -35,8 +36,9 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
         columns_list: list[str],
         min_sum_value: float | None = None,
         max_sum_value: float | None = None,
-        *args,
-        **kwargs: object,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_sum_value, max_sum_value)
 
@@ -44,7 +46,7 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
         self.max_sum_value = max_sum_value
         self.min_sum_value = min_sum_value
         self.column = "-".join(self.columns_list) + "-combined"
-        super().__init__(self.column, *args, **kwargs)
+        super().__init__(self.column, impact, threshold, **kwargs)
 
     @property
     def fail_message(self) -> str:
@@ -54,7 +56,7 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
             f"{self.max_sum_value}."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Check if the sum of columns is greater than or equal to `max_sum`."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"

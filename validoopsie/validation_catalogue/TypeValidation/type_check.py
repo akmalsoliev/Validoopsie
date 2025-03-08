@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
 import pyarrow as pa
 from narwhals.dtypes import DType
-from narwhals.typing import Frame
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
@@ -20,7 +22,6 @@ class TypeCheck(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
 
     ```python
@@ -66,8 +67,9 @@ class TypeCheck(BaseValidationParameters):
         column: str | None = None,
         column_type: type | None = None,
         frame_schema_definition: dict[str, type] | None = None,
-        *args,
-        **kwargs,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         # Single validation check
         if column and column_type:
@@ -92,7 +94,7 @@ class TypeCheck(BaseValidationParameters):
             )
             raise ValueError(error_message)
 
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
 
     def __check_validation_parameter__(
         self,
@@ -122,7 +124,7 @@ class TypeCheck(BaseValidationParameters):
             f"expected type: {self.column_type}."
         )
 
-    def __call__(self, frame: Frame) -> Frame:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Validate the data type of the column(s)."""
         schema = frame.schema
         # Introduction of a new structure where the schema len will be used a frame length
