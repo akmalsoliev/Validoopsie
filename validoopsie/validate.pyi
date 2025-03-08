@@ -4,7 +4,6 @@ from typing import Any, Literal, Union
 from narwhals.typing import IntoFrame
 
 from validoopsie.base.base_validation_parameters import BaseValidationParameters
-from validoopsie.typing import KwargsType
 
 class Validate:
     frame: IntoFrame
@@ -27,7 +26,6 @@ class Validate:
             date_format: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column match the date format.
 
@@ -37,7 +35,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -48,7 +45,6 @@ class Validate:
             max_date: date | datetime | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are between the specified dates.
 
@@ -59,7 +55,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -71,7 +66,6 @@ class Validate:
             group_by_combined: bool = True,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the pair of columns are equal.
 
@@ -83,7 +77,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -93,7 +86,6 @@ class Validate:
             column: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are null.
 
@@ -102,7 +94,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -111,7 +102,6 @@ class Validate:
             column: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are not null.
 
@@ -120,7 +110,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -132,7 +121,6 @@ class Validate:
             max_value: int | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the string lengths are between the specified range.
 
@@ -149,7 +137,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -159,7 +146,6 @@ class Validate:
             value: int,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings with length equal to `value`.
 
@@ -169,7 +155,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -179,7 +164,6 @@ class Validate:
             pattern: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings that do not pattern match.
 
@@ -189,7 +173,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -199,7 +182,6 @@ class Validate:
             pattern: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings that pattern matches.
 
@@ -209,7 +191,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -221,7 +202,6 @@ class Validate:
             frame_schema_definition: dict[str, type] | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Validate the data type of the column(s).
 
@@ -233,7 +213,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
 
             ```python
@@ -302,7 +281,6 @@ class Validate:
             max_value: int | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check the number of unique values in a column to be between min and max.
 
@@ -319,7 +297,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -329,7 +306,6 @@ class Validate:
             values: list[Union[str, float, int, None]],
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the unique values are in the list.
 
@@ -339,7 +315,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -351,7 +326,6 @@ class Validate:
             max_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are between a range.
 
@@ -369,7 +343,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -379,7 +352,6 @@ class Validate:
             sum_value: float,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the sum of the columns is equal to a specific value.
 
@@ -389,7 +361,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -400,7 +371,6 @@ class Validate:
             max_sum_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the sum of columns is greater than or equal to `max_sum`.
 
@@ -419,6 +389,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
+
