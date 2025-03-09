@@ -34,23 +34,24 @@ def get_items(
 
 
 def get_length(nw_frame: IntoFrame) -> int:
-    result: int
+    result: int | None = None
     if isinstance(nw_frame, nw.LazyFrame):
-        result = nw.to_py_scalar(nw_frame.select(nw.len()).collect().item())
-        return result
+        result = int(nw.to_py_scalar(nw_frame.select(nw.len()).collect().item()))
     if isinstance(nw_frame, nw.DataFrame):
-        result = nw.to_py_scalar(nw_frame.select(nw.len()).item())
-        return result
+        result = int(nw.to_py_scalar(nw_frame.select(nw.len()).item()))
 
-    error_msg = "The frame is not a valid type."
-    raise TypeError(error_msg)
+    assert isinstance(result, int), "The result is not an integer. Method: get_length"
+    return result
 
 
 def get_count(nw_input_frame: DataFrame[Any], column: str) -> int:
-    result = nw.to_py_scalar(
-        nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
+    result = int(
+        nw.to_py_scalar(
+            nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
+        ),
     )
-    assert isinstance(result, int), "The result is not an integer."
+
+    assert isinstance(result, int), "The result is not an integer. Method: get_count"
     return result
 
 
