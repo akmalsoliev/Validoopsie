@@ -3,7 +3,6 @@ from __future__ import annotations
 import importlib
 import inspect
 from pathlib import Path
-from types import ModuleType
 from typing import TYPE_CHECKING, Callable
 
 import narwhals as nw
@@ -93,7 +92,7 @@ class Validate:
     def __create_validation_class__(
         self,
         validation_class: type,
-        *args: str | list[str | int] | int,
+        *args: object,
         **kwargs: dict[str, object],
     ) -> Validate:
         args = args[1:]
@@ -131,7 +130,7 @@ class Validate:
         """Add custom generated validation check to the Validate class instance.
 
         Parameters:
-            validation (type): Custom generated validation check
+            validation (BaseValidationParameters): Custom validation check to add
 
         """
         output_name: str = "InvalidValidationCheck"
