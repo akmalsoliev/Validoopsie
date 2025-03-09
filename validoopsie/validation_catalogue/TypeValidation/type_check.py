@@ -80,10 +80,8 @@ class TypeCheck(BaseValidationParameters):
         # Multiple validation checks
         elif not column and not column_type and frame_schema_definition:
             # Check if Validation inside of the dictionary is actually correct
-            [
-                self.__check_validation_parameter__(column, vtype, DType)
-                for column, vtype in frame_schema_definition.items()
-            ]
+            for vcolumn, vtype in frame_schema_definition.items():
+                self.__check_validation_parameter__(vcolumn, vtype, DType)
 
             column = "DataTypeColumnValidation"
             self.frame_schema_definition = frame_schema_definition
