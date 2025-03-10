@@ -1,15 +1,12 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING
+from typing import Literal, Optional
 
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
-
-if TYPE_CHECKING:
-    from validoopsie.typing import KwargsType
 
 
 @base_validation_wrapper
@@ -22,7 +19,6 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
-        kwargs: KwargsType (dict): Additional keyword arguments.
 
     """
 
@@ -30,18 +26,19 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         self,
         column: str,
         date_format: str,
-        *args,
-        **kwargs: KwargsType,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         self.date_format = date_format
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
 
     @property
     def fail_message(self) -> str:
         """Return the fail message, that will be used in the report."""
         return f"The column '{self.column}' has unique values that are not in the list."
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Check if the values in a column match the date format."""
         date_patterns = re.findall(r"[Ymd]+", self.date_format)
         separators = re.findall(r"[^Ymd]+", self.date_format)

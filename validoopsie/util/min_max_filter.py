@@ -3,15 +3,15 @@ from __future__ import annotations
 from datetime import date, datetime
 
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame
 
 
 def min_max_filter(
-    frame: FrameT,
+    frame: Frame,
     column: str,
     min_: float | date | datetime | None,
     max_: float | date | datetime | None,
-) -> FrameT:
+) -> Frame:
     if min_ is not None and max_ is not None:
         return frame.filter(nw.col(column).is_between(min_, max_, closed="both") == False)
     if min_ is not None:

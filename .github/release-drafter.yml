@@ -1,42 +1,38 @@
-name-template: 'Validoopsie $RESOLVED_VERSION'
-version-template: $RESOLVED_VERSION
-draft: true
-prerelease: false
-reuse-release: true
-
 exclude-labels:
   - ignore
   - release
   - wip
   - bump
+name-template: 'Validoopsie unreleased'
+version-template: unreleased
 
 change-template: '- $TITLE (#$NUMBER)'
+
 categories:
-  - title: 🏆 Highlights
+  - title: '🏆 Highlights'
     labels:
-      - new
-      - feature
+      - 'new'
+      - 'feature'
+  - title: '💥 Breaking changes'
+    labels:
+      - 'breaking'
+  - title: '⚠️ Deprecations'
+    labels:
+      - 'deprecation'
+      - 'deprecated'
 
-  - title: 💥 Breaking changes
+  - title: '🐛 Bug fixes'
     labels:
-      - breaking
+      - 'fix'
 
-  - title: ⚠️ Deprecations
+  - title: '🚀 Performance'
     labels:
-      - deprecation
+      - 'performance'
+      - 'improvement'
 
-  - title: 🐛 Bug fixes
+  - title: '📚 Documentation'
     labels:
-      - fix
-
-  - title: 🚀 Performance
-    labels:
-      - performance
-      - improvement
-
-  - title: 📚 Documentation
-    labels:
-      - docs
+      - 'docs'
 
 template: |
   ## Changes

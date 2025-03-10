@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import Literal, Optional
+
 import narwhals as nw
-from narwhals.typing import FrameT
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base import BaseValidationParameters, base_validation_wrapper
 
@@ -25,15 +27,16 @@ class ColumnUniquePair(BaseValidationParameters):
 
     def __init__(
         self,
-        column_list: list | tuple,
-        *args,
-        **kwargs,
+        column_list: list[str] | tuple[str, ...],
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: Optional[float] = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
         assert len(column_list) > 0, "At least two columns are required."
 
         self.column_list = column_list
         column = " - ".join(column_list)
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
 
     @property
     def fail_message(self) -> str:
@@ -43,7 +46,7 @@ class ColumnUniquePair(BaseValidationParameters):
             "contains non-unique values."
         )
 
-    def __call__(self, frame: FrameT) -> FrameT:
+    def __call__(self, frame: Frame) -> IntoFrame:
         """Check if the unique values are in the list."""
         return (
             frame.with_columns(

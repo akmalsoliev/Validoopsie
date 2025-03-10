@@ -2,15 +2,12 @@ from __future__ import annotations
 
 from datetime import datetime as dt
 from datetime import timezone
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar
 
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
-from narwhals.typing import IntoFrame
-
-if TYPE_CHECKING:
-    from validoopsie.typing import KwargsType
+from narwhals.typing import Frame, IntoFrame
 
 T = TypeVar("T")
 
@@ -37,21 +34,25 @@ def get_items(
 
 
 def get_length(nw_frame: IntoFrame) -> int:
+    result: int | None = None
     if isinstance(nw_frame, nw.LazyFrame):
-        return nw.to_py_scalar(nw_frame.select(nw.len()).collect().item())
+        result = int(nw.to_py_scalar(nw_frame.select(nw.len()).collect().item()))
     if isinstance(nw_frame, nw.DataFrame):
-        return nw.to_py_scalar(nw_frame.select(nw.len()).item())
-    msg = (
-        f"The frame is not a valid type. {type(nw_frame)}, if "
-        "you reached this point please open an issue."
-    )
-    raise TypeError(msg)
+        result = int(nw.to_py_scalar(nw_frame.select(nw.len()).item()))
+
+    assert isinstance(result, int), "The result is not an integer. Method: get_length"
+    return result
 
 
-def get_count(nw_input_frame: nw.DataFrame, column: str) -> int:
-    return nw.to_py_scalar(
-        nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
+def get_count(nw_input_frame: DataFrame[Any], column: str) -> int:
+    result = int(
+        nw.to_py_scalar(
+            nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
+        ),
     )
+
+    assert isinstance(result, int), "The result is not an integer. Method: get_count"
+    return result
 
 
 def log_exception_summary(class_name: str, name: str, error_str: str) -> None:
@@ -88,21 +89,22 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def get_frame(self: type, frame: IntoFrame) -> nw.DataFrame:
-    validated_frame = self(frame)
-    if isinstance(validated_frame, nw.LazyFrame):
-        return validated_frame.collect()
-    return validated_frame
+def collect_frame(frame: IntoFrame) -> DataFrame[Any]:
+    if isinstance(frame, nw.LazyFrame):
+        return frame.collect()
+    error_msg = "The frame is not a valid type."
+    assert isinstance(frame, nw.DataFrame), error_msg
+    return frame
 
 
 def base_validation_wrapper(
     cls: type[T],
 ) -> type[T]:
-    class Wrapper(cls):
+    class Wrapper(cls):  # type: ignore[valid-type, misc]
         def __init__(
             self,
             *args: list[object],
-            **kwargs: KwargsType,
+            **kwargs: dict[str, object],
         ) -> None:
             super().__init__(*args, **kwargs)
             self.column: str
@@ -124,15 +126,18 @@ def base_validation_wrapper(
                 frame = nw.from_native(frame)
 
                 # Execution of the validation
-                validated_frame: DataFrame = get_frame(self, frame)
+                validated_frame: Frame = self(frame)
+                collected_frame: DataFrame[Any] = collect_frame(validated_frame)
 
+                og_frame_rows_number: int
                 if hasattr(self, "schema_lenght"):
                     og_frame_rows_number = self.schema_lenght
                 else:
-                    og_frame_rows_number: int = get_length(frame)
+                    og_frame_rows_number = get_length(frame)
 
-                vf_row_number: int = get_length(validated_frame)
-                vf_count_number: int = get_count(validated_frame, self.column)
+                vf_row_number: int = get_length(collected_frame)
+                vf_count_number: int = get_count(collected_frame, self.column)
+
             except Exception as e:
                 class_name = cls.__name__
                 name = type(e).__name__
@@ -153,7 +158,7 @@ def base_validation_wrapper(
 
             result = {}
             if vf_row_number > 0:
-                items: list[str | int | float] = get_items(validated_frame, self.column)
+                items: list[str | int | float] = get_items(collected_frame, self.column)
                 if not threshold_pass:
                     result = {
                         "result": {

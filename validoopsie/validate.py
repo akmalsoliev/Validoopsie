@@ -11,7 +11,6 @@ from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
     from validoopsie.base.base_validation_parameters import BaseValidationParameters
-    from validoopsie.typing import KwargsType
 
 
 class Validate:
@@ -49,39 +48,35 @@ class Validate:
                 module_relative_path = py_file.relative_to(validoopsie_dir.parent)
                 module_name = ".".join(module_relative_path.with_suffix("").parts)
 
-                # Import the module from the file path
-                spec = importlib.util.spec_from_file_location(
-                    module_name,
-                    py_file,
-                )
-                module = importlib.util.module_from_spec(spec)
-                if spec.loader:
-                    spec.loader.exec_module(module)
-                else:
-                    msg = f"Could not load module {module_name} from {py_file}"
-                    logger.warning(msg)
-                    continue
+                module = importlib.import_module(module_name)
+                module_keys = module.__dict__.keys()
 
-                file_name_lower = py_file.stem.replace("_", "").lower()
-                # Find classes defined in the module
-                classes_in_module = inspect.getmembers(
-                    module,
-                    lambda member: inspect.isclass(member)
-                    and member.__name__.lower() == file_name_lower,
-                )
+                for key in module_keys:
+                    if py_file.stem.replace("_", "").lower() in key.lower():
+                        try:
+                            func: type = module.__dict__[key]
+                            setattr(
+                                subclass,
+                                key,
+                                self.__make_validation_method__(func),
+                            )
 
-                for _, class_obj in classes_in_module:
-                    # Attach the method to the subclass
-                    setattr(
-                        subclass,
-                        class_obj.__name__,
-                        self.__make_validation_method__(class_obj),
-                    )
+                        except KeyError:
+                            msg = f"Could not load module {module_name} from {py_file}"
+                            logger.warning(msg)
+                        except ImportError:
+                            msg = f"Could not load module {module_name} from {py_file}"
+                            logger.warning(msg)
+
+                        break
 
             # Attach the subclass to the Validate instance
             setattr(self, subclass_name, subclass())
 
-    def __make_validation_method__(self, class_obj: type) -> Callable[..., Validate]:
+    def __make_validation_method__(
+        self,
+        class_obj: type,
+    ) -> Callable[..., Validate]:
         def validation_method(*args, **kwargs) -> Validate:
             return self.__create_validation_class__(
                 class_obj,
@@ -93,6 +88,19 @@ class Validate:
         validation_method.__doc__ = class_obj.__doc__
 
         return validation_method
+
+    def __create_validation_class__(
+        self,
+        validation_class: type,
+        *args: object,
+        **kwargs: dict[str, object],
+    ) -> Validate:
+        args = args[1:]
+        validation = validation_class(*args, **kwargs)
+        result = validation.__execute_check__(frame=self.frame)
+        name = f"{validation.__class__.__name__}_{validation.column}"
+        self.__parse_results__(result, name)
+        return self
 
     def __parse_results__(self, result: dict, name: str) -> None:
         status = result["result"]["status"]
@@ -115,19 +123,6 @@ class Validate:
 
         self.results.update({name: result})
 
-    def __create_validation_class__(
-        self,
-        validation_class: type,
-        *args: str | list[str | int] | int,
-        **kwargs: KwargsType,
-    ) -> Validate:
-        args = args[1:]
-        validation = validation_class(*args, **kwargs)
-        result = validation.__execute_check__(frame=self.frame)
-        name = f"{validation.__class__.__name__}_{validation.column}"
-        self.__parse_results__(result, name)
-        return self
-
     def add_validation(
         self,
         validation: BaseValidationParameters,
@@ -135,7 +130,7 @@ class Validate:
         """Add custom generated validation check to the Validate class instance.
 
         Parameters:
-            validation (type): Custom generated validation check
+            validation (BaseValidationParameters): Custom validation check to add
 
         """
         output_name: str = "InvalidValidationCheck"
@@ -145,11 +140,13 @@ class Validate:
                 result = validation.__execute_check__(frame=self.frame)
                 column_name = validation.column
                 output_name = f"{class_name}_{column_name}"
-            except Exception as e:
+            except Exception:
                 result = {
                     "result": {
                         "status": "Fail",
-                        "message": f"An error occured while executing {class_name} - {e!s}",
+                        "message": (
+                            f"An error occured while executing {class_name} - {{e!s}}"
+                        ),
                     },
                 }
         else:
@@ -165,7 +162,7 @@ class Validate:
         self.__parse_results__(result, output_name)
         return self
 
-    def validate(self, *, raise_results:bool=False) -> Validate:
+    def validate(self, *, raise_results: bool = False) -> Validate:
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
@@ -208,6 +205,7 @@ class Validate:
 
             if raise_results:
                 import json
+
                 keys = ["Summary", *failed_validations]
                 filtered_results = {key: self.results[key] for key in keys}
                 json_results = json.dumps(filtered_results, indent=4)

@@ -4,19 +4,18 @@ from typing import Any, Literal, Union
 from narwhals.typing import IntoFrame
 
 from validoopsie.base.base_validation_parameters import BaseValidationParameters
-from validoopsie.typing import KwargsType
 
 class Validate:
     frame: IntoFrame
     results: dict[str, Any]
 
     def __init__(self, frame: IntoFrame) -> None: ...
-    def validate(self, raise_results: bool = False) -> Validate: ...
+    def validate(self, *, raise_results: bool = False) -> Validate: ...
     def add_validation(self, validation: BaseValidationParameters) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
         Args:
-            validation (type): Custom generated validation check
+            validation (BaseValidationParameters): Custom validation check to add
 
         """
 
@@ -27,9 +26,11 @@ class Validate:
             date_format: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column match the date format.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.DateValidation.column_match_date_format.ColumnMatchDateFormat`
 
             Args:
                 column (str): Column to validate.
@@ -37,7 +38,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -48,9 +48,11 @@ class Validate:
             max_date: date | datetime | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are between the specified dates.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.DateValidation.date_to_be_between.DateToBeBetween`
 
             Args:
                 column (str): Column to validate.
@@ -59,7 +61,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -71,9 +72,11 @@ class Validate:
             group_by_combined: bool = True,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the pair of columns are equal.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.EqualityValidation.pair_column_equality.PairColumnEquality`
 
             Args:
                 column (str): Column to validate.
@@ -83,7 +86,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -93,16 +95,17 @@ class Validate:
             column: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are null.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.NullValidation.column_be_null.ColumnBeNull`
 
             Args:
                 column (str): Column to validate.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -111,16 +114,17 @@ class Validate:
             column: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are not null.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.NullValidation.column_not_be_null.ColumnNotBeNull`
 
             Args:
                 column (str): Column to validate.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -132,9 +136,11 @@ class Validate:
             max_value: int | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the string lengths are between the specified range.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.StringValidation.length_to_be_between.LengthToBeBetween`
 
             If the `min_value` or `max_value` is not provided then other will be used as
             the threshold.
@@ -149,7 +155,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -159,9 +164,11 @@ class Validate:
             value: int,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings with length equal to `value`.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.StringValidation.length_to_be_equal_to.LengthToBeEqualTo`
 
             Args:
                 column (str): Column to validate.
@@ -169,7 +176,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -179,9 +185,11 @@ class Validate:
             pattern: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings that do not pattern match.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.StringValidation.not_pattern_match.NotPatternMatch`
 
             Args:
                 column (str): The column name.
@@ -189,7 +197,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -199,9 +206,11 @@ class Validate:
             pattern: str,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Expect the column entries to be strings that pattern matches.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.StringValidation.pattern_match.PatternMatch`
 
             Args:
                 column (str): The column name.
@@ -209,7 +218,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -221,9 +229,11 @@ class Validate:
             frame_schema_definition: dict[str, type] | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Validate the data type of the column(s).
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.TypeValidation.type_check.TypeCheck`
 
             Parameters:
                 column (str | None): The column to validate.
@@ -233,7 +243,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
 
             ```python
@@ -276,11 +285,14 @@ class Validate:
     class UniqueValidation:
         @staticmethod
         def ColumnUniquePair(
-            column_list: list | tuple,
+            column_list: list[str] | tuple[str],
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
         ) -> Validate:
             """Validates the uniqueness of combined values from multiple columns.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.UniqueValidation.column_unique_pair.ColumnUniquePair`
 
             This class checks if the combination of values from specified columns creates
             unique entries in the dataset. For example, if checking columns ['first_name',
@@ -302,9 +314,11 @@ class Validate:
             max_value: int | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check the number of unique values in a column to be between min and max.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.UniqueValidation.column_unique_value_count_to_be_between.ColumnUniqueValueCountToBeBetween`
 
             If the `min_value` or `max_value` is not provided then other will be used as
             the threshold.
@@ -319,7 +333,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -329,9 +342,11 @@ class Validate:
             values: list[Union[str, float, int, None]],
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the unique values are in the list.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.UniqueValidation.column_unique_values_to_be_in_list.ColumnUniqueValuesToBeInList`
 
             Args:
                 column (str): Column to validate.
@@ -339,7 +354,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -351,9 +365,11 @@ class Validate:
             max_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the values in a column are between a range.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.ValuesValidation.column_values_to_be_between.ColumnValuesToBeBetween`
 
             If the `min_value` or `max_value` is not provided then other will be used as
             the threshold.
@@ -369,7 +385,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -379,9 +394,11 @@ class Validate:
             sum_value: float,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the sum of the columns is equal to a specific value.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_equal_to.ColumnsSumToBeEqualTo`
 
             Args:
                 columns_list (list[str]): List of columns to sum.
@@ -389,7 +406,6 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
 
@@ -400,9 +416,11 @@ class Validate:
             max_sum_value: float | None = None,
             threshold: float = 0.00,
             impact: Literal["low", "medium", "high"] = "low",
-            **kwargs: KwargsType,
         ) -> Validate:
             """Check if the sum of columns is greater than or equal to `max_sum`.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_between.ColumnsSumToBeBetween`
 
             If the `min_value` or `max_value` is not provided then other will be used as
             the threshold.
@@ -419,6 +437,5 @@ class Validate:
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
                     validation. Defaults to "low".
-                kwargs: KwargsType (dict): Additional keyword arguments.
 
             """
