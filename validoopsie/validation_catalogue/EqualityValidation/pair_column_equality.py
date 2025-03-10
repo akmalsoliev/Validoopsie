@@ -28,6 +28,7 @@ class PairColumnEquality(BaseValidationParameters):
         target_column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: Optional[float] = 0.00,
+        *,
         group_by_combined: bool = True,
         **kwargs: dict[str, object],
     ) -> None:
