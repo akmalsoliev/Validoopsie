@@ -140,11 +140,13 @@ class Validate:
                 result = validation.__execute_check__(frame=self.frame)
                 column_name = validation.column
                 output_name = f"{class_name}_{column_name}"
-            except Exception as e:
+            except Exception:
                 result = {
                     "result": {
                         "status": "Fail",
-                        "message": f"An error occured while executing {class_name} - {e!s}",
+                        "message": (
+                            f"An error occured while executing {class_name} - {{e!s}}"
+                        ),
                     },
                 }
         else:
