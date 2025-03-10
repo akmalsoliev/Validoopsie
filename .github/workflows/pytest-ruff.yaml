@@ -33,15 +33,13 @@ jobs:
       - name: Run pytests
         run: uv run pytest tests
 
-      # No need to run it everytime
       - name: Run stubtests
         run: uv run stubtest validoopsie --allowlist stubtest_allowlist.txt
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
       - name: Run doctests
         run: uv run pytest validoopsie/*.py --doctest-modules
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
+        # No need to run it everytime
       - name: Run Ruff
         run: uv run ruff check validoopsie/
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'

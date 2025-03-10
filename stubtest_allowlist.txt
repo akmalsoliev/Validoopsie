@@ -11,6 +11,7 @@ validoopsie.Validate.__into_narwahlframe__
 validoopsie.Validate.__make_validation_method__
 validoopsie.Validate.__parse_results__
 validoopsie.base.base_validation_wrapper.DataFrame.iter_rows
+validoopsie.base.base_validation_wrapper.TypeVar.__mro_entries__
 validoopsie.base.base_validation_wrapper.Wrapper@103
 validoopsie.validate.Validate.DateValidation
 validoopsie.validate.Validate.EqualityValidation
