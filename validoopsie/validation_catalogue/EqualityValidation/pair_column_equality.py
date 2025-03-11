@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
-@base_validation_wrapper
 class PairColumnEquality(BaseValidationParameters):
     """Check if the pair of columns are equal.
 
@@ -27,7 +26,7 @@ class PairColumnEquality(BaseValidationParameters):
         column: str,
         target_column: str,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         *,
         group_by_combined: bool = True,
         **kwargs: dict[str, object],
@@ -44,7 +43,7 @@ class PairColumnEquality(BaseValidationParameters):
             f"'{self.target_column}'."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the pair of columns are equal."""
         select_columns = [self.column, f"{self.column}-count"]
         gb_cols = (

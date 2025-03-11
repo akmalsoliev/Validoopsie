@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
-@base_validation_wrapper
 class ColumnUniqueValuesToBeInList(BaseValidationParameters):
     """Check if the unique values are in the list.
 
@@ -26,7 +25,7 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
         column: str,
         values: list[str | int | float | None],
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         super().__init__(column, impact, threshold, **kwargs)
@@ -37,7 +36,7 @@ class ColumnUniqueValuesToBeInList(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The column '{self.column}' has unique values that are not in the list."
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the unique values are in the list."""
         return (
             frame.group_by(self.column)

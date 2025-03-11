@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
 import pyarrow as pa
 from narwhals.dtypes import DType
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
-@base_validation_wrapper
 class TypeCheck(BaseValidationParameters):
     """Validate the data type of the column(s).
 
@@ -68,7 +67,7 @@ class TypeCheck(BaseValidationParameters):
         column_type: type | None = None,
         frame_schema_definition: dict[str, type] | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         # Single validation check
@@ -122,7 +121,7 @@ class TypeCheck(BaseValidationParameters):
             f"expected type: {self.column_type}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Validate the data type of the column(s)."""
         schema = frame.schema
         # Introduction of a new structure where the schema len will be used a frame length

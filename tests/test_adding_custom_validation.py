@@ -4,7 +4,7 @@ from narwhals.typing import FrameT, IntoFrame
 
 from tests.utils.create_frames import create_frame_fixture
 from validoopsie import Validate
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
 @create_frame_fixture
@@ -15,13 +15,12 @@ def sample_data() -> dict[str, list]:
     }
 
 
-@base_validation_wrapper
 class MyCustomValidation(BaseValidationParameters):
     def __init__(
         self,
         column: str,
         *args,
-        **kwargs: object,
+        **kwargs: dict[str, object],
     ) -> None:
         super().__init__(column, *args, **kwargs)
 
@@ -60,9 +59,6 @@ class MyCustomValidation(BaseValidationParameters):
         )
 
 
-class FailValidation: ...
-
-
 def test_adding_custom_validation(sample_data: IntoFrame) -> None:
     column_name = "date"
     validation_name = f"{MyCustomValidation.__name__}_{column_name}"
@@ -73,6 +69,9 @@ def test_adding_custom_validation(sample_data: IntoFrame) -> None:
 
     assert results[validation_name]["result"]["status"] == "Success"
     vd.validate()
+
+
+class FailValidation: ...
 
 
 def test_adding_failed_validation(sample_data: IntoFrame) -> None:

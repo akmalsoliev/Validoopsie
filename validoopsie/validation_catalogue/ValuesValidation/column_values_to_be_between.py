@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-@base_validation_wrapper
 class ColumnValuesToBeBetween(BaseValidationParameters):
     """Check if the values in a column are between a range.
 
@@ -36,7 +35,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
         min_value: float | None = None,
         max_value: float | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_value, max_value)
@@ -53,7 +52,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
             f"between {self.min_value} and {self.max_value}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the values in a column are between a range."""
         return (
             min_max_filter(

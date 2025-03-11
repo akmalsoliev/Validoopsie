@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
-@base_validation_wrapper
 class ColumnsSumToBeEqualTo(BaseValidationParameters):
     """Check if the sum of the columns is equal to a specific value.
 
@@ -26,7 +25,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
         columns_list: list[str],
         sum_value: float,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         self.columns_list = columns_list
@@ -39,7 +38,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The columns {self.columns_list} do not sum to {self.sum_value}."
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the sum of the columns is equal to a specific value."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"

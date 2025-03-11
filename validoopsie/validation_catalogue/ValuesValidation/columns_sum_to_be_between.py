@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-@base_validation_wrapper
 class ColumnsSumToBeBetween(BaseValidationParameters):
     """Check if the sum of columns is greater than or equal to `max_sum`.
 
@@ -37,7 +36,7 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
         min_sum_value: float | None = None,
         max_sum_value: float | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_sum_value, max_sum_value)
@@ -56,7 +55,7 @@ class ColumnsSumToBeBetween(BaseValidationParameters):
             f"{self.max_sum_value}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the sum of columns is greater than or equal to `max_sum`."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
