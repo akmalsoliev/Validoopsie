@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class PairColumnEquality(BaseValidationParameters):
+class PairColumnEquality(BaseValidation):
     """Check if the pair of columns are equal.
 
     Parameters:

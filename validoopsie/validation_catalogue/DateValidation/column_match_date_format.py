@@ -6,10 +6,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class ColumnMatchDateFormat(BaseValidationParameters):
+class ColumnMatchDateFormat(BaseValidation):
     """Check if the values in a column match the date format.
 
     Parameters:

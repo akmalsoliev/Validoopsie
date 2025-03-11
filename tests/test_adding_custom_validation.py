@@ -4,7 +4,7 @@ from narwhals.typing import FrameT, IntoFrame
 
 from tests.utils.create_frames import create_frame_fixture
 from validoopsie import Validate
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
 @create_frame_fixture
@@ -15,7 +15,7 @@ def sample_data() -> dict[str, list]:
     }
 
 
-class MyCustomValidation(BaseValidationParameters):
+class MyCustomValidation(BaseValidation):
     def __init__(
         self,
         column: str,

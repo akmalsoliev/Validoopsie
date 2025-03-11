@@ -5,11 +5,11 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
+class ColumnUniqueValueCountToBeBetween(BaseValidation):
     """Check the number of unique values in a column to be between min and max.
 
     If the `min_value` or `max_value` is not provided then other will be used as the

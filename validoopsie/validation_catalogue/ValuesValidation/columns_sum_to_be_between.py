@@ -5,11 +5,11 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-class ColumnsSumToBeBetween(BaseValidationParameters):
+class ColumnsSumToBeBetween(BaseValidation):
     """Check if the sum of columns is greater than or equal to `max_sum`.
 
     If the `min_value` or `max_value` is not provided then other will be used as the

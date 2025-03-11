@@ -21,7 +21,7 @@ from validoopsie.util.base_util_functions import (
 )
 
 
-class BaseValidationParameters:
+class BaseValidation:
     """Base class for validation parameters."""
 
     def __init__(

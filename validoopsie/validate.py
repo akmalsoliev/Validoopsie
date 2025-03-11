@@ -10,7 +10,7 @@ from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
-    from validoopsie.base.base_validation_parameters import BaseValidationParameters
+    from validoopsie.base.base_validation import BaseValidation
 
 
 class Validate:
@@ -125,7 +125,7 @@ class Validate:
 
     def add_validation(
         self,
-        validation: BaseValidationParameters,
+        validation: BaseValidation,
     ) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
@@ -136,11 +136,11 @@ class Validate:
         output_name: str = "InvalidValidationCheck"
 
         try:
-            from validoopsie.base.base_validation_parameters import (
-                BaseValidationParameters,
+            from validoopsie.base.base_validation import (
+                BaseValidation,
             )
 
-            assert isinstance(validation, BaseValidationParameters)
+            assert isinstance(validation, BaseValidation)
         except AssertionError:
             if inspect.isclass(validation):
                 output_name = validation.__name__

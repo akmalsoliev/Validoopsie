@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class ColumnsSumToBeEqualTo(BaseValidationParameters):
+class ColumnsSumToBeEqualTo(BaseValidation):
     """Check if the sum of the columns is equal to a specific value.
 
     Parameters:

@@ -7,10 +7,10 @@ import pyarrow as pa
 from narwhals.dtypes import DType
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class TypeCheck(BaseValidationParameters):
+class TypeCheck(BaseValidation):
     """Validate the data type of the column(s).
 
     Parameters:

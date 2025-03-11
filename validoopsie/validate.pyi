@@ -3,7 +3,7 @@ from typing import Any, Literal, Union
 
 from narwhals.typing import IntoFrame
 
-from validoopsie.base.base_validation_parameters import BaseValidationParameters
+from validoopsie.base.base_validation_parameters import BaseValidation
 
 class Validate:
     frame: IntoFrame
@@ -11,7 +11,7 @@ class Validate:
 
     def __init__(self, frame: IntoFrame) -> None: ...
     def validate(self, *, raise_results: bool = False) -> Validate: ...
-    def add_validation(self, validation: BaseValidationParameters) -> Validate:
+    def add_validation(self, validation: BaseValidation) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
         Args:

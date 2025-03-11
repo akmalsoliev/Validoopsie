@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class ColumnNotBeNull(BaseValidationParameters):
+class ColumnNotBeNull(BaseValidation):
     """Check if the values in a column are not null.
 
     Parameters:

@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class ColumnUniqueValuesToBeInList(BaseValidationParameters):
+class ColumnUniqueValuesToBeInList(BaseValidation):
     """Check if the unique values are in the list.
 
     Parameters:

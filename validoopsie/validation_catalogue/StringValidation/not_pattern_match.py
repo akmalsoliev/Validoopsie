@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class NotPatternMatch(BaseValidationParameters):
+class NotPatternMatch(BaseValidation):
     """Expect the column entries to be strings that do not pattern match.
 
     Parameters:

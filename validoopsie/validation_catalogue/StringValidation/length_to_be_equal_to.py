@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class LengthToBeEqualTo(BaseValidationParameters):
+class LengthToBeEqualTo(BaseValidation):
     """Expect the column entries to be strings with length equal to `value`.
 
     Parameters:

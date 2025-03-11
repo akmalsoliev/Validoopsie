@@ -6,11 +6,11 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-class DateToBeBetween(BaseValidationParameters):
+class DateToBeBetween(BaseValidation):
     """Check if the column date is between min-max range.
 
     If the `min_date` or `max_date` is not provided then other will be used as the

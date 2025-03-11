@@ -5,10 +5,10 @@ from typing import Literal
 import narwhals as nw
 from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters
+from validoopsie.base import BaseValidation
 
 
-class ColumnUniquePair(BaseValidationParameters):
+class ColumnUniquePair(BaseValidation):
     """Validates the uniqueness of combined values from multiple columns.
 
     This class checks if the combination of values from specified columns creates unique
