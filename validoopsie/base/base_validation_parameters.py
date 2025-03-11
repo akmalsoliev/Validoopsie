@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import Any, Literal, Optional, TypeVar
+from typing import Any, Literal
 
 import narwhals as nw
 from narwhals.dataframe import DataFrame

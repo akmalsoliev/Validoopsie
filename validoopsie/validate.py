@@ -134,8 +134,8 @@ class Validate:
 
         """
         output_name: str = "InvalidValidationCheck"
+        class_name = validation.__class__.__name__
         if hasattr(validation, "__execute_check__"):
-            class_name = validation.__class__.__name__
             try:
                 result = validation.__execute_check__(frame=self.frame)
                 column_name = validation.column
@@ -153,7 +153,7 @@ class Validate:
             result = {
                 "result": {
                     "status": "Fail",
-                    "message": f"{validation.__name__} is not a valid validation check.",
+                    "message": f"{class_name} is not a valid validation check.",
                 },
             }
             if inspect.isclass(validation):
