@@ -134,30 +134,37 @@ class Validate:
 
         """
         output_name: str = "InvalidValidationCheck"
-        class_name = validation.__class__.__name__
-        if hasattr(validation, "__execute_check__"):
-            try:
-                result = validation.__execute_check__(frame=self.frame)
-                column_name = validation.column
-                output_name = f"{class_name}_{column_name}"
-            except Exception:
-                result = {
-                    "result": {
-                        "status": "Fail",
-                        "message": (
-                            f"An error occured while executing {class_name} - {{e!s}}"
-                        ),
-                    },
-                }
-        else:
+
+        try:
+            from validoopsie.base.base_validation_parameters import (
+                BaseValidationParameters,
+            )
+
+            assert isinstance(validation, BaseValidationParameters)
+        except AssertionError:
+            if inspect.isclass(validation):
+                output_name = validation.__name__
             result = {
                 "result": {
                     "status": "Fail",
-                    "message": f"{class_name} is not a valid validation check.",
+                    "message": f"{output_name} is not a valid validation check.",
                 },
             }
-            if inspect.isclass(validation):
-                output_name = validation.__name__
+            self.__parse_results__(result, output_name)
+            return self
+
+        class_name = validation.__class__.__name__
+        try:
+            result = validation.__execute_check__(frame=self.frame)
+            column_name = validation.column
+            output_name = f"{class_name}_{column_name}"
+        except Exception as e:
+            result = {
+                "result": {
+                    "status": "Fail",
+                    "message": (f"An error occured while executing {class_name} - {e!s}"),
+                },
+            }
 
         self.__parse_results__(result, output_name)
         return self
