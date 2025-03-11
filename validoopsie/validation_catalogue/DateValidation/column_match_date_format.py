@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import re
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidationParameters
 
 
-@base_validation_wrapper
 class ColumnMatchDateFormat(BaseValidationParameters):
     """Check if the values in a column match the date format.
 
@@ -20,6 +19,37 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame(
+        ...   {"dates_column": ["2022-01-01", "2022-01-02", "2022-01-03"]}
+        ... )
+        >>> frame = nw.from_native(df)
+        >>> validator = ColumnMatchDateFormat("dates_column", date_format="YYYY-mm-dd")
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        # With a failing case
+        >>> df_with_error = pd.DataFrame(
+        ...     {"dates_column": ["2022-01-01", "2022-01-02", "2024/12/12"]}
+        ... )
+        >>> frame_with_error = nw.from_native(df_with_error)
+        >>> validator = ColumnMatchDateFormat("dates_column", date_format="YYYY-mm-dd")
+        >>> result = validator.__execute_check__(frame=frame_with_error)
+        >>> result["result"]["status"]
+        'Fail'
+
+        # With threshold allowing some failures
+        >>> validator_with_threshold = ColumnMatchDateFormat(
+        ...     column="dates_column",
+        ...     date_format="YYYY-mm-dd",
+        ...     threshold=0.5
+        ... )
+        >>> result = validator_with_threshold.__execute_check__(frame=frame_with_error)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(
@@ -27,7 +57,7 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         column: str,
         date_format: str,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         self.date_format = date_format
@@ -38,7 +68,7 @@ class ColumnMatchDateFormat(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The column '{self.column}' has unique values that are not in the list."
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the values in a column match the date format."""
         date_patterns = re.findall(r"[Ymd]+", self.date_format)
         separators = re.findall(r"[^Ymd]+", self.date_format)
