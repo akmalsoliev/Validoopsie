@@ -26,6 +26,37 @@ class ColumnUniqueValueCountToBeBetween(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "strings": ["A", "A", "A", "B", "B", "C", "D", "E"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - more than 2 unique values
+        >>> validator = ColumnUniqueValueCountToBeBetween("strings", max_value=2)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case - between 1 and 10 unique values
+        >>> validator = ColumnUniqueValueCountToBeBetween(
+        ...     "strings", min_value=1, max_value=10
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case with threshold
+        >>> validator = ColumnUniqueValueCountToBeBetween(
+        ...     column="strings",
+        ...     max_value=2,
+        ...     threshold=0.6
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

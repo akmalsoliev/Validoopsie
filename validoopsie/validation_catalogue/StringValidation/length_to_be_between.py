@@ -26,6 +26,59 @@ class LengthToBeBetween(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "strings1": ["12345", "abcde", "1b3d5", "1234", "4321"],
+        ...     "strings2": ["A", "13579", "24680", "12345", "abcde"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Success case - all strings have lengths between 1 and 5
+        >>> validator = LengthToBeBetween(
+        ...     "strings2",
+        ...     min_value=1,
+        ...     max_value=5
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Failing case - some strings are outside length range
+        >>> validator = LengthToBeBetween("strings1", min_value=1, max_value=4)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # With threshold allowing some failures
+        >>> validator_with_threshold = LengthToBeBetween(
+        ...     column="strings1",
+        ...     min_value=1,
+        ...     max_value=4,
+        ...     threshold=0.6
+        ... )
+        >>> result = validator_with_threshold.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # With only min_value specified
+        >>> min_validator = LengthToBeBetween(
+        ...     column="strings1",
+        ...     min_value=4
+        ... )
+        >>> result = min_validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # With only max_value specified
+        >>> max_validator = LengthToBeBetween(
+        ...     column="strings2",
+        ...     max_value=5
+        ... )
+        >>> result = max_validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

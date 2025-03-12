@@ -22,43 +22,68 @@ class TypeCheck(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> from narwhals.dtypes import Boolean, FloatType, IntegerType, String
+        >>> df = pd.DataFrame({
+        ...     "IntegerType": [1, -15, 32, 64, 128],
+        ...     "FloatType": [1.23, -45.67, 0.01, 3.14159, 2.71828],
+        ...     "String": ["hello", "world", "narwhals", "data", "type"],
+        ...     "Boolean": [True, False, True, False, True]
+        ... })
+        >>> frame = nw.from_native(df)
 
-    ```python
-    import pandas as pd
-    from narwhals.dtypes import (
-        FloatType,
-        IntegerType,
-        String,
-    )
+        >>> # Success case - checking a single column with correct type
+        >>> validator = TypeCheck(column="IntegerType", column_type=IntegerType)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
 
-    from validoopsie import Validate
+        >>> # Failing case - checking a single column with incorrect type
+        >>> validator = TypeCheck(column="IntegerType", column_type=FloatType)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
 
-    df = pd.DataFrame(
-        {
-            "IntType": [1, -15],
-            "FloatType": [1.23, -45.67],
-            "String": ["hello", "world"],
-        },
-    )
+        >>> # Multiple column validation - all types correct
+        >>> frame_schema_definition = {
+        ...     "IntegerType": IntegerType,
+        ...     "FloatType": FloatType,
+        ...     "String": String,
+        ...     "Boolean": Boolean,
+        ... }
+        >>> validator = TypeCheck(frame_schema_definition=frame_schema_definition)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
 
-    # Single validation check
-    vd = Validate(df)
-    vd.TypeValidation.TypeCheck(
-        column="IntType",
-        column_type=IntegerType,
-    )
+        >>> # Multiple column validation - with errors
+        >>> frame_schema_definition = {
+        ...     "IntegerType": IntegerType,
+        ...     "FloatType": FloatType,
+        ...     "String": FloatType,  # Intentional error
+        ...     "Boolean": Boolean
+        ... }
+        >>> validator = TypeCheck(frame_schema_definition=frame_schema_definition)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
 
-    # or you can always use the dictionary
-    column_type_definitions = {
-        "IntType": IntegerType,
-        "FloatType": FloatType,
-        "String": String,
-    }
-    vd.TypeValidation.TypeCheck(
-        frame_schema_definition=column_type_definitions,
-    )
-    ```
-
+        >>> # With threshold allowing some failures
+        >>> frame_schema_definition = {
+        ...     "IntegerType": FloatType,  # Intentional error
+        ...     "FloatType": FloatType,
+        ...     "String": String,
+        ...     "Boolean": Boolean,
+        ... }
+        >>> validator = TypeCheck(
+        ...     frame_schema_definition=frame_schema_definition,
+        ...     threshold=0.75
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

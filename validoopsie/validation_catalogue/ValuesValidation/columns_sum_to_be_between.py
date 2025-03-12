@@ -28,6 +28,47 @@ class ColumnsSumToBeBetween(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "A": [1, 2, 3, 4, 5],
+        ...     "B": [5, 4, 3, 2, 1],
+        ...     "D": [5, 4, 3, 2, 0]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - sum not greater than 25
+        >>> validator = ColumnsSumToBeBetween(["A", "B"], min_sum_value=25)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case - sum greater than 6
+        >>> validator = ColumnsSumToBeBetween(["A", "B"], min_sum_value=6)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case - sum between 3 and 10
+        >>> validator = ColumnsSumToBeBetween(
+        ...     columns_list=["A", "B"],
+        ...     min_sum_value=3,
+        ...     max_sum_value=10
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case with threshold
+        >>> validator = ColumnsSumToBeBetween(
+        ...     columns_list=["A", "D"],
+        ...     min_sum_value=6,
+        ...     threshold=0.5
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

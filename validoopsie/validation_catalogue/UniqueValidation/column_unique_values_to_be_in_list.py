@@ -18,6 +18,40 @@ class ColumnUniqueValuesToBeInList(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> berlin = ["Berlin"] * 4
+        >>> rome = ["Rome"] * 5
+        >>> df = pd.DataFrame({
+        ...     "cities": berlin + rome + ["Paris"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - Paris is not in the allowed list
+        >>> validator = ColumnUniqueValuesToBeInList("cities", ["Berlin", "Rome"])
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case with threshold
+        >>> validator = ColumnUniqueValuesToBeInList(
+        ...     column="cities",
+        ...     values=["Berlin", "Rome"],
+        ...     threshold=0.5
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case - all values in the allowed list
+        >>> validator = ColumnUniqueValuesToBeInList(
+        ...     column="cities",
+        ...     values=["Paris", "Rome", "Berlin"]
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

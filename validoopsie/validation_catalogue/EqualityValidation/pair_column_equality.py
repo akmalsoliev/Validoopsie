@@ -19,6 +19,35 @@ class PairColumnEquality(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "column_a": [1, 2, 3, 4, 5],
+        ...     "column_b": [1, 2, 3, 4, 5],
+        ...     "column_c": [1, 2, 6, 4, 5]
+        ... })
+        >>> frame = nw.from_native(df)
+        >>> validator = PairColumnEquality("column_a", target_column="column_b")
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Failing case - some values don't match
+        >>> validator = PairColumnEquality("column_a", target_column="column_c")
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # With threshold allowing some failures
+        >>> validator_with_threshold = PairColumnEquality(
+        ...     column="column_a",
+        ...     target_column="column_c",
+        ...     threshold=0.4
+        ... )
+        >>> result = validator_with_threshold.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

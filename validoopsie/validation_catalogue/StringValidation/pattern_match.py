@@ -18,6 +18,36 @@ class PatternMatch(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "codes": ["ABC001", "ABC002", "DEF001", "XYZ999", "LMNO12"],
+        ...     "numbers": ["123", "456", "789", "101112", "131415"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Success case - all values match regex pattern
+        >>> validator = PatternMatch("numbers", pattern="^[0-9]+$")
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Failing case - some values don't match pattern
+        >>> validator = PatternMatch("codes", pattern="^ABC")
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # With threshold allowing some failures
+        >>> validator_with_threshold = PatternMatch(
+        ...     column="codes",
+        ...     pattern="^ABC",
+        ...     threshold=0.6
+        ... )
+        >>> result = validator_with_threshold.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

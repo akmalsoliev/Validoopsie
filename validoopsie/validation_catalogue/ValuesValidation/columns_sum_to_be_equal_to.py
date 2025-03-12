@@ -18,6 +18,37 @@ class ColumnsSumToBeEqualTo(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "A": [1, 2, 3, 4, 5],
+        ...     "B": [5, 4, 3, 2, 1],
+        ...     "D": [5, 4, 3, 2, 2]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Success case - A + B sums to 6 in all rows
+        >>> validator = ColumnsSumToBeEqualTo(["A", "B"], sum_value=6)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Failing case - A + D does not sum to 6 in all rows
+        >>> validator = ColumnsSumToBeEqualTo(["A", "D"], sum_value=6)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case with threshold
+        >>> validator = ColumnsSumToBeEqualTo(
+        ...     columns_list=["A", "D"],
+        ...     sum_value=6,
+        ...     threshold=0.5
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

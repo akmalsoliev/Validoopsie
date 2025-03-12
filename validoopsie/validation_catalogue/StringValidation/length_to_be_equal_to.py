@@ -18,6 +18,36 @@ class LengthToBeEqualTo(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "strings1": ["12345", "abcde", "1b3d5", "1234", "4321"],
+        ...     "strings2": ["AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - some strings do not have the expected length
+        >>> validator = LengthToBeEqualTo("strings1", value=5)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case - all strings have the expected length
+        >>> validator = LengthToBeEqualTo("strings2", value=5)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # With threshold allowing some failures
+        >>> validator_with_threshold = LengthToBeEqualTo(
+        ...     column="strings1",
+        ...     value=5,
+        ...     threshold=0.6
+        ... )
+        >>> result = validator_with_threshold.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

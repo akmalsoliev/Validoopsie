@@ -27,6 +27,40 @@ class DateToBeBetween(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> from datetime import date
+        >>> df = pd.DataFrame(
+        ...     {"dates_column": [date(2023, 1, 1), date(2023, 2, 15), date(2023, 5, 15)]}
+        ... )
+        >>> frame = nw.from_native(df)
+        >>> validator = DateToBeBetween(
+        ...     "dates_column",
+        ...     min_date=date(2023, 1, 1),
+        ...     max_date=date(2023, 5, 15)
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        # With only min_date specified
+        >>> min_validator = DateToBeBetween(
+        ...     column="dates_column",
+        ...     min_date=date(2023, 1, 1)
+        ... )
+        >>> result = min_validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        # With only max_date specified
+        >>> max_validator = DateToBeBetween(
+        ...     column="dates_column",
+        ...     max_date=date(2023, 5, 15)
+        ... )
+        >>> result = max_validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

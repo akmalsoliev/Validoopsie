@@ -22,6 +22,34 @@ class ColumnUniquePair(BaseValidation):
       impact (Literal["low", "medium", "high"], optional): Impact level of validation.
           Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "first_name": ["John", "Jane", "John", "Alice", "Bob"],
+        ...     "last_name": ["Doe", "Smith", "Smith", "Johnson", "Wilson"],
+        ...     "age": [30, 25, 35, 28, 42],
+        ...     "city": ["NY", "LA", "NY", "Chicago", "Boston"]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - first_name and city have duplicates
+        >>> validator = ColumnUniquePair(["first_name", "city"])
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case - first_name and age combinations are unique
+        >>> validator = ColumnUniquePair(["first_name", "age"])
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case with multiple columns
+        >>> validator = ColumnUniquePair(["first_name", "last_name", "city"])
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(

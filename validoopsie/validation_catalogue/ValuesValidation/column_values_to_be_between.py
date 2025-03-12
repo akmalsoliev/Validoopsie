@@ -27,6 +27,43 @@ class ColumnValuesToBeBetween(BaseValidation):
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> import narwhals as nw
+        >>> df = pd.DataFrame({
+        ...     "A": [1, 2, 3, 4, 5],
+        ...     "B": [1.0, 2.0, 3.0, 4.0, 5.0]
+        ... })
+        >>> frame = nw.from_native(df)
+
+        >>> # Failing case - not all values between 1 and 2
+        >>> validator = ColumnValuesToBeBetween("A", min_value=1, max_value=2)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Fail'
+
+        >>> # Success case with threshold
+        >>> validator = ColumnValuesToBeBetween(
+        ...     column="A",
+        ...     min_value=1,
+        ...     max_value=2,
+        ...     threshold=0.6
+        ... )
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case - all values between 1 and 5
+        >>> validator = ColumnValuesToBeBetween("A", min_value=1, max_value=5)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
+
+        >>> # Success case with only min_value
+        >>> validator = ColumnValuesToBeBetween("A", min_value=1)
+        >>> result = validator.__execute_check__(frame=frame)
+        >>> result["result"]["status"]
+        'Success'
     """
 
     def __init__(
