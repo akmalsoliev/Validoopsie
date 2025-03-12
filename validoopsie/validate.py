@@ -169,7 +169,7 @@ class Validate:
         self.__parse_results__(result, output_name)
         return self
 
-    def validate(self, *, raise_results: bool = False) -> Validate:
+    def validate(self, *, raise_results: bool = False):
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
@@ -219,4 +219,3 @@ class Validate:
                 value_error_msg = f"{value_error_msg}\n{json_results}"
 
             raise ValueError(value_error_msg)
-        return self
