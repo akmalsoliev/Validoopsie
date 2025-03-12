@@ -3,7 +3,7 @@ from typing import Any, Literal, Union
 
 from narwhals.typing import IntoFrame
 
-from validoopsie.base.base_validation_parameters import BaseValidation
+from validoopsie.base.base_validation import BaseValidation
 
 class Validate:
     frame: IntoFrame
