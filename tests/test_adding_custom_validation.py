@@ -1,3 +1,5 @@
+from typing import Literal
+
 import narwhals as nw
 import pytest
 from narwhals.typing import FrameT, IntoFrame
@@ -19,10 +21,11 @@ class MyCustomValidation(BaseValidation):
     def __init__(
         self,
         column: str,
-        *args,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
 
     @property
     def fail_message(self) -> str:
