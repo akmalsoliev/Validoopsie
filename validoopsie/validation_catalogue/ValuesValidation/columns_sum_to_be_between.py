@@ -18,11 +18,11 @@ class ColumnsSumToBeBetween(BaseValidation):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Parameters:
+    Args:
         columns_list (list[str]): List of columns to sum.
-        max_sum_value (float | None): Minimum sum value that columns should be greater
+        min_sum_value (float | None): Minimum sum value that columns should be greater
             than or equal to.
-        min_sum_value (float | None): Maximum sum value that columns should be less than
+        max_sum_value (float | None): Maximum sum value that columns should be less than
             or equal to.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
@@ -30,45 +30,30 @@ class ColumnsSumToBeBetween(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate macronutrient sum in range
         >>> df = pd.DataFrame({
-        ...     "A": [1, 2, 3, 4, 5],
-        ...     "B": [5, 4, 3, 2, 1],
-        ...     "D": [5, 4, 3, 2, 0]
+        ...     "protein": [26],
+        ...     "fat": [19],
+        ...     "carbs": [0]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - sum not greater than 25
-        >>> validator = ColumnsSumToBeBetween(["A", "B"], min_sum_value=25)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case - sum greater than 6
-        >>> validator = ColumnsSumToBeBetween(["A", "B"], min_sum_value=6)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Success case - sum between 3 and 10
-        >>> validator = ColumnsSumToBeBetween(
-        ...     columns_list=["A", "B"],
-        ...     min_sum_value=3,
-        ...     max_sum_value=10
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .ValuesValidation.ColumnsSumToBeBetween(
+        ...         columns_list=["protein", "fat", "carbs"],
+        ...         min_sum_value=30,
+        ...         max_sum_value=50
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnsSumToBeBetween_protein-fat-carbs-combined"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        >>> # Success case with threshold
-        >>> validator = ColumnsSumToBeBetween(
-        ...     columns_list=["A", "D"],
-        ...     min_sum_value=6,
-        ...     threshold=0.5
-        ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

@@ -13,77 +13,45 @@ from validoopsie.base import BaseValidation
 class TypeCheck(BaseValidation):
     """Validate the data type of the column(s).
 
-    Parameters:
+    Args:
         column (str | None): The column to validate.
         column_type (type | None): The type of validation to perform.
-        frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary of
-            column names and their respective validation types.
+        frame_schema_definition (dict[str, type] | None): A dictionary
+            of column names and their respective validation types.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
-        >>> from narwhals.dtypes import Boolean, FloatType, IntegerType, String
+        >>> from validoopsie import Validate
+        >>> from narwhals.dtypes import IntegerType, FloatType, String
+        >>>
+        >>> # Validate column types
         >>> df = pd.DataFrame({
-        ...     "IntegerType": [1, -15, 32, 64, 128],
-        ...     "FloatType": [1.23, -45.67, 0.01, 3.14159, 2.71828],
-        ...     "String": ["hello", "world", "narwhals", "data", "type"],
-        ...     "Boolean": [True, False, True, False, True]
+        ...     "id": [1001, 1002, 1003],
+        ...     "name": ["Alice", "Bob", "Charlie"],
+        ...     "balance": [100.50, 250.75, 0.00]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Success case - checking a single column with correct type
-        >>> validator = TypeCheck(column="IntegerType", column_type=IntegerType)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Failing case - checking a single column with incorrect type
-        >>> validator = TypeCheck(column="IntegerType", column_type=FloatType)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Multiple column validation - all types correct
-        >>> frame_schema_definition = {
-        ...     "IntegerType": IntegerType,
-        ...     "FloatType": FloatType,
-        ...     "String": String,
-        ...     "Boolean": Boolean,
-        ... }
-        >>> validator = TypeCheck(frame_schema_definition=frame_schema_definition)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Multiple column validation - with errors
-        >>> frame_schema_definition = {
-        ...     "IntegerType": IntegerType,
-        ...     "FloatType": FloatType,
-        ...     "String": FloatType,  # Intentional error
-        ...     "Boolean": Boolean
-        ... }
-        >>> validator = TypeCheck(frame_schema_definition=frame_schema_definition)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # With threshold allowing some failures
-        >>> frame_schema_definition = {
-        ...     "IntegerType": FloatType,  # Intentional error
-        ...     "FloatType": FloatType,
-        ...     "String": String,
-        ...     "Boolean": Boolean,
-        ... }
-        >>> validator = TypeCheck(
-        ...     frame_schema_definition=frame_schema_definition,
-        ...     threshold=0.75
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .TypeValidation.TypeCheck(
+        ...         frame_schema_definition={
+        ...             "id": IntegerType,
+        ...             "name": String,
+        ...             "balance": FloatType
+        ...         }
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>>
+        >>> key = "TypeCheck_DataTypeColumnValidation"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+
     """
 
     def __init__(

@@ -11,7 +11,7 @@ from validoopsie.base import BaseValidation
 class ColumnsSumToBeEqualTo(BaseValidation):
     """Check if the sum of the columns is equal to a specific value.
 
-    Parameters:
+    Args:
         columns_list (list[str]): List of columns to sum.
         sum_value (float): Value that the columns should sum to.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
@@ -20,35 +20,29 @@ class ColumnsSumToBeEqualTo(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate component sum equals total
         >>> df = pd.DataFrame({
-        ...     "A": [1, 2, 3, 4, 5],
-        ...     "B": [5, 4, 3, 2, 1],
-        ...     "D": [5, 4, 3, 2, 2]
+        ...     "hardware": [5000],
+        ...     "software": [3000],
+        ...     "personnel": [12000],
+        ...     "total": [20000]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Success case - A + B sums to 6 in all rows
-        >>> validator = ColumnsSumToBeEqualTo(["A", "B"], sum_value=6)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Failing case - A + D does not sum to 6 in all rows
-        >>> validator = ColumnsSumToBeEqualTo(["A", "D"], sum_value=6)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case with threshold
-        >>> validator = ColumnsSumToBeEqualTo(
-        ...     columns_list=["A", "D"],
-        ...     sum_value=6,
-        ...     threshold=0.5
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .ValuesValidation.ColumnsSumToBeEqualTo(
+        ...         columns_list=["hardware", "software", "personnel"],
+        ...         sum_value=20000
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnsSumToBeEqualTo_hardware-software-personnel-combined"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
     """
 
     def __init__(

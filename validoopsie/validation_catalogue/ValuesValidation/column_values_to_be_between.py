@@ -19,7 +19,7 @@ class ColumnValuesToBeBetween(BaseValidation):
     in failure.
 
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         min_value (float | None): Minimum value for a column entry length.
         max_value (float | None): Maximum value for a column entry length.
@@ -29,41 +29,28 @@ class ColumnValuesToBeBetween(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate numeric range
         >>> df = pd.DataFrame({
-        ...     "A": [1, 2, 3, 4, 5],
-        ...     "B": [1.0, 2.0, 3.0, 4.0, 5.0]
+        ...     "age": [25, 30, 42, 18, 65]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - not all values between 1 and 2
-        >>> validator = ColumnValuesToBeBetween("A", min_value=1, max_value=2)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case with threshold
-        >>> validator = ColumnValuesToBeBetween(
-        ...     column="A",
-        ...     min_value=1,
-        ...     max_value=2,
-        ...     threshold=0.6
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .ValuesValidation.ColumnValuesToBeBetween(
+        ...         column="age",
+        ...         min_value=18,
+        ...         max_value=65
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnValuesToBeBetween_age"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        >>> # Success case - all values between 1 and 5
-        >>> validator = ColumnValuesToBeBetween("A", min_value=1, max_value=5)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Success case with only min_value
-        >>> validator = ColumnValuesToBeBetween("A", min_value=1)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

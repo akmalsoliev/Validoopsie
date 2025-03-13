@@ -12,7 +12,7 @@ from validoopsie.base import BaseValidation
 class ColumnMatchDateFormat(BaseValidation):
     """Check if the values in a column match the date format.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         date_format (str): Date format to check.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
@@ -21,35 +21,41 @@ class ColumnMatchDateFormat(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
-        >>> df = pd.DataFrame(
-        ...   {"dates_column": ["2022-01-01", "2022-01-02", "2022-01-03"]}
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate dates match format
+        >>> df = pd.DataFrame({
+        ...     "dates_iso": ["2023-01-01", "2023-02-15", "2023-03-30"],
+        ...     "dates_mixed": ["2023-01-01", "02/15/2023", "2023-03-30"]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .DateValidation.ColumnMatchDateFormat(
+        ...         column="dates_iso",
+        ...         date_format="YYYY-mm-dd"
+        ...     )
         ... )
-        >>> frame = nw.from_native(df)
-        >>> validator = ColumnMatchDateFormat("dates_column", date_format="YYYY-mm-dd")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnMatchDateFormat_dates_iso"
+        >>> vd.results[key]["result"]["status"]
         'Success'
 
-        # With a failing case
-        >>> df_with_error = pd.DataFrame(
-        ...     {"dates_column": ["2022-01-01", "2022-01-02", "2024/12/12"]}
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+        >>>
+        >>> # With threshold allowing some failures
+        >>> vd2 = (
+        ...     Validate(df)
+        ...     .DateValidation.ColumnMatchDateFormat(
+        ...         column="dates_mixed",
+        ...         date_format="YYYY-mm-dd",
+        ...         threshold=0.4  # Allow 40% failure rate
+        ...     )
         ... )
-        >>> frame_with_error = nw.from_native(df_with_error)
-        >>> validator = ColumnMatchDateFormat("dates_column", date_format="YYYY-mm-dd")
-        >>> result = validator.__execute_check__(frame=frame_with_error)
-        >>> result["result"]["status"]
-        'Fail'
-
-        # With threshold allowing some failures
-        >>> validator_with_threshold = ColumnMatchDateFormat(
-        ...     column="dates_column",
-        ...     date_format="YYYY-mm-dd",
-        ...     threshold=0.5
-        ... )
-        >>> result = validator_with_threshold.__execute_check__(frame=frame_with_error)
-        >>> result["result"]["status"]
+        >>> key2 = "ColumnMatchDateFormat_dates_mixed"
+        >>> vd2.results[key2]["result"]["status"]
         'Success'
+
     """
 
     def __init__(

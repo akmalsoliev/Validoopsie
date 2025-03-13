@@ -11,7 +11,7 @@ from validoopsie.base import BaseValidation
 class LengthToBeEqualTo(BaseValidation):
     """Expect the column entries to be strings with length equal to `value`.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         value (int): The expected value for a column entry length.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
@@ -20,34 +20,27 @@ class LengthToBeEqualTo(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate fixed-length codes
         >>> df = pd.DataFrame({
-        ...     "strings1": ["12345", "abcde", "1b3d5", "1234", "4321"],
-        ...     "strings2": ["AAAAA", "BBBBB", "CCCCC", "DDDDD", "EEEEE"]
+        ...     "country_code": ["US", "UK", "FR"]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - some strings do not have the expected length
-        >>> validator = LengthToBeEqualTo("strings1", value=5)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case - all strings have the expected length
-        >>> validator = LengthToBeEqualTo("strings2", value=5)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # With threshold allowing some failures
-        >>> validator_with_threshold = LengthToBeEqualTo(
-        ...     column="strings1",
-        ...     value=5,
-        ...     threshold=0.6
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .StringValidation.LengthToBeEqualTo(
+        ...         column="country_code",
+        ...         value=2
+        ...     )
         ... )
-        >>> result = validator_with_threshold.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "LengthToBeEqualTo_country_code"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+
     """
 
     def __init__(

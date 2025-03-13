@@ -113,7 +113,6 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
                 >>> # Validate dates match format
@@ -121,10 +120,9 @@ class Validate:
                 ...     "dates_iso": ["2023-01-01", "2023-02-15", "2023-03-30"],
                 ...     "dates_mixed": ["2023-01-01", "02/15/2023", "2023-03-30"]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .DateValidation.ColumnMatchDateFormat(
                 ...         column="dates_iso",
                 ...         date_format="YYYY-mm-dd"
@@ -139,7 +137,7 @@ class Validate:
                 >>>
                 >>> # With threshold allowing some failures
                 >>> vd2 = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .DateValidation.ColumnMatchDateFormat(
                 ...         column="dates_mixed",
                 ...         date_format="YYYY-mm-dd",
@@ -230,7 +228,6 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
                 >>> # Validate columns match
@@ -238,10 +235,9 @@ class Validate:
                 ...     "amount": [100, 200, 300],
                 ...     "verified_amount": [100, 200, 300]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .EqualityValidation.PairColumnEquality(
                 ...         column="amount",
                 ...         target_column="verified_amount"
@@ -276,19 +272,16 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
-                >>> import numpy as np
                 >>>
                 >>> # Validate field contains only nulls
                 >>> df = pd.DataFrame({
                 ...     "id": [1, 2, 3],
                 ...     "optional_field": [None, None, None]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .NullValidation.ColumnBeNull(column="optional_field")
                 ... )
                 >>> key = "ColumnBeNull_optional_field"
@@ -319,7 +312,6 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
                 >>> # Validate field has no nulls
@@ -327,10 +319,9 @@ class Validate:
                 ...     "id": [1, 2, 3],
                 ...     "required_field": ["a", "b", "c"]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .NullValidation.ColumnNotBeNull(column="required_field")
                 ... )
                 >>> key = "ColumnNotBeNull_required_field"
@@ -420,23 +411,21 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
-                >>> # Validate fixed-length codes
+                >>> # Validate text doesn't contain pattern
                 >>> df = pd.DataFrame({
-                ...     "country_code": ["US", "UK", "FR"]
+                ...     "comment": ["Great product!", "Normal comment", "Just okay"]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
-                ...     .StringValidation.LengthToBeEqualTo(
-                ...         column="country_code",
-                ...         value=2
+                ...     Validate(df)
+                ...     .StringValidation.NotPatternMatch(
+                ...         column="comment",
+                ...         pattern=r"password"
                 ...     )
                 ... )
-                >>> key = "LengthToBeEqualTo_country_code"
+                >>> key = "NotPatternMatch_comment"
                 >>> vd.results[key]["result"]["status"]
                 'Success'
                 >>>
@@ -466,17 +455,15 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
                 >>> # Validate text doesn't contain pattern
                 >>> df = pd.DataFrame({
                 ...     "comment": ["Great product!", "Normal comment", "Just okay"]
                 ... })
-                >>> frame = nw.from_native(df)
                 >>>
                 >>> vd = (
-                ...     Validate(frame)
+                ...     Validate(df)
                 ...     .StringValidation.NotPatternMatch(
                 ...         column="comment",
                 ...         pattern=r"password"
@@ -549,10 +536,10 @@ class Validate:
             Implementation:
                 :class:`validoopsie.validation_catalogue.TypeValidation.type_check.TypeCheck`
 
-            Parameters:
+            Args:
                 column (str | None): The column to validate.
                 column_type (type | None): The type of validation to perform.
-                frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary
+                frame_schema_definition (dict[str, type] | None): A dictionary
                     of column names and their respective validation types.
                 threshold (float, optional): Threshold for validation. Defaults to 0.0.
                 impact (Literal["low", "medium", "high"], optional): Impact level of
@@ -606,12 +593,12 @@ class Validate:
             unique entries in the dataset. For example, if checking columns ['first_name',
             'last_name'], the combination of these values should be unique for each row.
 
-            Parameters
-              column_list (list | tuple): List or tuple of column names to check for
-                  unique combinations.
-              threshold (float, optional): Threshold for validation. Defaults to 0.0.
-              impact (Literal["low", "medium", "high"], optional): Impact level of
-                  validation. Defaults to "low".
+            Args:
+                column_list (list | tuple): List or tuple of column names to check for
+                    unique combinations.
+                threshold (float, optional): Threshold for validation. Defaults to 0.0.
+                impact (Literal["low", "medium", "high"], optional): Impact level of
+                    validation. Defaults to "low".
 
             Examples:
                 >>> import pandas as pd
@@ -765,7 +752,6 @@ class Validate:
 
             Examples:
                 >>> import pandas as pd
-                >>> import narwhals as nw
                 >>> from validoopsie import Validate
                 >>>
                 >>> # Validate numeric range
@@ -782,53 +768,6 @@ class Validate:
                 ...     )
                 ... )
                 >>> key = "ColumnValuesToBeBetween_age"
-                >>> vd.results[key]["result"]["status"]
-                'Success'
-                >>>
-                >>> # When calling validate on successful validation there is no error.
-                >>> vd.validate()
-
-            """
-
-        @staticmethod
-        def ColumnsSumToBeEqualTo(
-            columns_list: list[str],
-            sum_value: float,
-            threshold: float = 0.00,
-            impact: Literal["low", "medium", "high"] = "low",
-        ) -> Validate:
-            """Check if the sum of the columns is equal to a specific value.
-
-            Implementation:
-                :class:`validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_equal_to.ColumnsSumToBeEqualTo`
-
-            Args:
-                columns_list (list[str]): List of columns to sum.
-                sum_value (float): Value that the columns should sum to.
-                threshold (float, optional): Threshold for validation. Defaults to 0.0.
-                impact (Literal["low", "medium", "high"], optional): Impact level of
-                    validation. Defaults to "low".
-
-            Examples:
-                >>> import pandas as pd
-                >>> from validoopsie import Validate
-                >>>
-                >>> # Validate component sum equals total
-                >>> df = pd.DataFrame({
-                ...     "hardware": [5000],
-                ...     "software": [3000],
-                ...     "personnel": [12000],
-                ...     "total": [20000]
-                ... })
-                >>>
-                >>> vd = (
-                ...     Validate(df)
-                ...     .ValuesValidation.ColumnsSumToBeEqualTo(
-                ...         columns_list=["hardware", "software", "personnel"],
-                ...         sum_value=20000
-                ...     )
-                ... )
-                >>> key = "ColumnsSumToBeEqualTo_hardware-software-personnel-combined"
                 >>> vd.results[key]["result"]["status"]
                 'Success'
                 >>>
@@ -894,3 +833,49 @@ class Validate:
 
             """
 
+        @staticmethod
+        def ColumnsSumToBeEqualTo(
+            columns_list: list[str],
+            sum_value: float,
+            threshold: float = 0.00,
+            impact: Literal["low", "medium", "high"] = "low",
+        ) -> Validate:
+            """Check if the sum of the columns is equal to a specific value.
+
+            Implementation:
+                :class:`validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_equal_to.ColumnsSumToBeEqualTo`
+
+            Args:
+                columns_list (list[str]): List of columns to sum.
+                sum_value (float): Value that the columns should sum to.
+                threshold (float, optional): Threshold for validation. Defaults to 0.0.
+                impact (Literal["low", "medium", "high"], optional): Impact level of
+                    validation. Defaults to "low".
+
+            Examples:
+                >>> import pandas as pd
+                >>> from validoopsie import Validate
+                >>>
+                >>> # Validate component sum equals total
+                >>> df = pd.DataFrame({
+                ...     "hardware": [5000],
+                ...     "software": [3000],
+                ...     "personnel": [12000],
+                ...     "total": [20000]
+                ... })
+                >>>
+                >>> vd = (
+                ...     Validate(df)
+                ...     .ValuesValidation.ColumnsSumToBeEqualTo(
+                ...         columns_list=["hardware", "software", "personnel"],
+                ...         sum_value=20000
+                ...     )
+                ... )
+                >>> key = "ColumnsSumToBeEqualTo_hardware-software-personnel-combined"
+                >>> vd.results[key]["result"]["status"]
+                'Success'
+                >>>
+                >>> # When calling validate on successful validation there is no error.
+                >>> vd.validate()
+
+            """

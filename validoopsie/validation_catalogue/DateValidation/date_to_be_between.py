@@ -19,10 +19,10 @@ class DateToBeBetween(BaseValidation):
     If neither `min_date` nor `max_date` is provided, then the validation will result
     in failure.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
-        min_date (int | None): Minimum date for a column entry length.
-        max_date (int | None): Maximum date for a column entry length.
+        min_date (date | datetime | None): Minimum date for a column entry length.
+        max_date (date | datetime | None): Maximum date for a column entry length.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
@@ -30,37 +30,33 @@ class DateToBeBetween(BaseValidation):
     Examples:
         >>> import pandas as pd
         >>> import narwhals as nw
-        >>> from datetime import date
-        >>> df = pd.DataFrame(
-        ...     {"dates_column": [date(2023, 1, 1), date(2023, 2, 15), date(2023, 5, 15)]}
+        >>> from validoopsie import Validate
+        >>> from datetime import datetime
+        >>>
+        >>> # Validate dates are within range
+        >>> df = pd.DataFrame({
+        ...     "order_date": [
+        ...         datetime(2023, 1, 15),
+        ...         datetime(2023, 2, 20),
+        ...         datetime(2023, 3, 25)
+        ...     ]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .DateValidation.DateToBeBetween(
+        ...         column="order_date",
+        ...         min_date=datetime(2023, 1, 1),
+        ...         max_date=datetime(2023, 12, 31)
+        ...     )
         ... )
-        >>> frame = nw.from_native(df)
-        >>> validator = DateToBeBetween(
-        ...     "dates_column",
-        ...     min_date=date(2023, 1, 1),
-        ...     max_date=date(2023, 5, 15)
-        ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "DateToBeBetween_order_date"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        # With only min_date specified
-        >>> min_validator = DateToBeBetween(
-        ...     column="dates_column",
-        ...     min_date=date(2023, 1, 1)
-        ... )
-        >>> result = min_validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        # With only max_date specified
-        >>> max_validator = DateToBeBetween(
-        ...     column="dates_column",
-        ...     max_date=date(2023, 5, 15)
-        ... )
-        >>> result = max_validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

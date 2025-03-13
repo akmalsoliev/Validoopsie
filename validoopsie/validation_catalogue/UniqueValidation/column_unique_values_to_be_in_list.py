@@ -11,47 +11,36 @@ from validoopsie.base import BaseValidation
 class ColumnUniqueValuesToBeInList(BaseValidation):
     """Check if the unique values are in the list.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         values (list[Union[str, float, int, None]]): List of values to check.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
-        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
-            Defaults to "low".
+        impact (Literal["low", "medium", "high"], optional): Impact level of
+            validation. Defaults to "low".
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
-        >>> berlin = ["Berlin"] * 4
-        >>> rome = ["Rome"] * 5
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate values in allowed list
         >>> df = pd.DataFrame({
-        ...     "cities": berlin + rome + ["Paris"]
+        ...     "status": ["active", "inactive", "pending"]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - Paris is not in the allowed list
-        >>> validator = ColumnUniqueValuesToBeInList("cities", ["Berlin", "Rome"])
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case with threshold
-        >>> validator = ColumnUniqueValuesToBeInList(
-        ...     column="cities",
-        ...     values=["Berlin", "Rome"],
-        ...     threshold=0.5
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .UniqueValidation.ColumnUniqueValuesToBeInList(
+        ...         column="status",
+        ...         values=["active", "inactive", "pending"]
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnUniqueValuesToBeInList_status"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        >>> # Success case - all values in the allowed list
-        >>> validator = ColumnUniqueValuesToBeInList(
-        ...     column="cities",
-        ...     values=["Paris", "Rome", "Berlin"]
-        ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

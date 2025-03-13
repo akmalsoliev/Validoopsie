@@ -15,41 +15,36 @@ class ColumnUniquePair(BaseValidation):
     entries in the dataset. For example, if checking columns ['first_name', 'last_name'],
     the combination of these values should be unique for each row.
 
-    Parameters
-      column_list (list | tuple): List or tuple of column names to check for unique
-          combinations.
-      threshold (float, optional): Threshold for validation. Defaults to 0.0.
-      impact (Literal["low", "medium", "high"], optional): Impact level of validation.
-          Defaults to "low".
+    Args:
+        column_list (list | tuple): List or tuple of column names to check for
+            unique combinations.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of
+            validation. Defaults to "low".
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate unique pairs
         >>> df = pd.DataFrame({
-        ...     "first_name": ["John", "Jane", "John", "Alice", "Bob"],
-        ...     "last_name": ["Doe", "Smith", "Smith", "Johnson", "Wilson"],
-        ...     "age": [30, 25, 35, 28, 42],
-        ...     "city": ["NY", "LA", "NY", "Chicago", "Boston"]
+        ...     "student_id": [101, 102, 103],
+        ...     "course_id": [201, 202, 203],
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - first_name and city have duplicates
-        >>> validator = ColumnUniquePair(["first_name", "city"])
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case - first_name and age combinations are unique
-        >>> validator = ColumnUniquePair(["first_name", "age"])
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .UniqueValidation.ColumnUniquePair(
+        ...         column_list=["student_id", "course_id"]
+        ...     )
+        ... )
+        >>> key = "ColumnUniquePair_student_id - course_id"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        >>> # Success case with multiple columns
-        >>> validator = ColumnUniquePair(["first_name", "last_name", "city"])
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

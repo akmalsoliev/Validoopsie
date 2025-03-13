@@ -11,7 +11,7 @@ from validoopsie.base import BaseValidation
 class ColumnBeNull(BaseValidation):
     """Check if the values in a column are null.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
@@ -19,39 +19,25 @@ class ColumnBeNull(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
-        >>> import numpy as np
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate field contains only nulls
         >>> df = pd.DataFrame({
-        ...     "col_mixed": [1, 2, None, 4, 5],
-        ...     "col_no_nulls": [1.0, 2.0, 3.0, 4.0, 5.0],
-        ...     "col_all_nulls": [None, None, None, None, None]
+        ...     "id": [1, 2, 3],
+        ...     "optional_field": [None, None, None]
         ... })
-        >>> frame = nw.from_native(df)
-        >>> validator = ColumnBeNull("col_all_nulls")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Failing case - some values are not null
-        >>> validator = ColumnBeNull("col_mixed")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Failing case - all values are not null
-        >>> validator = ColumnBeNull("col_no_nulls")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # With threshold allowing some non-null values
-        >>> validator_with_threshold = ColumnBeNull(
-        ...     column="col_mixed",
-        ...     threshold=0.8
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .NullValidation.ColumnBeNull(column="optional_field")
         ... )
-        >>> result = validator_with_threshold.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnBeNull_optional_field"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+
     """
 
     def __init__(

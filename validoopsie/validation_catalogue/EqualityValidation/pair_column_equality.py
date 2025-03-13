@@ -11,7 +11,7 @@ from validoopsie.base import BaseValidation
 class PairColumnEquality(BaseValidation):
     """Check if the pair of columns are equal.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         target_column (str): Column to compare.
         group_by_combined (bool, optional): Group by combine columns. Default True.
@@ -21,33 +21,28 @@ class PairColumnEquality(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate columns match
         >>> df = pd.DataFrame({
-        ...     "column_a": [1, 2, 3, 4, 5],
-        ...     "column_b": [1, 2, 3, 4, 5],
-        ...     "column_c": [1, 2, 6, 4, 5]
+        ...     "amount": [100, 200, 300],
+        ...     "verified_amount": [100, 200, 300]
         ... })
-        >>> frame = nw.from_native(df)
-        >>> validator = PairColumnEquality("column_a", target_column="column_b")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Failing case - some values don't match
-        >>> validator = PairColumnEquality("column_a", target_column="column_c")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # With threshold allowing some failures
-        >>> validator_with_threshold = PairColumnEquality(
-        ...     column="column_a",
-        ...     target_column="column_c",
-        ...     threshold=0.4
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .EqualityValidation.PairColumnEquality(
+        ...         column="amount",
+        ...         target_column="verified_amount"
+        ...     )
         ... )
-        >>> result = validator_with_threshold.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "PairColumnEquality_amount"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+
     """
 
     def __init__(

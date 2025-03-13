@@ -18,7 +18,7 @@ class ColumnUniqueValueCountToBeBetween(BaseValidation):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Parameters:
+    Args:
         column (str): The column to validate.
         min_value (int or None): The minimum number of unique values allowed.
         max_value (int or None): The maximum number of unique values allowed.
@@ -28,35 +28,28 @@ class ColumnUniqueValueCountToBeBetween(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate number of unique values
         >>> df = pd.DataFrame({
-        ...     "strings": ["A", "A", "A", "B", "B", "C", "D", "E"]
+        ...     "category": ["A", "B", "C", "A", "B"]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Failing case - more than 2 unique values
-        >>> validator = ColumnUniqueValueCountToBeBetween("strings", max_value=2)
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # Success case - between 1 and 10 unique values
-        >>> validator = ColumnUniqueValueCountToBeBetween(
-        ...     "strings", min_value=1, max_value=10
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .UniqueValidation.ColumnUniqueValueCountToBeBetween(
+        ...         column="category",
+        ...         min_value=1,
+        ...         max_value=5
+        ...     )
         ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "ColumnUniqueValueCountToBeBetween_category"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
-        >>> # Success case with threshold
-        >>> validator = ColumnUniqueValueCountToBeBetween(
-        ...     column="strings",
-        ...     max_value=2,
-        ...     threshold=0.6
-        ... )
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
     """
 
     def __init__(

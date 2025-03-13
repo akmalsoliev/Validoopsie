@@ -9,9 +9,9 @@ from validoopsie.base import BaseValidation
 
 
 class PatternMatch(BaseValidation):
-    """Expect the column entries to be strings that pattern matches.
+    r"""Expect the column entries to be strings that pattern matches.
 
-    Parameters:
+    Args:
         column (str): The column name.
         pattern (str): The pattern expression the column should match.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
@@ -20,34 +20,27 @@ class PatternMatch(BaseValidation):
 
     Examples:
         >>> import pandas as pd
-        >>> import narwhals as nw
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate email format
         >>> df = pd.DataFrame({
-        ...     "codes": ["ABC001", "ABC002", "DEF001", "XYZ999", "LMNO12"],
-        ...     "numbers": ["123", "456", "789", "101112", "131415"]
+        ...     "email": ["user1@example.com", "user2@example.com"]
         ... })
-        >>> frame = nw.from_native(df)
-
-        >>> # Success case - all values match regex pattern
-        >>> validator = PatternMatch("numbers", pattern="^[0-9]+$")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Success'
-
-        >>> # Failing case - some values don't match pattern
-        >>> validator = PatternMatch("codes", pattern="^ABC")
-        >>> result = validator.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
-        'Fail'
-
-        >>> # With threshold allowing some failures
-        >>> validator_with_threshold = PatternMatch(
-        ...     column="codes",
-        ...     pattern="^ABC",
-        ...     threshold=0.6
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .StringValidation.PatternMatch(
+        ...         column="email",
+        ...         pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        ...     )
         ... )
-        >>> result = validator_with_threshold.__execute_check__(frame=frame)
-        >>> result["result"]["status"]
+        >>> key = "PatternMatch_email"
+        >>> vd.results[key]["result"]["status"]
         'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
+
     """
 
     def __init__(
