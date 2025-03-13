@@ -61,7 +61,7 @@ def test_length_to_be_between_success_with_threshold_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeBetween("test", min_value=1, max_value=4, threshold=0.6)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -76,7 +76,7 @@ def test_length_to_be_between_fail_with_low_threshold_integration(
         max_value=4,
         threshold=0.01,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"
 
@@ -84,7 +84,7 @@ def test_length_to_be_between_fail_with_low_threshold_integration(
 def test_length_to_be_between_success_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeBetween("test2", min_value=1, max_value=5)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -142,7 +142,7 @@ def test_min_length_to_be_between_success_with_threshold_integration(
         min_value=6,
         threshold=0.5,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -156,7 +156,7 @@ def test_min_length_to_be_between_fail_with_low_threshold_integration(
         min_value=6,
         threshold=0.1,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"
 
@@ -164,7 +164,7 @@ def test_min_length_to_be_between_fail_with_low_threshold_integration(
 def test_min_length_to_be_between_success_integration(less_data: Frame) -> None:
     vd = Validate(less_data)
     vd.StringValidation.LengthToBeBetween("strings", min_value=4)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -225,7 +225,7 @@ def test_string_length_to_be_less_than_or_equal_to_fail_threshold_integration(
         max_value=4,
         threshold=0.5,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -239,7 +239,7 @@ def test_string_length_to_be_less_than_or_equal_to_success_threshold_integration
         max_value=4,
         threshold=0.1,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"
 
@@ -249,5 +249,5 @@ def test_string_length_to_be_less_than_or_equal_to_success_integration(
 ) -> None:
     vd = Validate(greater_data)
     vd.StringValidation.LengthToBeBetween("strings", max_value=10)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]

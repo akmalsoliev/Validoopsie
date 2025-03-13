@@ -78,7 +78,7 @@ def test_column_values_to_be_between_fail_integration(lf: Frame) -> None:
 def test_column_values_to_be_between_success_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", 1, 5)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -86,7 +86,7 @@ def test_column_values_to_be_between_success_integration(lf: Frame) -> None:
 def test_column_values_to_be_between_success_threshold_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", 1, 2, threshold=0.6)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -102,7 +102,7 @@ def test_column_values_greater_than_fail_integration(lf: Frame) -> None:
 def test_column_values_greater_than_success_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", min_value=1)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -118,6 +118,6 @@ def test_column_values_less_than_fail_integration(lf: Frame) -> None:
 def test_column_values_less_than_success_integration(lf: Frame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnValuesToBeBetween("A", max_value=6)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"

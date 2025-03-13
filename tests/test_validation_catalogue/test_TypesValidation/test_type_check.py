@@ -184,7 +184,7 @@ def test_type_check_threshold_failure(sample_data: Frame) -> None:
 def test_type_check_integration_success(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.TypeValidation.TypeCheck("IntegerType", IntegerType)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[-1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -199,7 +199,7 @@ def test_type_check_integration_failure_high_impact(sample_data: Frame) -> None:
 def test_type_check_integration_failure_low_impact(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.TypeValidation.TypeCheck("IntegerType", FloatType, impact="low")
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[-1]
     assert result[key]["result"]["status"] == "Fail"
 
@@ -220,7 +220,7 @@ def test_type_check_integration_threshold_success(sample_data: Frame) -> None:
         frame_schema_definition=frame_schema_definition,
         threshold=0.8,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[-1]
     assert result[key]["result"]["status"] == "Success"
 

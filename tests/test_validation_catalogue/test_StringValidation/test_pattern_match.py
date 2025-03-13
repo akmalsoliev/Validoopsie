@@ -53,7 +53,7 @@ def test_column_values_to_match_pattern_fail_integration(sample_data: Frame) -> 
 def test_column_values_to_match_pattern_success_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.PatternMatch("codes", pattern="^[A-Z]+[0-9]+$")
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -63,7 +63,7 @@ def test_column_values_to_match_pattern_fail_threshold_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.PatternMatch("codes", pattern="ABC", threshold=0.6)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -73,6 +73,6 @@ def test_column_values_to_match_pattern_success_threshold_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.PatternMatch("codes", pattern="ABC", threshold=0.01)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"

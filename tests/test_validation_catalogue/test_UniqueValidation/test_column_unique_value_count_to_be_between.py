@@ -96,7 +96,7 @@ def test_column_unique_value_count_to_be_between_success_integration(
         min_value=1,
         max_value=3,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -110,7 +110,7 @@ def test_column_unique_value_count_to_be_between_success_with_threshold_integrat
         max_value=2,
         threshold=0.6,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -120,7 +120,7 @@ def test_column_unique_value_count_to_be_between_success_high_max_value_integrat
 ) -> None:
     vd = Validate(sample_data)
     vd.UniqueValidation.ColumnUniqueValueCountToBeBetween("strings", max_value=10)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -144,7 +144,7 @@ def test_column_unique_value_count_greater_than_success_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.UniqueValidation.ColumnUniqueValueCountToBeBetween("strings", min_value=1)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -168,6 +168,6 @@ def test_column_unique_value_count_less_than_success_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.UniqueValidation.ColumnUniqueValueCountToBeBetween("strings", max_value=5)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
