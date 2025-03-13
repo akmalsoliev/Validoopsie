@@ -107,6 +107,7 @@ lint.ignore = [
   "TD003",
   "UP007",
   "FBT003", # Added for min max check where needed `nw.lit(True)` and `nw.lit(False)`
+  "COM812"
 ]
 
 [tool.ruff.lint.pydocstyle]
@@ -119,8 +120,4 @@ disable_error_code = ["union-attr"]
 [[tool.mypy.overrides]]
 module = "validoopsie.*"
 disallow_untyped_decorators = false
-
-[tool.mypy.stubtest]
-ignore_missing_stub = true
-allowlist = "stubtest_allowlist.txt"
 

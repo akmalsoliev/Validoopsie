@@ -169,7 +169,7 @@ class Validate:
         self.__parse_results__(result, output_name)
         return self
 
-    def validate(self, *, raise_results: bool = False):
+    def validate(self, *, raise_results: bool = False) -> None:
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."

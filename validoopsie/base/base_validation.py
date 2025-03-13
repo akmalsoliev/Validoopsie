@@ -56,7 +56,7 @@ class BaseValidation:
     def __execute_check__(
         self,
         frame: IntoFrame,
-    ) -> dict:
+    ) -> dict[str, Any]:
         """Execute the validation check on the provided frame."""
         current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
         class_name = self.__class__.__name__
