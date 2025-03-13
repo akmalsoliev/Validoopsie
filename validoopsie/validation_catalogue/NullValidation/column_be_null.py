@@ -1,22 +1,42 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class ColumnBeNull(BaseValidationParameters):
+class ColumnBeNull(BaseValidation):
     """Check if the values in a column are null.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate field contains only nulls
+        >>> df = pd.DataFrame({
+        ...     "id": [1, 2, 3],
+        ...     "optional_field": [None, None, None]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .NullValidation.ColumnBeNull(column="optional_field")
+        ... )
+        >>> key = "ColumnBeNull_optional_field"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -24,7 +44,7 @@ class ColumnBeNull(BaseValidationParameters):
         self,
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         super().__init__(column, impact, threshold, **kwargs)
@@ -34,7 +54,7 @@ class ColumnBeNull(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The column '{self.column}' doesn't have values that are null."
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the values in a column are null."""
         return (
             frame.select(self.column)

@@ -1,23 +1,45 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class NotPatternMatch(BaseValidationParameters):
+class NotPatternMatch(BaseValidation):
     """Expect the column entries to be strings that do not pattern match.
 
-    Parameters:
+    Args:
         column (str): The column name.
         pattern (str): The pattern expression the column should not match.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
-        impact (Literal["low", "medium", "high"], optional): Impact level of validation.
-            Defaults to "low".
+        impact (Literal["low", "medium", "high"], optional): Impact level of
+            validation. Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate text doesn't contain pattern
+        >>> df = pd.DataFrame({
+        ...     "comment": ["Great product!", "Normal comment", "Just okay"]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .StringValidation.NotPatternMatch(
+        ...         column="comment",
+        ...         pattern=r"password"
+        ...     )
+        ... )
+        >>> key = "NotPatternMatch_comment"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -26,7 +48,7 @@ class NotPatternMatch(BaseValidationParameters):
         column: str,
         pattern: str,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         super().__init__(column, impact, threshold, **kwargs)
@@ -40,7 +62,7 @@ class NotPatternMatch(BaseValidationParameters):
             f"the pattern '{self.pattern}'."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Expect the column entries to be strings that do not pattern match."""
         return (
             frame.filter(

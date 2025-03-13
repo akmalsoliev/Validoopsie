@@ -1,27 +1,49 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class ColumnUniquePair(BaseValidationParameters):
+class ColumnUniquePair(BaseValidation):
     """Validates the uniqueness of combined values from multiple columns.
 
     This class checks if the combination of values from specified columns creates unique
     entries in the dataset. For example, if checking columns ['first_name', 'last_name'],
     the combination of these values should be unique for each row.
 
-    Parameters
-      column_list (list | tuple): List or tuple of column names to check for unique
-          combinations.
-      threshold (float, optional): Threshold for validation. Defaults to 0.0.
-      impact (Literal["low", "medium", "high"], optional): Impact level of validation.
-          Defaults to "low".
+    Args:
+        column_list (list | tuple): List or tuple of column names to check for
+            unique combinations.
+        threshold (float, optional): Threshold for validation. Defaults to 0.0.
+        impact (Literal["low", "medium", "high"], optional): Impact level of
+            validation. Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate unique pairs
+        >>> df = pd.DataFrame({
+        ...     "student_id": [101, 102, 103],
+        ...     "course_id": [201, 202, 203],
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .UniqueValidation.ColumnUniquePair(
+        ...         column_list=["student_id", "course_id"]
+        ...     )
+        ... )
+        >>> key = "ColumnUniquePair_student_id - course_id"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -29,7 +51,7 @@ class ColumnUniquePair(BaseValidationParameters):
         self,
         column_list: list[str] | tuple[str, ...],
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         assert len(column_list) > 0, "At least two columns are required."
@@ -46,7 +68,7 @@ class ColumnUniquePair(BaseValidationParameters):
             "contains non-unique values."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the unique values are in the list."""
         return (
             frame.with_columns(

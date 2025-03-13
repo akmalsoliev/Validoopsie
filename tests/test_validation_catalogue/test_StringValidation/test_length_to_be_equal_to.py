@@ -63,7 +63,7 @@ def test_string_length_to_be_equal_to_fail_threshold_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeEqualTo("test", 4, threshold=0.6)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -73,7 +73,7 @@ def test_string_length_to_be_equal_to_success_threshold_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeEqualTo("test", 4, threshold=0.01)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"
 
@@ -81,7 +81,7 @@ def test_string_length_to_be_equal_to_success_threshold_integration(
 def test_string_length_to_be_equal_to_success_integration(sample_data: Frame) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeEqualTo("test3", 5)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -91,6 +91,6 @@ def test_string_length_to_be_equal_to_fail_non_string_column_integration(
 ) -> None:
     vd = Validate(sample_data)
     vd.StringValidation.LengthToBeEqualTo("test2", 5)
-    result = vd.validate().results
+    result = vd.results
     key = list(vd.results.keys())[1]
     assert result[key]["result"]["status"] == "Fail"

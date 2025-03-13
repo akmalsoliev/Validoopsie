@@ -1,24 +1,48 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class ColumnsSumToBeEqualTo(BaseValidationParameters):
+class ColumnsSumToBeEqualTo(BaseValidation):
     """Check if the sum of the columns is equal to a specific value.
 
-    Parameters:
+    Args:
         columns_list (list[str]): List of columns to sum.
         sum_value (float): Value that the columns should sum to.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate component sum equals total
+        >>> df = pd.DataFrame({
+        ...     "hardware": [5000],
+        ...     "software": [3000],
+        ...     "personnel": [12000],
+        ...     "total": [20000]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .ValuesValidation.ColumnsSumToBeEqualTo(
+        ...         columns_list=["hardware", "software", "personnel"],
+        ...         sum_value=20000
+        ...     )
+        ... )
+        >>> key = "ColumnsSumToBeEqualTo_hardware-software-personnel-combined"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
     """
 
     def __init__(
@@ -26,7 +50,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
         columns_list: list[str],
         sum_value: float,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         self.columns_list = columns_list
@@ -39,7 +63,7 @@ class ColumnsSumToBeEqualTo(BaseValidationParameters):
         """Return the fail message, that will be used in the report."""
         return f"The columns {self.columns_list} do not sum to {self.sum_value}."
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the sum of the columns is equal to a specific value."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"

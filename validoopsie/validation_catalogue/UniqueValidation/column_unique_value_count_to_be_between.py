@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-@base_validation_wrapper
-class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
+class ColumnUniqueValueCountToBeBetween(BaseValidation):
     """Check the number of unique values in a column to be between min and max.
 
     If the `min_value` or `max_value` is not provided then other will be used as the
@@ -19,13 +18,37 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
     If neither `min_value` nor `max_value` is provided, then the validation will result
     in failure.
 
-    Parameters:
+    Args:
         column (str): The column to validate.
         min_value (int or None): The minimum number of unique values allowed.
         max_value (int or None): The maximum number of unique values allowed.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate number of unique values
+        >>> df = pd.DataFrame({
+        ...     "category": ["A", "B", "C", "A", "B"]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .UniqueValidation.ColumnUniqueValueCountToBeBetween(
+        ...         column="category",
+        ...         min_value=1,
+        ...         max_value=5
+        ...     )
+        ... )
+        >>> key = "ColumnUniqueValueCountToBeBetween_category"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -35,7 +58,7 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
         min_value: int | None = None,
         max_value: int | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_value, max_value)
@@ -52,7 +75,7 @@ class ColumnUniqueValueCountToBeBetween(BaseValidationParameters):
             f"is not between {self.min_value} and {self.max_value}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Validate the number of unique values in the column."""
         unique_value_counts = frame.group_by(self.column).agg(
             nw.col(self.column).count().alias(f"{self.column}-count"),

@@ -1,24 +1,47 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class PairColumnEquality(BaseValidationParameters):
+class PairColumnEquality(BaseValidation):
     """Check if the pair of columns are equal.
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         target_column (str): Column to compare.
         group_by_combined (bool, optional): Group by combine columns. Default True.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate columns match
+        >>> df = pd.DataFrame({
+        ...     "amount": [100, 200, 300],
+        ...     "verified_amount": [100, 200, 300]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .EqualityValidation.PairColumnEquality(
+        ...         column="amount",
+        ...         target_column="verified_amount"
+        ...     )
+        ... )
+        >>> key = "PairColumnEquality_amount"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -27,7 +50,7 @@ class PairColumnEquality(BaseValidationParameters):
         column: str,
         target_column: str,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         *,
         group_by_combined: bool = True,
         **kwargs: dict[str, object],
@@ -44,7 +67,7 @@ class PairColumnEquality(BaseValidationParameters):
             f"'{self.target_column}'."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the pair of columns are equal."""
         select_columns = [self.column, f"{self.column}-count"]
         gb_cols = (

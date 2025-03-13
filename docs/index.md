@@ -11,11 +11,11 @@
   <a href="https://pepy.tech/projects/validoopsie">
     <img src="https://static.pepy.tech/badge/validoopsie" alt="PyPI Downloads">
   </a>
-  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml">
-    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml/badge.svg" alt="PyTest" />
+  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml">
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml/badge.svg" alt="Tests and Linters" />
   </a>
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml">
-    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml/badge.svg" alt="PyTest" />
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml/badge.svg" alt="Documentation" />
   </a>
 </p>
 
@@ -56,6 +56,8 @@ powerful solution to make these tasks accessible and straightforward.
 ## Getting Started
 
 - [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
+- [🚨 Impact Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/impact_levels.html)
+- [🎯 Threshold Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/threshold_levels.html)
 - [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
 - [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
 - [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingValidationCustom.html)

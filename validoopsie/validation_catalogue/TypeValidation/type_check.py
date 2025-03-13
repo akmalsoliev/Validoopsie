@@ -1,64 +1,56 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
 import pyarrow as pa
 from narwhals.dtypes import DType
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
-@base_validation_wrapper
-class TypeCheck(BaseValidationParameters):
+class TypeCheck(BaseValidation):
     """Validate the data type of the column(s).
 
-    Parameters:
+    Args:
         column (str | None): The column to validate.
         column_type (type | None): The type of validation to perform.
-        frame_schema_definition (dict[str, ValidoopsieType] | None): A dictionary of
-            column names and their respective validation types.
+        frame_schema_definition (dict[str, type] | None): A dictionary
+            of column names and their respective validation types.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
 
-
-    ```python
-    import pandas as pd
-    from narwhals.dtypes import (
-        FloatType,
-        IntegerType,
-        String,
-    )
-
-    from validoopsie import Validate
-
-    df = pd.DataFrame(
-        {
-            "IntType": [1, -15],
-            "FloatType": [1.23, -45.67],
-            "String": ["hello", "world"],
-        },
-    )
-
-    # Single validation check
-    vd = Validate(df)
-    vd.TypeValidation.TypeCheck(
-        column="IntType",
-        column_type=IntegerType,
-    )
-
-    # or you can always use the dictionary
-    column_type_definitions = {
-        "IntType": IntegerType,
-        "FloatType": FloatType,
-        "String": String,
-    }
-    vd.TypeValidation.TypeCheck(
-        frame_schema_definition=column_type_definitions,
-    )
-    ```
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>> from narwhals.dtypes import IntegerType, FloatType, String
+        >>>
+        >>> # Validate column types
+        >>> df = pd.DataFrame({
+        ...     "id": [1001, 1002, 1003],
+        ...     "name": ["Alice", "Bob", "Charlie"],
+        ...     "balance": [100.50, 250.75, 0.00]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .TypeValidation.TypeCheck(
+        ...         frame_schema_definition={
+        ...             "id": IntegerType,
+        ...             "name": String,
+        ...             "balance": FloatType
+        ...         }
+        ...     )
+        ... )
+        >>>
+        >>> key = "TypeCheck_DataTypeColumnValidation"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -68,7 +60,7 @@ class TypeCheck(BaseValidationParameters):
         column_type: type | None = None,
         frame_schema_definition: dict[str, type] | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         # Single validation check
@@ -122,7 +114,7 @@ class TypeCheck(BaseValidationParameters):
             f"expected type: {self.column_type}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Validate the data type of the column(s)."""
         schema = frame.schema
         # Introduction of a new structure where the schema len will be used a frame length

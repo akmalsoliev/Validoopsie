@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from typing import Literal, Optional
+from typing import Literal
 
 import narwhals as nw
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
 
 
-@base_validation_wrapper
-class ColumnValuesToBeBetween(BaseValidationParameters):
+class ColumnValuesToBeBetween(BaseValidation):
     """Check if the values in a column are between a range.
 
     If the `min_value` or `max_value` is not provided then other will be used as the
@@ -20,13 +19,37 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
     in failure.
 
 
-    Parameters:
+    Args:
         column (str): Column to validate.
         min_value (float | None): Minimum value for a column entry length.
         max_value (float | None): Maximum value for a column entry length.
         threshold (float, optional): Threshold for validation. Defaults to 0.0.
         impact (Literal["low", "medium", "high"], optional): Impact level of validation.
             Defaults to "low".
+
+    Examples:
+        >>> import pandas as pd
+        >>> from validoopsie import Validate
+        >>>
+        >>> # Validate numeric range
+        >>> df = pd.DataFrame({
+        ...     "age": [25, 30, 42, 18, 65]
+        ... })
+        >>>
+        >>> vd = (
+        ...     Validate(df)
+        ...     .ValuesValidation.ColumnValuesToBeBetween(
+        ...         column="age",
+        ...         min_value=18,
+        ...         max_value=65
+        ...     )
+        ... )
+        >>> key = "ColumnValuesToBeBetween_age"
+        >>> vd.results[key]["result"]["status"]
+        'Success'
+        >>>
+        >>> # When calling validate on successful validation there is no error.
+        >>> vd.validate()
 
     """
 
@@ -36,7 +59,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
         min_value: float | None = None,
         max_value: float | None = None,
         impact: Literal["low", "medium", "high"] = "low",
-        threshold: Optional[float] = 0.00,
+        threshold: float = 0.00,
         **kwargs: dict[str, object],
     ) -> None:
         min_max_arg_check(min_value, max_value)
@@ -53,7 +76,7 @@ class ColumnValuesToBeBetween(BaseValidationParameters):
             f"between {self.min_value} and {self.max_value}."
         )
 
-    def __call__(self, frame: Frame) -> IntoFrame:
+    def __call__(self, frame: Frame) -> Frame:
         """Check if the values in a column are between a range."""
         return (
             min_max_filter(

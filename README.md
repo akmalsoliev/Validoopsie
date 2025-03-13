@@ -11,11 +11,11 @@
   <a href="https://pepy.tech/projects/validoopsie">
     <img src="https://static.pepy.tech/badge/validoopsie" alt="PyPI Downloads">
   </a>
-  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml">
-    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest.yaml/badge.svg" alt="PyTest" />
+  <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml">
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml/badge.svg" alt="Tests and Linters" />
   </a>
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml">
-    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml/badge.svg" alt="PyTest" />
+    <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/docs.yaml/badge.svg" alt="Documentation" />
   </a>
 </p>
 
@@ -51,7 +51,8 @@ powerful solution to make these tasks accessible and straightforward.
 
 1. [Installation](#installation)
 2. [Getting Started](#getting-started)
-3. [License](#license)
+3. [Development](#development)
+4. [License](#license)
 
 ## Installation
 
@@ -62,6 +63,8 @@ powerful solution to make these tasks accessible and straightforward.
 ## Getting Started
 
 - [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
+- [🚨 Impact Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/impact_levels.html)
+- [🎯 Threshold Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/threshold_levels.html)
 - [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
 - [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
 - [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingValidationCustom.html)
@@ -97,9 +100,9 @@ vd.EqualityValidation.PairColumnEquality(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
-    "age",
-    20,
-    40,
+    column="age",
+    min_value=20,
+    max_value=40,
 )
 
 vd.results
@@ -188,9 +191,9 @@ vd.EqualityValidation.PairColumnEquality(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
-    "age",
-    20,
-    40,
+    column="age",
+    min_value=20,
+    max_value=40,
 ).validate()
 ```
 
@@ -200,6 +203,26 @@ condenced information on validations and their status in a colorful way.
 <p align="left">
     <img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
 </p>
+
+## Development
+
+Validoopsie includes a Makefile to simplify development tasks:
+
+```bash
+# Install dependencies
+make setup
+
+# Run linters (mypy, ruff)
+make lint
+
+# Run tests (includes doctests, stubtest)
+make test
+
+# Run both lint and test
+make all
+```
+
+For more information on development, check the [contribution guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html).
 
 ## License
 

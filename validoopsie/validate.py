@@ -10,7 +10,7 @@ from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
-    from validoopsie.base.base_validation_parameters import BaseValidationParameters
+    from validoopsie.base.base_validation import BaseValidation
 
 
 class Validate:
@@ -125,7 +125,7 @@ class Validate:
 
     def add_validation(
         self,
-        validation: BaseValidationParameters,
+        validation: BaseValidation,
     ) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
@@ -134,35 +134,42 @@ class Validate:
 
         """
         output_name: str = "InvalidValidationCheck"
-        if hasattr(validation, "__execute_check__"):
-            class_name = validation.__class__.__name__
-            try:
-                result = validation.__execute_check__(frame=self.frame)
-                column_name = validation.column
-                output_name = f"{class_name}_{column_name}"
-            except Exception:
-                result = {
-                    "result": {
-                        "status": "Fail",
-                        "message": (
-                            f"An error occured while executing {class_name} - {{e!s}}"
-                        ),
-                    },
-                }
-        else:
+
+        try:
+            from validoopsie.base.base_validation import (
+                BaseValidation,
+            )
+
+            assert isinstance(validation, BaseValidation)
+        except AssertionError:
+            if inspect.isclass(validation):
+                output_name = validation.__name__
             result = {
                 "result": {
                     "status": "Fail",
-                    "message": f"{validation.__name__} is not a valid validation check.",
+                    "message": f"{output_name} is not a valid validation check.",
                 },
             }
-            if inspect.isclass(validation):
-                output_name = validation.__name__
+            self.__parse_results__(result, output_name)
+            return self
+
+        class_name = validation.__class__.__name__
+        try:
+            result = validation.__execute_check__(frame=self.frame)
+            column_name = validation.column
+            output_name = f"{class_name}_{column_name}"
+        except Exception as e:
+            result = {
+                "result": {
+                    "status": "Fail",
+                    "message": (f"An error occured while executing {class_name} - {e!s}"),
+                },
+            }
 
         self.__parse_results__(result, output_name)
         return self
 
-    def validate(self, *, raise_results: bool = False) -> Validate:
+    def validate(self, *, raise_results: bool = False) -> None:
         """Validate the data set."""
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
@@ -212,4 +219,3 @@ class Validate:
                 value_error_msg = f"{value_error_msg}\n{json_results}"
 
             raise ValueError(value_error_msg)
-        return self

@@ -1,4 +1,4 @@
-name: Pytests and Ruff
+name: Pytests and Linters
 on:
   push:
     branches: [main, dev]
@@ -30,13 +30,27 @@ jobs:
       - name: Install the project
         run: uv sync --all-extras --dev
 
+      # Linter
+      - name: Run Ruff
+        run: uv run ruff check validoopsie/
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+
+      - name: Run Mypy
+        run: uv run mypy validoopsie/
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+
+      # Tests
       # No need to run it everytime
       - name: Run stubtests
         run: uv run stubtest validoopsie --allowlist stubtest_allowlist.txt
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-      - name: Run Ruff
-        run: uv run ruff check validoopsie/
+      - name: Run Pytests with doctests
+        run: uv run pytest validoopsie --doctest-modules
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+
+      - name: Run doctest on stub
+        run:  uv run python -m doctest validoopsie/validate.pyi
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
       - name: Run pytests

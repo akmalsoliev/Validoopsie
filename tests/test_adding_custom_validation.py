@@ -1,10 +1,12 @@
+from typing import Literal
+
 import narwhals as nw
 import pytest
 from narwhals.typing import FrameT, IntoFrame
 
 from tests.utils.create_frames import create_frame_fixture
 from validoopsie import Validate
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
+from validoopsie.base import BaseValidation
 
 
 @create_frame_fixture
@@ -15,15 +17,15 @@ def sample_data() -> dict[str, list]:
     }
 
 
-@base_validation_wrapper
-class MyCustomValidation(BaseValidationParameters):
+class MyCustomValidation(BaseValidation):
     def __init__(
         self,
         column: str,
-        *args,
-        **kwargs: object,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: float = 0.00,
+        **kwargs: dict[str, object],
     ) -> None:
-        super().__init__(column, *args, **kwargs)
+        super().__init__(column, impact, threshold, **kwargs)
 
     @property
     def fail_message(self) -> str:
@@ -60,9 +62,6 @@ class MyCustomValidation(BaseValidationParameters):
         )
 
 
-class FailValidation: ...
-
-
 def test_adding_custom_validation(sample_data: IntoFrame) -> None:
     column_name = "date"
     validation_name = f"{MyCustomValidation.__name__}_{column_name}"
@@ -73,6 +72,9 @@ def test_adding_custom_validation(sample_data: IntoFrame) -> None:
 
     assert results[validation_name]["result"]["status"] == "Success"
     vd.validate()
+
+
+class FailValidation: ...
 
 
 def test_adding_failed_validation(sample_data: IntoFrame) -> None:

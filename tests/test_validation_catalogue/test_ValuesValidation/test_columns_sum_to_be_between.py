@@ -83,7 +83,7 @@ def test_columns_sum_to_be_greater_than_fail_integration(lf: IntoFrame) -> None:
 def test_columns_sum_to_be_greater_than_success_integration(lf: IntoFrame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnsSumToBeBetween(["A", "B"], min_sum_value=6)
-    result = vd.validate().results
+    result = vd.results
     key = list(result.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -98,7 +98,7 @@ def test_columns_sum_to_be_less_than_fail_integration(lf: IntoFrame) -> None:
 def test_columns_sum_to_be_less_than_success_integration(lf: IntoFrame) -> None:
     vd = Validate(lf)
     vd.ValuesValidation.ColumnsSumToBeBetween(["A", "B"], max_sum_value=30)
-    result = vd.validate().results
+    result = vd.results
     key = list(result.keys())[1]
     assert result[key]["result"]["status"] == "Success"
 
@@ -123,6 +123,6 @@ def test_columns_sum_to_be_between_success_integration(lf: IntoFrame) -> None:
         min_sum_value=3,
         max_sum_value=10,
     )
-    result = vd.validate().results
+    result = vd.results
     key = list(result.keys())[1]
     assert result[key]["result"]["status"] == "Success"
