@@ -9,33 +9,43 @@ on contribution to this project is wild for me, so I appreciate every minute you
     ```sh
     git clone https://github.com/your-username/Validoopsie.git
     ```
-1. Install the required dependencies (I prefer using `uv` for this):
+
+2. Use the Makefile to set up the development environment:
     ```sh
-    uv sync --all-extras
-    ```
-If you want to modify the documentation, you will also need to install the documentation dependencies:
-    ```sh
-    uv sync --group docs
+    make setup
     ```
 
-2. Create a new branch for your feature or bugfix:
+   This will create a virtual environment and install all dependencies.
+
+   Alternatively, you can install dependencies manually:
+    ```sh
+    uv venv
+    uv sync --all-groups
+    ```
+
+3. Create a new branch for your feature or bugfix:
     ```sh
     git checkout -b my-feature-branch
     ```
-3. Make your changes in the new branch.
-4. Run the tests to ensure that your changes do not break anything:
+4. Make your changes in the new branch.
+5. Run tests and linters to ensure quality:
     ```sh
-    pytest
+    # Run all tests and linters
+    make all
+
+    # Or run them separately
+    make lint
+    make test
     ```
-5. Commit your changes with a descriptive commit message:
+6. Commit your changes with a descriptive commit message:
     ```sh
     git commit -m "Add feature X"
     ```
-6. Push your branch to your fork on GitHub:
+7. Push your branch to your fork on GitHub:
     ```sh
     git push origin my-feature-branch
     ```
-7. Open a pull request on the main repository.
+8. Open a pull request on the main repository.
 
 ## Submitting Changes
 

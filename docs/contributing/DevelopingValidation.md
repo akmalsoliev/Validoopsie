@@ -31,27 +31,25 @@ Since this is a value-based validation, you’ll create the file inside the
 
 ## 3. Define the Validation Class
 
-Your class should:
-
-- Inherit from `BaseValidationParameters`.
-- Use the `@base_validation_wrapper` decorator.
+Your class should inherit from `BaseValidation`.
 
 Here’s an example:
 
 ```python
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
-from narwhals.typing import FrameT
+from validoopsie.base import BaseValidation
+# We will use these later
+from typing import Literal
+from narwhals.typing import Frame
 
-@base_validation_wrapper
-class ColumnValuesToBeBetween(BaseValidationParameters):
+class ColumnValuesToBeBetween(BaseValidation):
 ```
 
 ---
 
 ## 4. Add a Docstring
 
-Include a clear docstring for both the class and its methods, docstring will also be reused
-for the stub file later on. Here’s an example structure:
+Include a clear docstring and doctest for both the class and its methods, these will also be 
+reused for the stub file later on. Here’s an example structure:
 
 ```python
 """Check if the values in a column are within a specific range.
@@ -64,17 +62,51 @@ Args:
     impact (str, optional): Impact level of validation. Defaults to "low".
     kwargs (dict): Additional keyword arguments.
 
+Examples:
+    >>> import pandas as pd
+    >>> from validoopsie import Validate
+    >>>
+    >>> # Validate numeric range
+    >>> df = pd.DataFrame({
+    ...     "age": [25, 30, 42, 18, 65]
+    ... })
+    >>>
+    >>> vd = (
+    ...     Validate(df)
+    ...     .ValuesValidation.ColumnValuesToBeBetween(
+    ...         column="age",
+    ...         min_value=18,
+    ...         max_value=65
+    ...     )
+    ... )
+    >>> key = "ColumnValuesToBeBetween_age"
+    >>> vd.results[key]["result"]["status"]
+    'Success'
+    >>>
+    >>> # When calling validate on successful validation there is no error.
+    >>> vd.validate()
+
 """
 ```
+
+Doctest servers as a double purpose, it provides examples on how to use the validation, 
+automatically showcased in the documentation and also serves as a test case for the 
+validation.
 
 ---
 
 ## 5. Implement the `__init__` Method
 
-The `__init__` method must include at least these parameters: `column`, `min_value`, and `max_value`.
-Note that column is passed to the parent class (`BaseValidationParameters`).
+The `__init__` method must include `column` (if your validation uses a
+combination of columns or some other varation pass it later to
+`super().__init__`).
 
-- Always pass `*args` and `**kwargs` to the base class.
+In this case we are attempting to find values between two numbers, hence, these
+parameters are required: `column`, `min_value`, and `max_value`.
+It should also include the standard `impact` and `threshold` parameters
+required by the base class (`BaseValidation`).
+
+- Always pass `column`, `impact`, and `threshold` to the base class.
 - If your validation doesn’t require a column, generate one in the `__init__` method.
 
 Example:
@@ -85,10 +117,11 @@ def __init__(
     column: str,
     min_value: float,
     max_value: float,
-    *args,
-    **kwargs: object,
+    impact: Literal["low", "medium", "high"] = "low",
+    threshold: float = 0.00,
+    **kwargs: dict[str, object],
 ) -> None:
-    super().__init__(column, *args, **kwargs)
+    super().__init__(column, impact, threshold, **kwargs)
     self.min_value = min_value
     self.max_value = max_value
 ```
@@ -120,7 +153,7 @@ return only the failed values.
 Example:
 
 ```python
-def __call__(self, frame: FrameT) -> FrameT:
+def __call__(self, frame: Frame) -> Frame:
     """Check if the values in a column are within the specified range.
 
     The result will be used during execution.
@@ -137,6 +170,11 @@ def __call__(self, frame: FrameT) -> FrameT:
 ---
 
 ## 8. Test Your Validation
+
+Prior to proceeding with test generation, you might want to use your already generated test in the docstring, for that you can run:
+```bash
+    uv run pytest validoopsie --doctest-modules
+```
 
 1. Create a test file under `tests/test_validation_catalogue/test_ValuesValidation`.
 2. Use the `@create_frame_fixture` decorator to define test data for different
@@ -195,6 +233,30 @@ class Validate:
                 threshold (float, optional): Validation threshold. Defaults to 0.0.
                 impact (str, optional): Impact level of validation. Defaults to "low".
                 kwargs (dict): Additional keyword arguments.
+
+            Examples:
+                >>> import pandas as pd
+                >>> from validoopsie import Validate
+                >>>
+                >>> # Validate numeric range
+                >>> df = pd.DataFrame({
+                ...     "age": [25, 30, 42, 18, 65]
+                ... })
+                >>>
+                >>> vd = (
+                ...     Validate(df)
+                ...     .ValuesValidation.ColumnValuesToBeBetween(
+                ...         column="age",
+                ...         min_value=18,
+                ...         max_value=65
+                ...     )
+                ... )
+                >>> key = "ColumnValuesToBeBetween_age"
+                >>> vd.results[key]["result"]["status"]
+                'Success'
+                >>>
+                >>> # When calling validate on successful validation there is no error.
+                >>> vd.validate()
 
             """
 ```

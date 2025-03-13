@@ -41,16 +41,43 @@ on contribution to this project is wild for me, so I appreciate every minute you
 ## Setting Up the Development Environment
 
 1. Ensure you have Python 3.9 or higher installed.
-2. Install the required dependencies (I prefer using `uv` for this):
+2. Use the Makefile to set up the development environment:
+    ```sh
+    make setup
+    ```
+   
+   This will create a virtual environment and install all dependencies.
+
+   Alternatively, you can install dependencies manually:
     ```sh
     uv sync --all-extras
     ```
 
-## Running Tests
+## Running Tests and Linters
 
-We use `pytest` for running tests. To run the tests, execute the following command:
+We use a Makefile to simplify development tasks:
+
 ```sh
+# Run linters (mypy, ruff)
+make lint
+
+# Run tests (includes doctests, stubtest)
+make test
+
+# Run both lint and test
+make all
+```
+
+You can also run specific commands directly:
+```sh
+# Run pytest
 pytest
+
+# Run mypy type checking
+mypy validoopsie/
+
+# Run ruff linter
+ruff check validoopsie/
 ```
 
 

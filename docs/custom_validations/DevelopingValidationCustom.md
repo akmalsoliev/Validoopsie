@@ -10,19 +10,14 @@ using the Validoopsie library.
 
 ## 1. Define the Validation Class
 
-To create a custom validation, start by defining a new class that:
-
-- Inherits from `BaseValidationParameters`.
-- Uses the `@base_validation_wrapper` decorator.
-
-Here's how you can begin:
+To create a custom validation, start by defining a new class that inherits from `BaseValidation`:
 
 ```python
-from validoopsie.base import BaseValidationParameters, base_validation_wrapper
-from narwhals.typing import FrameT
+from typing import Literal
+from validoopsie.base import BaseValidation
+from narwhals.typing import Frame
 
-@base_validation_wrapper
-class MyCustomValidation(BaseValidationParameters):
+class MyCustomValidation(BaseValidation):
     pass
 ```
 
@@ -49,17 +44,20 @@ Args:
 ## 3. Define the `__init__` Method
 
 The `__init__` method initializes your validation class. It should include at
-least the `column` parameter, which serves as a secondary name for the
-validation result. Remember to pass `*args` and `**kwargs` to the base class.
-
-If your validation doesn't inherently require a column, you can assign a
-default value within the `__init__` method.
+least the `column` parameter, along with impact and threshold parameters. The base class
+requires these parameters to be passed explicitly.
 
 Example:
 
 ```python
-def __init__(self, column: str, *args, **kwargs) -> None:
-    super().__init__(column, *args, **kwargs)
+def __init__(
+    self,
+    column: str,
+    impact: Literal["low", "medium", "high"] = "low",
+    threshold: float = 0.00,
+    **kwargs: dict[str, object],
+) -> None:
+    super().__init__(column, impact, threshold, **kwargs)
 ```
 
 ## 4. Add a Fail Message
@@ -85,14 +83,14 @@ should return only the records that do not meet the validation criteria.
 Example:
 
 ```python
-def __call__(self, frame: FrameT) -> FrameT:
+def __call__(self, frame: Frame) -> Frame:
     """Execute the custom validation logic.
 
     Args:
-        frame (FrameT): The data frame to validate.
+        frame (Frame): The data frame to validate.
 
     Returns:
-        FrameT: A data frame containing records that failed the validation.
+        Frame: A data frame containing records that failed the validation.
     """
     return (
         frame.group_by(self.column)
@@ -142,8 +140,8 @@ validator = Validate(df)
 # Add your custom validation
 validator.add_validation(MyCustomValidation(column="date"))
 
-# Execute the validations and get the result
-result = validator.result
+# Access the results directly
+result = validator.results
 
 print(result)
 ```
@@ -152,10 +150,6 @@ print(result)
 
 After running the validation, you can expect an output similar to the following:
 
-<details>
-  <summary>
-    <strong>OUTPUT</strong>
-  </summary>
 ```json
 {
     "Summary": {
@@ -179,7 +173,6 @@ After running the validation, you can expect an output similar to the following:
     }
 }
 ```
-</details>
 
 ---
 
