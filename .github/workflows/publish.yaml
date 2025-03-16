@@ -47,7 +47,7 @@ jobs:
 
   github-release:
     name: >-
-      Sign the Python 🐍 distribution 📦 with Sigstore and upload them to GitHub Release
+      Sign the Python 🐍 distribution 📦 with Sigstore and upload them to GitHub Release Drafter draft
     needs:
       - publish-to-pypi
     runs-on: ubuntu-latest
@@ -66,23 +66,24 @@ jobs:
         with:
           inputs: >-
             ./dist/*.tar.gz ./dist/*.whl
-
-      - name: Create GitHub Release
+            
+      - name: Find Release Drafter draft release
+        id: find-draft
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create
-          "$GITHUB_REF_NAME"
-          --repo "$GITHUB_REPOSITORY"
-          --notes ""
-
-      - name: Upload artifact signatures to GitHub Release
+        run: |
+          DRAFT_ID=$(gh api repos/$GITHUB_REPOSITORY/releases --jq '.[] | select(.draft==true and .name != null) | .id' | head -n 1)
+          DRAFT_TAG=$(gh api repos/$GITHUB_REPOSITORY/releases --jq '.[] | select(.draft==true and .name != null) | .tag_name' | head -n 1)
+          echo "DRAFT_ID=$DRAFT_ID" >> $GITHUB_ENV
+          echo "DRAFT_TAG=$DRAFT_TAG" >> $GITHUB_ENV
+          echo "draft_id=$DRAFT_ID" >> $GITHUB_OUTPUT
+          echo "draft_tag=$DRAFT_TAG" >> $GITHUB_OUTPUT
+          
+      - name: Upload artifact signatures to Release Drafter draft
+        if: steps.find-draft.outputs.draft_id != ''
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        # Upload to GitHub Release using the `gh` CLI.
-        # `dist/` contains the built packages, and the
-        # sigstore-produced signatures and certificates.
         run: >-
           gh release upload
-          "$GITHUB_REF_NAME" dist/**
+          "$DRAFT_TAG" dist/**
           --repo "$GITHUB_REPOSITORY"

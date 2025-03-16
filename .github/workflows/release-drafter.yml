@@ -2,11 +2,12 @@ name: Release Drafter
 
 on:
   push:
+    # branches to consider in the event; optional, defaults to all
     branches:
       - main
-    tags:
-      - 'v[0-9]+.[0-99]+.[0-9]+*'
-  pull_request:
+
+  pull_request_target:
+    # Only following types are handled by the action, but one can default to all as well
     types: [opened, reopened, synchronize, edited]
 
 permissions:
@@ -22,9 +23,16 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Release Drafter
-        uses: release-drafter/release-drafter@v6
+      # (Optional) GitHub Enterprise requires GHE_HOST variable set
+      #- name: Set GHE_HOST
+      #  run: |
+      #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
+
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: release-drafter/release-drafter@v6
+        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
         with:
-          config-name: 'release-drafter.yml'
+          # config-name: release-drafter.yml
+          disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
