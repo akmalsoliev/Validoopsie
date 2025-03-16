@@ -108,56 +108,52 @@ vd.EqualityValidation.PairColumnEquality(
 vd.results
 ```
 
-<details>
-  <summary>
-    <strong>OUTPUT</strong>
-  </summary>
+**OUTPUT:**
 
-    ```json
-    {
-      "Summary": {
-        "passed": false,
-        "validations": [
-          "PairColumnEquality_name",
-          "ColumnUniqueValuesToBeInList_last_name"
-        ]
-      },
-      "PairColumnEquality_name": {
-        "validation": "PairColumnEquality",
-        "impact": "low",
-        "timestamp": "2025-01-03T22:28:02.497324+01:00",
-        "column": "name",
-        "result": {
-          "status": "Fail",
-          "threshold pass": false,
-          "message": "The column 'name' is not equal to the column'age'.",
-          "failing items": [
-            "Doe - column name - column age - 30",
-            "Jane - column name - column age - 35",
-            "John - column name - column age - 25"
-          ],
-          "failed number": 3,
-          "frame row number": 3,
-          "threshold": 0.0,
-          "failed percentage": 1.0
-        }
-      },
-      "ColumnUniqueValuesToBeInList_last_name": {
-        "validation": "ColumnUniqueValuesToBeInList",
-        "impact": "low",
-        "timestamp": "2025-01-03T22:28:02.499192+01:00",
-        "column": "last_name",
-        "result": {
-          "status": "Success",
-          "threshold pass": true,
-          "message": "All items passed the validation.",
-          "frame row number": 3,
-          "threshold": 0.0
-        }
-      }
+```json
+{
+  "Summary": {
+    "passed": false,
+    "validations": [
+      "PairColumnEquality_name",
+      "ColumnUniqueValuesToBeInList_last_name"
+    ]
+  },
+  "PairColumnEquality_name": {
+    "validation": "PairColumnEquality",
+    "impact": "low",
+    "timestamp": "2025-01-03T22:28:02.497324+01:00",
+    "column": "name",
+    "result": {
+      "status": "Fail",
+      "threshold pass": false,
+      "message": "The column 'name' is not equal to the column'age'.",
+      "failing items": [
+        "Doe - column name - column age - 30",
+        "Jane - column name - column age - 35",
+        "John - column name - column age - 25"
+      ],
+      "failed number": 3,
+      "frame row number": 3,
+      "threshold": 0.0,
+      "failed percentage": 1.0
     }
-    ```
-</details>
+  },
+  "ColumnUniqueValuesToBeInList_last_name": {
+    "validation": "ColumnUniqueValuesToBeInList",
+    "impact": "low",
+    "timestamp": "2025-01-03T22:28:02.499192+01:00",
+    "column": "last_name",
+    "result": {
+      "status": "Success",
+      "threshold pass": true,
+      "message": "All items passed the validation.",
+      "frame row number": 3,
+      "threshold": 0.0
+    }
+  }
+}
+```
 
 To ensure that all your validations have been correctly executed and to handle
 any potential errors that may arise during the validation process, you can use
