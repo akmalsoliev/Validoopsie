@@ -140,7 +140,7 @@ vd.results
             "failed_number": 3,
             "frame_row_number": 3,
             "threshold": 0.0,
-            "failed percentage": 1.0
+            "failed_percentage": 1.0
         }
     },
     "ColumnUniqueValuesToBeInList_last_name": {

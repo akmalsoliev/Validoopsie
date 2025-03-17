@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import Any, Literal
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 import narwhals as nw
 from narwhals.dataframe import DataFrame
@@ -20,6 +20,12 @@ from validoopsie.util.base_util_functions import (
     log_exception_summary,
 )
 
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import (
+        ResultValidationTypedDict,
+        ValidationTypedDict,
+    )
+
 
 class BaseValidation:
     """Base class for validation parameters."""
@@ -34,9 +40,11 @@ class BaseValidation:
         check__impact(impact)
         check__threshold(threshold)
 
-        self.column = column
         # Sometimes operator can make a mistake and pass a string with a different case
-        self.impact = impact.lower()
+        impact_lower = cast("Literal['low', 'medium', 'high']", impact.lower())
+        self.impact: Literal["low", "medium", "high"] = impact_lower
+
+        self.column = column
         self.threshold = threshold
         self.__dict__.update(kwargs)
 
@@ -56,7 +64,7 @@ class BaseValidation:
     def __execute_check__(
         self,
         frame: IntoFrame,
-    ) -> dict[str, Any]:
+    ) -> ValidationTypedDict:
         """Execute the validation check on the provided frame."""
         current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
         class_name = self.__class__.__name__
@@ -93,53 +101,36 @@ class BaseValidation:
         )
         threshold_pass: bool = failed_percentage <= self.threshold
 
-        result = {}
         if vf_row_number > 0:
             items: list[str | int | float] = get_items(collected_frame, self.column)
-            if not threshold_pass:
-                result = {
-                    "result": {
-                        "status": "Fail",
-                        "threshold_pass": threshold_pass,
-                        "message": self.fail_message,
-                        "failing_items": items,
-                        "failed_number": vf_count_number,
-                        "frame_row_number": og_frame_rows_number,
-                        "threshold": self.threshold,
-                        "failed percentage": failed_percentage,
-                    },
-                }
-            elif threshold_pass:
-                result = {
-                    "result": {
-                        "status": "Success",
-                        "threshold_pass": threshold_pass,
-                        "message": self.fail_message,
-                        "failing_items": items,
-                        "failed_number": vf_count_number,
-                        "frame_row_number": og_frame_rows_number,
-                        "threshold": self.threshold,
-                        "failed percentage": failed_percentage,
-                    },
-                }
+            status: str = "Fail"
+            if threshold_pass:
+                status = "Success"
+
+            result: ResultValidationTypedDict = {
+                "status": status,
+                "threshold_pass": threshold_pass,
+                "message": self.fail_message,
+                "failing_items": items,
+                "failed_number": vf_count_number,
+                "frame_row_number": og_frame_rows_number,
+                "threshold": self.threshold,
+                "failed_percentage": failed_percentage,
+            }
 
         else:
             result = {
-                "result": {
-                    "status": "Success",
-                    "threshold_pass": threshold_pass,
-                    "message": "All items passed the validation.",
-                    "frame_row_number": og_frame_rows_number,
-                    "threshold": self.threshold,
-                },
+                "status": "Success",
+                "threshold_pass": threshold_pass,
+                "message": "All items passed the validation.",
+                "frame_row_number": og_frame_rows_number,
+                "threshold": self.threshold,
             }
-
-        assert "result" in result, "The result key is missing."
 
         return {
             "validation": class_name,
             "impact": self.impact,
             "timestamp": current_time_str,
             "column": self.column,
-            **result,
+            "result": result,
         }
