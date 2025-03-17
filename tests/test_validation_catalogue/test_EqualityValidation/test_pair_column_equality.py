@@ -17,7 +17,7 @@ def test_pair_column_equlity_fail_one(lf: IntoFrame) -> None:
     test = PairColumnEquality(column="A", target_column="B")
     result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
-    assert result["result"]["threshold pass"] == True
+    assert result["result"]["threshold_pass"] == True
 
 
 def test_pair_column_equlity_fail_all(lf: IntoFrame) -> None:

@@ -112,46 +112,63 @@ vd.results
 
 ```json
 {
-  "Summary": {
-    "passed": false,
-    "validations": [
-      "PairColumnEquality_name",
-      "ColumnUniqueValuesToBeInList_last_name"
-    ]
-  },
-  "PairColumnEquality_name": {
-    "validation": "PairColumnEquality",
-    "impact": "low",
-    "timestamp": "2025-01-03T22:28:02.497324+01:00",
-    "column": "name",
-    "result": {
-      "status": "Fail",
-      "threshold pass": false,
-      "message": "The column 'name' is not equal to the column'age'.",
-      "failing items": [
-        "Doe - column name - column age - 30",
-        "Jane - column name - column age - 35",
-        "John - column name - column age - 25"
-      ],
-      "failed number": 3,
-      "frame row number": 3,
-      "threshold": 0.0,
-      "failed percentage": 1.0
+    "Summary": {
+        "passed": false,
+        "validations": [
+            "PairColumnEquality_name",
+            "ColumnUniqueValuesToBeInList_last_name",
+            "ColumnValuesToBeBetween_age"
+        ],
+        "failed_validation": [
+            "PairColumnEquality_name"
+        ]
+    },
+    "PairColumnEquality_name": {
+        "validation": "PairColumnEquality",
+        "impact": "high",
+        "timestamp": "2025-03-17T10:28:08.258604+01:00",
+        "column": "name",
+        "result": {
+            "status": "Fail",
+            "threshold_pass": false,
+            "message": "The column 'name' is not equal to the column'age'.",
+            "failing_items": [
+                "Doe - column name - column age - 30",
+                "Jane - column name - column age - 35",
+                "John - column name - column age - 25"
+            ],
+            "failed_number": 3,
+            "frame_row_number": 3,
+            "threshold": 0.0,
+            "failed percentage": 1.0
+        }
+    },
+    "ColumnUniqueValuesToBeInList_last_name": {
+        "validation": "ColumnUniqueValuesToBeInList",
+        "impact": "low",
+        "timestamp": "2025-03-17T10:28:08.265990+01:00",
+        "column": "last_name",
+        "result": {
+            "status": "Success",
+            "threshold_pass": true,
+            "message": "All items passed the validation.",
+            "frame_row_number": 3,
+            "threshold": 0.0
+        }
+    },
+    "ColumnValuesToBeBetween_age": {
+        "validation": "ColumnValuesToBeBetween",
+        "impact": "low",
+        "timestamp": "2025-03-17T10:28:08.267564+01:00",
+        "column": "age",
+        "result": {
+            "status": "Success",
+            "threshold_pass": true,
+            "message": "All items passed the validation.",
+            "frame_row_number": 3,
+            "threshold": 0.0
+        }
     }
-  },
-  "ColumnUniqueValuesToBeInList_last_name": {
-    "validation": "ColumnUniqueValuesToBeInList",
-    "impact": "low",
-    "timestamp": "2025-01-03T22:28:02.499192+01:00",
-    "column": "last_name",
-    "result": {
-      "status": "Success",
-      "threshold pass": true,
-      "message": "All items passed the validation.",
-      "frame row number": 3,
-      "threshold": 0.0
-    }
-  }
 }
 ```
 

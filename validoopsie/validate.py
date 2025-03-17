@@ -109,10 +109,10 @@ class Validate:
         # If all validations pass, the result will be PASS
         if status == "Fail":
             self.results["Summary"]["passed"] = False
-            if "Failed Validation" not in self.results["Summary"]:
-                self.results["Summary"]["Failed Validation"] = [name]
+            if "failed_validation" not in self.results["Summary"]:
+                self.results["Summary"]["failed_validation"] = [name]
             else:
-                self.results["Summary"]["Failed Validation"].append(name)
+                self.results["Summary"]["failed_validation"].append(name)
         elif self.results["Summary"]["passed"] is None and status == "Success":
             self.results["Summary"]["passed"] = True
 

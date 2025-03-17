@@ -25,7 +25,7 @@ def test_except_column_values_to_not_be_null_fail_5(sample_data: Frame) -> None:
     test = ColumnNotBeNull(column="C")
     result = test.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Fail"
-    assert result["result"]["failed number"] == 5
+    assert result["result"]["failed_number"] == 5
 
 
 def test_except_column_values_to_not_be_null_success(sample_data: Frame) -> None:

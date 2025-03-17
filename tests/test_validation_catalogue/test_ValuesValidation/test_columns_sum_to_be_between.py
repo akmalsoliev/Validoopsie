@@ -69,7 +69,7 @@ def test_columns_sum_to_be_with_threshold_success(lf: IntoFrame) -> None:
     test = ColumnsSumToBeBetween(["A", "D"], min_sum_value=6, threshold=0.5)
     result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
-    assert result["result"]["threshold pass"] is True
+    assert result["result"]["threshold_pass"] is True
 
 
 # Integration Tests for Greater Than (min_sum_value only)

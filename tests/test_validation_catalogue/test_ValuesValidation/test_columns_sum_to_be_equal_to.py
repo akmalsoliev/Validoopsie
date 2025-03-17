@@ -27,7 +27,7 @@ def test_fail_but_threshold_success_columns_sum_to_be_equal_to(lf: IntoFrame) ->
     test = ColumnsSumToBeEqualTo(["A", "D"], 6, threshold=0.5)
     result = test.__execute_check__(frame=lf)
     assert result["result"]["status"] == "Success"
-    assert result["result"]["threshold pass"] == True
+    assert result["result"]["threshold_pass"] == True
 
 
 def test_error_columns_sum_to_be_equal_to(lf: IntoFrame) -> None:
