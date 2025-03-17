@@ -138,7 +138,7 @@ def test_type_check_failure_multiple_columns(sample_data: Frame) -> None:
     ds = TypeCheck(None, None, frame_schema_definition=frame_schema_definition)
     result = ds.__execute_check__(frame=sample_data)
     assert result["result"]["status"] == "Fail"
-    assert result["result"]["failing items"][0] == "String"
+    assert result["result"]["failing_items"][0] == "String"
 
 
 def test_type_check_threshold_success(sample_data: Frame) -> None:

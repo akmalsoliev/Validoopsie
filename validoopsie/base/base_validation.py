@@ -100,11 +100,11 @@ class BaseValidation:
                 result = {
                     "result": {
                         "status": "Fail",
-                        "threshold pass": threshold_pass,
+                        "threshold_pass": threshold_pass,
                         "message": self.fail_message,
-                        "failing items": items,
-                        "failed number": vf_count_number,
-                        "frame row number": og_frame_rows_number,
+                        "failing_items": items,
+                        "failed_number": vf_count_number,
+                        "frame_row_number": og_frame_rows_number,
                         "threshold": self.threshold,
                         "failed percentage": failed_percentage,
                     },
@@ -113,11 +113,11 @@ class BaseValidation:
                 result = {
                     "result": {
                         "status": "Success",
-                        "threshold pass": threshold_pass,
+                        "threshold_pass": threshold_pass,
                         "message": self.fail_message,
-                        "failing items": items,
-                        "failed number": vf_count_number,
-                        "frame row number": og_frame_rows_number,
+                        "failing_items": items,
+                        "failed_number": vf_count_number,
+                        "frame_row_number": og_frame_rows_number,
                         "threshold": self.threshold,
                         "failed percentage": failed_percentage,
                     },
@@ -127,9 +127,9 @@ class BaseValidation:
             result = {
                 "result": {
                     "status": "Success",
-                    "threshold pass": threshold_pass,
+                    "threshold_pass": threshold_pass,
                     "message": "All items passed the validation.",
-                    "frame row number": og_frame_rows_number,
+                    "frame_row_number": og_frame_rows_number,
                     "threshold": self.threshold,
                 },
             }
