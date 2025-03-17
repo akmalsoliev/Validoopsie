@@ -13,6 +13,11 @@ validoopsie.validate.Validate.StringValidation
 validoopsie.validate.Validate.TypeValidation
 validoopsie.validate.Validate.UniqueValidation
 validoopsie.validate.Validate.ValuesValidation
+validoopsie.base.base_validation.ResultValidationTypedDict
+validoopsie.base.base_validation.ValidationTypedDict
+validoopsie.base.results_typedict.TypedDict
+validoopsie.util.base_util_functions.ResultValidationTypedDict
+validoopsie.util.base_util_functions.ValidationTypedDict
 
 # Private methods that are in the implementation but not in the stub
 validoopsie.Validate.__create_validation_class__

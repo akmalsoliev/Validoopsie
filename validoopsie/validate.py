@@ -10,7 +10,13 @@ from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
 if TYPE_CHECKING:
-    from validoopsie.base.base_validation import BaseValidation
+    from validoopsie.base import (
+        BaseValidation,
+        ResultsTypedDict,
+        ResultValidationTypedDict,
+        SummaryTypedDict,
+        ValidationTypedDict,
+    )
 
 
 class Validate:
@@ -19,11 +25,13 @@ class Validate:
         return nw.from_native(frame)
 
     def __init__(self, frame: IntoFrame) -> None:
-        self.results = {
-            "Summary": {
-                "passed": None,
-                "validations": "No validation checks were added.",
-            },
+        summary: SummaryTypedDict = {
+            "passed": None,
+            "validations": "No validation checks were added.",
+        }
+
+        self.results: ResultsTypedDict = {
+            "Summary": summary,
         }
         self.frame: Frame = self.__into_narwahlframe__(frame)
         self.__generate_validation_attributes__()
@@ -92,21 +100,21 @@ class Validate:
     def __create_validation_class__(
         self,
         validation_class: type,
-        *args: object,
+        *args: list[object],
         **kwargs: dict[str, object],
     ) -> Validate:
         args = args[1:]
         validation = validation_class(*args, **kwargs)
-        result = validation.__execute_check__(frame=self.frame)
-        name = f"{validation.__class__.__name__}_{validation.column}"
-        self.__parse_results__(result, name)
+        result: ValidationTypedDict = validation.__execute_check__(frame=self.frame)
+        name: str = f"{validation.__class__.__name__}_{validation.column}"
+        self.__parse_results__(name, result)
         return self
 
-    def __parse_results__(self, result: dict, name: str) -> None:
-        status = result["result"]["status"]
-        # If the validation check failed, set the overall result to fail
+    def __parse_results__(self, name: str, result_dict: ValidationTypedDict) -> None:
+        status: str = result_dict["result"]["status"]
+        # If the validation check failed, set the overall result to Fail
         # If No validations are added, the result will be None
-        # If all validations pass, the result will be PASS
+        # If all validations pass, the result will be Success
         if status == "Fail":
             self.results["Summary"]["passed"] = False
             if "failed_validation" not in self.results["Summary"]:
@@ -121,7 +129,8 @@ class Validate:
         else:
             self.results["Summary"]["validations"].append(name)
 
-        self.results.update({name: result})
+        # appending the results to the results dictionary
+        self.results[name] = result_dict
 
     def add_validation(
         self,
@@ -134,6 +143,8 @@ class Validate:
 
         """
         output_name: str = "InvalidValidationCheck"
+        result: ValidationTypedDict
+        output: ResultValidationTypedDict
 
         try:
             from validoopsie.base.base_validation import (
@@ -141,16 +152,24 @@ class Validate:
             )
 
             assert isinstance(validation, BaseValidation)
+        # This is under the condition that the validation is not of type BaseValidation
         except AssertionError:
             if inspect.isclass(validation):
                 output_name = validation.__name__
-            result = {
-                "result": {
-                    "status": "Fail",
-                    "message": f"{output_name} is not a valid validation check.",
-                },
+            output = {
+                "status": "Fail",
+                "message": f"{output_name} is not a valid validation check.",
             }
-            self.__parse_results__(result, output_name)
+
+            result = {
+                "validation": output_name,
+                "impact": "high",
+                "timestamp": "N/A",
+                "column": "N/A",
+                "result": output,
+            }
+
+            self.__parse_results__(output_name, result)
             return self
 
         class_name = validation.__class__.__name__
@@ -159,14 +178,19 @@ class Validate:
             column_name = validation.column
             output_name = f"{class_name}_{column_name}"
         except Exception as e:
+            output = {
+                "status": "Fail",
+                "message": (f"An error occured while executing {class_name} - {e!s}"),
+            }
             result = {
-                "result": {
-                    "status": "Fail",
-                    "message": (f"An error occured while executing {class_name} - {e!s}"),
-                },
+                "validation": output_name,
+                "impact": "high",
+                "timestamp": "N/A",
+                "column": "N/A",
+                "result": output,
             }
 
-        self.__parse_results__(result, output_name)
+        self.__parse_results__(output_name, result)
         return self
 
     def validate(self, *, raise_results: bool = False) -> None:

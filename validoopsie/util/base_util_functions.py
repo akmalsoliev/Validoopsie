@@ -1,11 +1,17 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any, Literal
 
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
 from narwhals.typing import IntoFrame
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import (
+        ResultValidationTypedDict,
+        ValidationTypedDict,
+    )
 
 
 def get_items(
@@ -58,20 +64,22 @@ def log_exception_summary(class_name: str, name: str, error_str: str) -> None:
 
 def build_error_message(
     class_name: str,
-    impact: str,
+    impact: Literal["low", "medium", "high"],
     column: str,
     error_str: str,
     current_time_str: str,
-) -> dict[str, str | dict[str, str]]:
+) -> ValidationTypedDict:
+    failed_dict: ResultValidationTypedDict = {
+        "status": "Fail",
+        "message": f"ERROR: {error_str!s}",
+    }
+
     return {
         "validation": class_name,
         "impact": impact,
         "timestamp": current_time_str,
         "column": column,
-        "result": {
-            "status": "Fail",
-            "message": f"ERROR: {error_str!s}",
-        },
+        "result": failed_dict,
     }
 
 

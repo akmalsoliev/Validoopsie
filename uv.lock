@@ -3765,6 +3765,7 @@ dependencies = [
     { name = "loguru" },
     { name = "narwhals" },
     { name = "pyarrow" },
+    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -3798,6 +3799,7 @@ requires-dist = [
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "narwhals", specifier = ">=1.27.1" },
     { name = "pyarrow", specifier = ">=11.0.0" },
+    { name = "typing-extensions", specifier = ">=4.0.0" },
 ]
 
 [package.metadata.requires-dev]

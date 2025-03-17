@@ -16,6 +16,7 @@ dependencies = [
     "loguru>=0.7.3",
     "narwhals>=1.27.1",
     "pyarrow>=11.0.0",
+    "typing-extensions>=4.0.0",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
