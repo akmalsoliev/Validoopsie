@@ -39,13 +39,36 @@ def modin_df(data: dict[str, list]) -> mpd.DataFrame:
     return mpd.DataFrame(data)
 
 
-def spark_df(data: dict[str, list]) -> DataFrame:
+@pytest.fixture(scope="session")
+def spark_session():
+    """Create a shared SparkSession for all tests."""
     session = (
+        SparkSession.builder.appName("ValidoopsieTests")
+        .master("local[*]")
+        .config("spark.driver.memory", "2g")
+        .config("spark.executor.memory", "1g")
+        .config("spark.sql.shuffle.partitions", "4")
+        .config("spark.default.parallelism", "4")
+        .config("spark.sql.adaptive.enabled", "true")
+        .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+        .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+        .config("spark.sql.inMemoryColumnarStorage.compressed", "true")
+        .getOrCreate()
+    )
+    yield session
+    session.stop()
+
+
+def spark_df(data: dict[str, list], session=None) -> DataFrame:
+    """Create a Spark DataFrame with optimizations for testing."""
+    # Use provided session or create a new one
+    spark = session or (
         SparkSession.builder.appName("DataFrameCreation")
         .master("local[*]")
         .config("spark.driver.memory", "1g")
         .getOrCreate()
     )
+
     index_col_name = generate_temporary_column_name(n_bytes=8, columns=list(data))
     data[index_col_name] = list(range(len(data[next(iter(data))])))
 
@@ -53,16 +76,21 @@ def spark_df(data: dict[str, list]) -> DataFrame:
     for key in null_cols:
         del data[key]
 
-    sp_df = (  # type: ignore[no-any-return]
-        session.createDataFrame([*zip(*data.values())], schema=[*data.keys()])
-        .repartition(2)
+    # Optimize partitioning for small test data
+    partitions = 1 if len(data[next(iter(data))]) < 1000 else 2
+
+    sp_df = (
+        spark.createDataFrame([*zip(*data.values())], schema=[*data.keys()])
+        .repartition(partitions)
         .orderBy(index_col_name)
         .drop(index_col_name)
     )
+
     for col in null_cols:
         sp_df = sp_df.withColumn(col, lit(None))
 
-    return sp_df
+    # Cache the dataframe to avoid recomputation
+    return sp_df.cache()
 
 
 def duckdb_df(data: dict[str, list]) -> Frame:
@@ -85,11 +113,14 @@ def create_frame_fixture(func: Callable) -> Callable:
         params=params,
         ids=[param[0] for param in params],
     )
-    def wrapper(request: SubRequest) -> ReturnType:
+    def wrapper(request: SubRequest, spark_session=None) -> ReturnType:
         _, df_factory = request.param
         data = func()
-        if request.param[0] == "pyspark" and all(len(v) == 0 for v in data.values()):
-            pytest.skip("Empty frames not supported in PySpark")
+        if request.param[0] == "pyspark":
+            if all(len(v) == 0 for v in data.values()):
+                pytest.skip("Empty frames not supported in PySpark")
+            # Pass the shared session to spark_df
+            return df_factory(data, spark_session)
         return df_factory(data)
 
     return wrapper
