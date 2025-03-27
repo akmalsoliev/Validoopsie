@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class ColumnUniquePair(BaseValidation):
@@ -52,7 +55,7 @@ class ColumnUniquePair(BaseValidation):
         column_list: list[str] | tuple[str, ...],
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         assert len(column_list) > 0, "At least two columns are required."
 

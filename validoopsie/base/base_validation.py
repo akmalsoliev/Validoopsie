@@ -22,6 +22,7 @@ from validoopsie.util.base_util_functions import (
 
 if TYPE_CHECKING:
     from validoopsie.base.results_typedict import (
+        KwargsParams,
         ResultValidationTypedDict,
         ValidationTypedDict,
     )
@@ -35,7 +36,7 @@ class BaseValidation:
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         check__impact(impact)
         check__threshold(threshold)
@@ -49,7 +50,7 @@ class BaseValidation:
         self.__dict__.update(kwargs)
 
         # This is mainly used for type checking validation
-        self.schema_lenght: int | None = None
+        self.schema_length: int | None = None
 
     @property
     @abstractmethod
@@ -76,8 +77,8 @@ class BaseValidation:
             validated_frame: Frame = self(frame)
             collected_frame: DataFrame[Any] = collect_frame(validated_frame)
 
-            if self.schema_lenght is not None:
-                og_frame_rows_number = self.schema_lenght
+            if self.schema_length is not None:
+                og_frame_rows_number = self.schema_length
             else:
                 og_frame_rows_number = get_length(frame)
 

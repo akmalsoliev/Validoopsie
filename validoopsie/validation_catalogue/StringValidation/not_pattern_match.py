@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class NotPatternMatch(BaseValidation):
@@ -49,7 +52,7 @@ class NotPatternMatch(BaseValidation):
         pattern: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         super().__init__(column, impact, threshold, **kwargs)
         self.pattern = pattern

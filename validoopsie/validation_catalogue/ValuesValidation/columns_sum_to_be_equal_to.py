@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class ColumnsSumToBeEqualTo(BaseValidation):
@@ -51,7 +54,7 @@ class ColumnsSumToBeEqualTo(BaseValidation):
         sum_value: float,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         self.columns_list = columns_list
         self.sum_value = sum_value

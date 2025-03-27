@@ -37,3 +37,9 @@ class ValidationTypedDict(TypedDict):
 
 class ResultsTypedDict(TypedDict):
     Summary: SummaryTypedDict
+
+
+class KwargsParams(TypedDict, total=False):
+    column: str
+    impact: Literal["high", "medium", "low"]
+    threshold: float
