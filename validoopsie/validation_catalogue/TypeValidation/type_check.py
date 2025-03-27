@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 import pyarrow as pa
@@ -8,6 +8,9 @@ from narwhals.dtypes import DType
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class TypeCheck(BaseValidation):
@@ -61,7 +64,7 @@ class TypeCheck(BaseValidation):
         frame_schema_definition: dict[str, type] | None = None,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         # Single validation check
         if column and column_type:

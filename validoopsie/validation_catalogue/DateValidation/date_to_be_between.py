@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 from datetime import date, datetime
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
 from validoopsie.util import min_max_arg_check, min_max_filter
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class DateToBeBetween(BaseValidation):
@@ -66,7 +69,7 @@ class DateToBeBetween(BaseValidation):
         max_date: date | datetime | None = None,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         min_max_arg_check(min_date, max_date)
 

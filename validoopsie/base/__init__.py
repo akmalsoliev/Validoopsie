@@ -1,5 +1,6 @@
 from .base_validation import BaseValidation
 from .results_typedict import (
+    KwargsParams,
     ResultsTypedDict,
     ResultValidationTypedDict,
     SummaryTypedDict,
@@ -8,6 +9,7 @@ from .results_typedict import (
 
 __all__ = [
     "BaseValidation",
+    "KwargsParams",
     "ResultValidationTypedDict",
     "ResultsTypedDict",
     "SummaryTypedDict",

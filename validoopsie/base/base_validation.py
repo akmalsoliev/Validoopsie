@@ -22,6 +22,7 @@ from validoopsie.util.base_util_functions import (
 
 if TYPE_CHECKING:
     from validoopsie.base.results_typedict import (
+        KwargsParams,
         ResultValidationTypedDict,
         ValidationTypedDict,
     )
@@ -35,7 +36,7 @@ class BaseValidation:
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs,
+        **kwargs: KwargsParams,
     ) -> None:
         check__impact(impact)
         check__threshold(threshold)

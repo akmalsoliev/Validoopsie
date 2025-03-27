@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import re
-from typing import Literal
+from typing import TYPE_CHECKING, Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
+
+if TYPE_CHECKING:
+    from validoopsie.base.results_typedict import KwargsParams
 
 
 class ColumnMatchDateFormat(BaseValidation):
@@ -64,7 +67,7 @@ class ColumnMatchDateFormat(BaseValidation):
         date_format: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
+        **kwargs: KwargsParams,
     ) -> None:
         self.date_format = date_format
         super().__init__(column, impact, threshold, **kwargs)
