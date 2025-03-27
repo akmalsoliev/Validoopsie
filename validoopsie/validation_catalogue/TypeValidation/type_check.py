@@ -118,7 +118,7 @@ class TypeCheck(BaseValidation):
         """Validate the data type of the column(s)."""
         schema = frame.schema
         # Introduction of a new structure where the schema len will be used a frame length
-        self.schema_lenght = schema.len()
+        self.schema_length = schema.len()
         failed_columns = []
         for column_name in self.frame_schema_definition:
             # Should this be raised or not?
