@@ -41,12 +41,12 @@ validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_equal_to.Kwa
 # Private methods that are in the implementation but not in the stub
 validoopsie.Validate.__create_validation_class__
 validoopsie.Validate.__generate_validation_attributes__
-validoopsie.Validate.__into_narwahlframe__
+validoopsie.Validate.__into_narwhalsframe__
 validoopsie.Validate.__make_validation_method__
 validoopsie.Validate.__parse_results__
 validoopsie.validate.Validate.__create_validation_class__
 validoopsie.validate.Validate.__generate_validation_attributes__
-validoopsie.validate.Validate.__into_narwahlframe__
+validoopsie.validate.Validate.__into_narwhalsframe__
 validoopsie.validate.Validate.__make_validation_method__
 validoopsie.validate.Validate.__parse_results__
 
