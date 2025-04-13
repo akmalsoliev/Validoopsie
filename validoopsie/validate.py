@@ -20,7 +20,7 @@ if TYPE_CHECKING:
 
 
 class Validate:
-    def __into_narwahlframe__(self, frame: IntoFrame) -> Frame:
+    def __into_narwhalsframe__(self, frame: IntoFrame) -> Frame:
         """Convert a native frame to a narwhals frame."""
         return nw.from_native(frame)
 
@@ -33,7 +33,7 @@ class Validate:
         self.results: ResultsTypedDict = {
             "Summary": summary,
         }
-        self.frame: Frame = self.__into_narwahlframe__(frame)
+        self.frame: Frame = self.__into_narwhalsframe__(frame)
         self.__generate_validation_attributes__()
 
     def __generate_validation_attributes__(self) -> None:
