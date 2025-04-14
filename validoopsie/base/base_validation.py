@@ -61,7 +61,6 @@ class BaseValidation:
     def __call__(self, frame: Frame) -> Frame:
         """Return the fail message, that will be used in the report."""
 
-    @abstractmethod
     def __execute_check__(
         self,
         frame: IntoFrame,
