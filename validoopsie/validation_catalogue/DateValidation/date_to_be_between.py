@@ -96,4 +96,5 @@ class DateToBeBetween(BaseValidation):
             )
             .group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
+            .with_columns(nw.col(self.column).cast(nw.String).alias(self.column))
         )

@@ -93,7 +93,7 @@ class ColumnMatchDateFormat(BaseValidation):
         return (
             frame.with_columns(exp)
             .filter(nw.col("contains") == False)
-            .select(nw.col(self.column))
+            .select(nw.col(self.column).cast(nw.String))
             .group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
         )
