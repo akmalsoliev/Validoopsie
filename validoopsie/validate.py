@@ -222,12 +222,12 @@ class Validate:
                 warning_msg = (
                     f"Failed validation: {key} - {self.results[key]['result']['message']}"
                 )
-                logger.warning(warning_msg)
+                logger.error(warning_msg)
             elif failed:
                 warning_msg = (
                     f"Failed validation: {key} - {self.results[key]['result']['message']}"
                 )
-                logger.error(warning_msg)
+                logger.warning(warning_msg)
             else:
                 info_msg = f"Passed validation: {key}"
                 logger.info(info_msg)
