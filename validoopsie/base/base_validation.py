@@ -9,6 +9,12 @@ import narwhals as nw
 from narwhals.dataframe import DataFrame
 from narwhals.typing import Frame, IntoFrame
 
+from validoopsie.base.results_typedict import (
+    KwargsParams,
+    ResultValidationTypedDict,
+    ValidationTypedDict,
+)
+
 from validoopsie.util.base_util_functions import (
     build_error_message,
     check__impact,
@@ -19,13 +25,6 @@ from validoopsie.util.base_util_functions import (
     get_length,
     log_exception_summary,
 )
-
-if TYPE_CHECKING:
-    from validoopsie.base.results_typedict import (
-        KwargsParams,
-        ResultValidationTypedDict,
-        ValidationTypedDict,
-    )
 
 
 class BaseValidation:
@@ -107,30 +106,30 @@ class BaseValidation:
             if threshold_pass:
                 status = "Success"
 
-            result: ResultValidationTypedDict = {
-                "status": status,
-                "threshold_pass": threshold_pass,
-                "message": self.fail_message,
-                "failing_items": items,
-                "failed_number": vf_count_number,
-                "frame_row_number": og_frame_rows_number,
-                "threshold": self.threshold,
-                "failed_percentage": failed_percentage,
-            }
+            result = ResultValidationTypedDict(
+                status=status,
+                threshold_pass=threshold_pass,
+                message=self.fail_message,
+                failing_items=items,
+                failed_number=vf_count_number,
+                frame_row_number=og_frame_rows_number,
+                threshold=self.threshold,
+                failed_percentage=failed_percentage,
+            )
 
         else:
-            result = {
-                "status": "Success",
-                "threshold_pass": threshold_pass,
-                "message": "All items passed the validation.",
-                "frame_row_number": og_frame_rows_number,
-                "threshold": self.threshold,
-            }
+            result = ResultValidationTypedDict(
+                status="Success",
+                threshold_pass=threshold_pass,
+                message="All items passed the validation.",
+                frame_row_number=og_frame_rows_number,
+                threshold=self.threshold,
+            )
 
-        return {
-            "validation": class_name,
-            "impact": self.impact,
-            "timestamp": current_time_str,
-            "column": self.column,
-            "result": result,
-        }
+        return ValidationTypedDict(
+            validation=class_name,
+            impact=self.impact,
+            timestamp=current_time_str,
+            column=self.column,
+            result=result,
+        )

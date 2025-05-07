@@ -187,3 +187,5 @@ pyrightconfig.json
 # Visual Studio Code
 .vscode/
 .idea
+
+**/.claude/settings.local.json
