@@ -9,14 +9,15 @@ import narwhals as nw
 from loguru import logger
 from narwhals.typing import Frame, IntoFrame
 
+from validoopsie.base.results_typedict import (
+    ResultsTypedDict,
+    ResultValidationTypedDict,
+    SummaryTypedDict,
+    ValidationTypedDict,
+)
+
 if TYPE_CHECKING:
-    from validoopsie.base import (
-        BaseValidation,
-        ResultsTypedDict,
-        ResultValidationTypedDict,
-        SummaryTypedDict,
-        ValidationTypedDict,
-    )
+    from validoopsie.base import BaseValidation
 
 
 class Validate:
@@ -25,14 +26,14 @@ class Validate:
         return nw.from_native(frame)
 
     def __init__(self, frame: IntoFrame) -> None:
-        summary: SummaryTypedDict = {
-            "passed": None,
-            "validations": "No validation checks were added.",
-        }
+        summary = SummaryTypedDict(
+            passed=None,
+            validations="No validation checks were added.",
+        )
 
-        self.results: ResultsTypedDict = {
-            "Summary": summary,
-        }
+        self.results = ResultsTypedDict(
+            Summary=summary,
+        )
         self.frame: Frame = self.__into_narwhalsframe__(frame)
         self.__generate_validation_attributes__()
 
@@ -154,20 +155,24 @@ class Validate:
             assert isinstance(validation, BaseValidation)
         # This is under the condition that the validation is not of type BaseValidation
         except AssertionError:
-            if inspect.isclass(validation):
-                output_name = validation.__name__
-            output = {
-                "status": "Fail",
-                "message": f"{output_name} is not a valid validation check.",
-            }
+            # Get class name safely
+            output_name = (
+                getattr(validation, "__name__", str(validation))
+                if inspect.isclass(validation)
+                else type(validation).__name__
+            )
+            output = ResultValidationTypedDict(
+                status="Fail",
+                message=f"{output_name} is not a valid validation check.",
+            )
 
-            result = {
-                "validation": output_name,
-                "impact": "high",
-                "timestamp": "N/A",
-                "column": "N/A",
-                "result": output,
-            }
+            result = ValidationTypedDict(
+                validation=output_name,
+                impact="high",
+                timestamp="N/A",
+                column="N/A",
+                result=output,
+            )
 
             self.__parse_results__(output_name, result)
             return self
@@ -178,17 +183,17 @@ class Validate:
             column_name = validation.column
             output_name = f"{class_name}_{column_name}"
         except Exception as e:
-            output = {
-                "status": "Fail",
-                "message": (f"An error occured while executing {class_name} - {e!s}"),
-            }
-            result = {
-                "validation": output_name,
-                "impact": "high",
-                "timestamp": "N/A",
-                "column": "N/A",
-                "result": output,
-            }
+            output = ResultValidationTypedDict(
+                status="Fail",
+                message=(f"An error occured while executing {class_name} - {e!s}"),
+            )
+            result = ValidationTypedDict(
+                validation=output_name,
+                impact="high",
+                timestamp="N/A",
+                column="N/A",
+                result=output,
+            )
 
         self.__parse_results__(output_name, result)
         return self

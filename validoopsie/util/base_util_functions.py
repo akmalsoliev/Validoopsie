@@ -7,11 +7,10 @@ from loguru import logger
 from narwhals.dataframe import DataFrame
 from narwhals.typing import IntoFrame
 
-if TYPE_CHECKING:
-    from validoopsie.base.results_typedict import (
-        ResultValidationTypedDict,
-        ValidationTypedDict,
-    )
+from validoopsie.base.results_typedict import (
+    ResultValidationTypedDict,
+    ValidationTypedDict,
+)
 
 
 def get_items(
@@ -69,18 +68,18 @@ def build_error_message(
     error_str: str,
     current_time_str: str,
 ) -> ValidationTypedDict:
-    failed_dict: ResultValidationTypedDict = {
-        "status": "Fail",
-        "message": f"ERROR: {error_str!s}",
-    }
+    failed_dict = ResultValidationTypedDict(
+        status="Fail",
+        message=f"ERROR: {error_str!s}",
+    )
 
-    return {
-        "validation": class_name,
-        "impact": impact,
-        "timestamp": current_time_str,
-        "column": column,
-        "result": failed_dict,
-    }
+    return ValidationTypedDict(
+        validation=class_name,
+        impact=impact,
+        timestamp=current_time_str,
+        column=column,
+        result=failed_dict,
+    )
 
 
 def check__impact(impact: str) -> None:

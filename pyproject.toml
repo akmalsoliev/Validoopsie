@@ -57,7 +57,11 @@ dev-dependencies = [
   "pytest-env>=1.1.5",
   "mypy>=1.15.0",
   "pyarrow-stubs>=17.17",
+  "ty",
 ]
+
+[tool.uv.sources]
+ty = { git = "https://github.com/astral-sh/ty.git" }
 
 [dependency-groups]
 docs = [
