@@ -14,7 +14,6 @@ from validoopsie.base.results_typedict import (
     ResultValidationTypedDict,
     ValidationTypedDict,
 )
-
 from validoopsie.util.base_util_functions import (
     build_error_message,
     check__impact,

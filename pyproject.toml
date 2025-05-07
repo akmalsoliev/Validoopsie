@@ -60,9 +60,6 @@ dev-dependencies = [
   "ty",
 ]
 
-[tool.uv.sources]
-ty = { git = "https://github.com/astral-sh/ty.git" }
-
 [dependency-groups]
 docs = [
    "markdown-exec>=1.10.0",
