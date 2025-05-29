@@ -110,15 +110,14 @@ validator.add_validation(BusinessRuleCheck(column="transaction_type", impact="hi
 When adding type hints, follow this pattern:
 
 ```python
-def __init__(
-    self,
-    column: str,
-    pattern: str,
-    threshold: float = 0.0,
-    impact: Literal["low", "medium", "high"] = "low",
-    **kwargs: Any
-) -> None:
-    # Implementation
+    def __init__(
+        self,
+        column: str,
+        pattern: str,
+        threshold: float = 0.0,
+        impact: Literal["low", "medium", "high"] = "low",
+    ) -> None:
+        # Implementation
 ```
 
 By following these naming conventions, you ensure that your custom validations are easily understood by other developers and integrate well with Validoopsie's existing validation structure.

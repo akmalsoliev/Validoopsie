@@ -23,9 +23,8 @@ class MyCustomValidation(BaseValidation):
         column: str,
         impact: Literal["low", "medium", "high"] = "low",
         threshold: float = 0.00,
-        **kwargs: dict[str, object],
     ) -> None:
-        super().__init__(column, impact, threshold, **kwargs)
+        super().__init__(column, impact, threshold)
 
     @property
     def fail_message(self) -> str:
@@ -54,7 +53,8 @@ class MyCustomValidation(BaseValidation):
                 nw.col("mean_temperature_celsius") > 60,
                 # Every tempearture below -40 degrees celsius is considered as an error
                 nw.col("mean_temperature_celsius") < -40,
-                # Every mean tempearture below -10 and above 30 degrees celsius is considered as an error
+                # Every mean tempearture below -10 and above 30 degrees celsius is
+                # considered as an error
                 nw.col("mean_temperature_celsius").is_between(-10, 30) == False,
             )
             .group_by(self.column)

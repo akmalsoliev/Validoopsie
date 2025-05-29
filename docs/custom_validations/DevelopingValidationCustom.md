@@ -8,6 +8,67 @@ the specific logic required for your data quality checks.
 This guide will walk you through the process of developing a custom validation
 using the Validoopsie library.
 
+## Final Output
+
+```py
+from typing import Literal
+from validoopsie.base import BaseValidation
+from narwhals.typing import FrameT
+
+class MyCustomValidation(BaseValidation):
+    """Custom validation that filters temperature data based on grouped dates.
+
+    Args:
+        column (str): The column name used in the validation and as an identifier in results.
+        threshold (float, optional): The threshold for the validation. Defaults to 0.0.
+        impact (str, optional): The impact level of the validation. Defaults to "low".
+        kwargs (dict): Additional keyword arguments.
+
+    """
+    def __init__(
+        self,
+        column: str,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: float = 0.00,
+    ) -> None:
+        super().__init__(column, impact, threshold, **kwargs)
+
+    @property
+    def fail_message(self) -> str:
+        """Return the fail message used in the report."""
+        return "Custom validation failed: Temperature readings are outside acceptable ranges."
+
+    def __call__(self, frame: FrameT) -> FrameT:
+        """Execute the custom validation logic.
+
+        Args:
+            frame (FrameT): The data frame to validate.
+
+        Returns:
+            FrameT: A data frame containing records that failed the validation.
+        """
+        return (
+            frame.group_by(self.column)
+            .agg(nw.col("temperature").mean().alias("mean_temperature_farenheit"))
+            .with_columns(
+                ((nw.col("mean_temperature_farenheit") - 32) * 5 / 9).alias(
+                    "mean_temperature_celsius",
+                ),
+            )
+            .filter(
+                # Every tempearture above 60 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius") > 60,
+                # Every tempearture below -40 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius") < -40,
+                # Every mean tempearture below -10 and above 30 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius").is_between(-10, 30) == False,
+            )
+            .group_by(self.column)
+            .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
+        )
+
+```
+
 ## 1. Define the Validation Class
 
 To create a custom validation, start by defining a new class that inherits from `BaseValidation`:
@@ -15,10 +76,9 @@ To create a custom validation, start by defining a new class that inherits from 
 ```python
 from typing import Literal
 from validoopsie.base import BaseValidation
-from narwhals.typing import Frame
+from narwhals.typing import FrameT
 
 class MyCustomValidation(BaseValidation):
-    pass
 ```
 
 ## 2. Add a Docstring
@@ -50,14 +110,13 @@ requires these parameters to be passed explicitly.
 Example:
 
 ```python
-def __init__(
-    self,
-    column: str,
-    impact: Literal["low", "medium", "high"] = "low",
-    threshold: float = 0.00,
-    **kwargs: dict[str, object],
-) -> None:
-    super().__init__(column, impact, threshold, **kwargs)
+    def __init__(
+        self,
+        column: str,
+        impact: Literal["low", "medium", "high"] = "low",
+        threshold: float = 0.00,
+    ) -> None:
+        super().__init__(column, impact, threshold, **kwargs)
 ```
 
 ## 4. Add a Fail Message
@@ -69,10 +128,10 @@ diagnosing issues.
 Example:
 
 ```python
-@property
-def fail_message(self) -> str:
-    """Return the fail message used in the report."""
-    return "Custom validation failed: Temperature readings are outside acceptable ranges."
+    @property
+    def fail_message(self) -> str:
+        """Return the fail message used in the report."""
+        return "Custom validation failed: Temperature readings are outside acceptable ranges."
 ```
 
 ## 5. Define the Validation Logic (`__call__` Method)
@@ -83,34 +142,34 @@ should return only the records that do not meet the validation criteria.
 Example:
 
 ```python
-def __call__(self, frame: Frame) -> Frame:
-    """Execute the custom validation logic.
+    def __call__(self, frame: FrameT) -> FrameT:
+        """Execute the custom validation logic.
 
-    Args:
-        frame (Frame): The data frame to validate.
+        Args:
+            frame (FrameT): The data frame to validate.
 
-    Returns:
-        Frame: A data frame containing records that failed the validation.
-    """
-    return (
-        frame.group_by(self.column)
-        .agg(nw.col("temperature").mean().alias("mean_temperature_farenheit"))
-        .with_columns(
-            ((nw.col("mean_temperature_farenheit") - 32) * 5 / 9).alias(
-                "mean_temperature_celsius",
-            ),
+        Returns:
+            FrameT: A data frame containing records that failed the validation.
+        """
+        return (
+            frame.group_by(self.column)
+            .agg(nw.col("temperature").mean().alias("mean_temperature_farenheit"))
+            .with_columns(
+                ((nw.col("mean_temperature_farenheit") - 32) * 5 / 9).alias(
+                    "mean_temperature_celsius",
+                ),
+            )
+            .filter(
+                # Every tempearture above 60 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius") > 60,
+                # Every tempearture below -40 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius") < -40,
+                # Every mean tempearture below -10 and above 30 degrees celsius is considered as an error
+                nw.col("mean_temperature_celsius").is_between(-10, 30) == False,
+            )
+            .group_by(self.column)
+            .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
         )
-        .filter(
-            # Every tempearture above 60 degrees celsius is considered as an error
-            nw.col("mean_temperature_celsius") > 60,
-            # Every tempearture below -40 degrees celsius is considered as an error
-            nw.col("mean_temperature_celsius") < -40,
-            # Every mean tempearture below -10 and above 30 degrees celsius is considered as an error
-            nw.col("mean_temperature_celsius").is_between(-10, 30) == False,
-        )
-        .group_by(self.column)
-        .agg(nw.col(self.column).count().alias(f"{self.column}-count"))
-    )
 ```
 
 **Notes:**
@@ -129,7 +188,7 @@ import pandas as pd
 from validoopsie import Validate
 
 # Sample data frame
-df = pd.DataFrame({
+df = pd.DataFrameT({
     "date": ['2025-01-01', '2025-02-01', '2025-03-01', '2025-04-01'],
     "temperature": [50, 60, 70, 80],
 })
