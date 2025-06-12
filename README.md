@@ -11,6 +11,9 @@
   <a href="https://pepy.tech/projects/validoopsie">
     <img src="https://static.pepy.tech/badge/validoopsie" alt="PyPI Downloads">
   </a>
+  <a href="https://www.repostatus.org/#active">
+    <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status">
+  </a>
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml">
     <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml/badge.svg" alt="Tests and Linters" />
   </a>
