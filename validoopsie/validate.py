@@ -139,8 +139,46 @@ class Validate:
     ) -> Validate:
         """Add custom generated validation check to the Validate class instance.
 
-        Parameters:
+        Args:
             validation (BaseValidationParameters): Custom validation check to add
+
+        Examples:
+            >>> import pandas as pd
+            >>> import narwhals as nw
+            >>> from validoopsie import Validate
+            >>> from validoopsie.base import BaseValidation
+            >>>
+            >>> # Create a custom validation class
+            >>> class CustomValidation(BaseValidation):
+            ...     def __init__(self, column, impact="low", threshold=0.0, **kwargs):
+            ...         super().__init__(column, impact, threshold, **kwargs)
+            ...
+            ...     @property
+            ...     def fail_message(self) -> str:
+            ...         return f"Custom validation failed for column {self.column}"
+            ...
+            ...     def __call__(self, frame):
+            ...         # Custom validation logic
+            ...         return (
+            ...             # Note: that select `None` for an empty DataFrame
+            ...             frame.select(nw.all() == None)
+            ...             .group_by(self.column)
+            ...             .agg(nw.col("column1").sum().alias("column1-count"))
+            ...         )
+            ...
+            >>> # Apply custom validation
+            >>> df = pd.DataFrame({"column1": [1, 2, 3]})
+            >>>
+            >>> vd = (
+            ...     Validate(df)
+            ...     .add_validation(CustomValidation(column="column1"))
+            ... )
+            >>> key = "CustomValidation_column1"
+            >>> vd.results[key]["result"]["status"]
+            'Success'
+            >>>
+            >>> # When calling validate on successful validation there is no error.
+            >>> vd.validate()
 
         """
         output_name: str = "InvalidValidationCheck"
@@ -148,7 +186,7 @@ class Validate:
         output: ResultValidationTypedDict
 
         try:
-            from validoopsie.base.base_validation import (
+            from validoopsie.base.base_validation import (  # noqa: PLC0415
                 BaseValidation,
             )
 
@@ -199,7 +237,41 @@ class Validate:
         return self
 
     def validate(self, *, raise_results: bool = False) -> None:
-        """Validate the data set."""
+        """Validate the dataset by running all configured validation checks.
+
+        This method processes all validation results stored in `self.results` and handles
+        them based on their impact level. It logs validation outcomes and optionally
+        raises exceptions for failed high-impact validations.
+
+        Args:
+            raise_results: If True, includes detailed validation results in the exception
+                message when high-impact validations fail. If False, only includes the
+                names of failed validations. Defaults to False.
+
+        Raises:
+            ValueError: If no validation checks were added (only "Summary" key exists
+                in results), or if any high-impact validation checks fail.
+
+        Logging Behavior:
+            - High-impact failures: Logged at CRITICAL level
+            - Medium-impact failures: Logged at ERROR level
+            - Low-impact failures: Logged at WARNING level
+            - Successful validations: Logged at INFO level
+
+        Impact Level Handling:
+            - **High impact**: Failures cause ValueError to be raised
+            - **Medium impact**: Failures are logged as errors but don't raise exceptions
+            - **Low impact**: Failures are logged as warnings but don't raise exceptions
+
+        Note:
+            The "Summary" key in results is automatically skipped as it contains
+            aggregate information rather than individual validation check results.
+
+        Example:
+            .. code-block:: python
+            validator.validate()  # Raises ValueError if high-impact checks fail
+            validator.validate(raise_results=True)  # Includes detailed results error
+        """
         if self.results.keys().__len__() == 1:
             msg = "No validation checks were added."
             raise ValueError(msg)
@@ -240,7 +312,7 @@ class Validate:
             value_error_msg = f"Failed Validation(s): {failed_validations}"
 
             if raise_results:
-                import json
+                import json  # noqa: PLC0415
 
                 keys = ["Summary", *failed_validations]
                 filtered_results = {key: self.results[key] for key in keys}
