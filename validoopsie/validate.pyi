@@ -45,53 +45,60 @@ class Validate:
 
     def __init__(self, frame: IntoFrame) -> None: ...
     def validate(self, *, raise_results: bool = False) -> Validate: ...
-    def add_validation(self, validation: BaseValidation) -> Validate:
-        """Add custom generated validation check to the Validate class instance.
+    def add_validation(self, validation: BaseValidation) -> Validate: ...
 
-        Args:
-            validation (BaseValidationParameters): Custom validation check to add
+    class DateValidation:
+        """Date validation methods for DataFrame columns.
+
+        This class provides static methods for validating date-related data in DataFrame
+        columns.
+        All methods return a Validate object that can be chained with other validations or
+        used to check validation results.
+
+        The class includes validations for:
+        - Date format compliance
+        - Date range validation
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).DateValidation.ColumnMatchDateFormat(...)``
 
         Examples:
             >>> import pandas as pd
-            >>> import narwhals as nw
             >>> from validoopsie import Validate
-            >>> from validoopsie.base import BaseValidation
+            >>> from datetime import datetime
             >>>
-            >>> # Create a custom validation class
-            >>> class CustomValidation(BaseValidation):
-            ...     def __init__(self, column, impact="low", threshold=0.0, **kwargs):
-            ...         super().__init__(column, impact, threshold, **kwargs)
-            ...
-            ...     @property
-            ...     def fail_message(self) -> str:
-            ...         return f"Custom validation failed for column {self.column}"
-            ...
-            ...     def __call__(self, frame):
-            ...         # Custom validation logic
-            ...         return (
-            ...             # Note: that select `None` for an empty DataFrame
-            ...             frame.select(nw.all() == None)
-            ...             .group_by(self.column)
-            ...             .agg(nw.col("column1").sum().alias("column1-count"))
-            ...         )
-            ...
-            >>> # Apply custom validation
-            >>> df = pd.DataFrame({"column1": [1, 2, 3]})
+            >>> df = pd.DataFrame({
+            ...     "order_date": ["2023-01-01", "2023-02-15", "2023-03-30"],
+            ...     "delivery_date": [
+            ...         datetime(2023, 1, 5),
+            ...         datetime(2023, 2, 20),
+            ...         datetime(2023, 4, 2)
+            ...     ]
+            ... })
             >>>
+            >>> # Chain multiple date validations
             >>> vd = (
             ...     Validate(df)
-            ...     .add_validation(CustomValidation(column="column1"))
+            ...     .DateValidation.ColumnMatchDateFormat(
+            ...         column="order_date",
+            ...         date_format="YYYY-mm-dd"
+            ...     )
+            ...     .DateValidation.DateToBeBetween(
+            ...         column="delivery_date",
+            ...         min_date=datetime(2023, 1, 1),
+            ...         max_date=datetime(2023, 12, 31)
+            ...     )
             ... )
-            >>> key = "CustomValidation_column1"
-            >>> vd.results[key]["result"]["status"]
-            'Success'
-            >>>
-            >>> # When calling validate on successful validation there is no error.
-            >>> vd.validate()
+            >>> vd.validate()  # Raises exception if any validations fail
 
         """
-
-    class DateValidation:
         @staticmethod
         def ColumnMatchDateFormat(
             column: str,
@@ -253,6 +260,59 @@ class Validate:
             """
 
     class NullValidation:
+        """Null validation methods for DataFrame columns.
+
+        This class provides static methods for validating null/missing values in DataFrame
+        columns.
+        All methods return a Validate object that can be chained with other validations or
+        used to check validation results.
+
+        The class includes validations for:
+        - Ensuring columns contain only null values
+        - Ensuring columns contain no null values
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).NullValidation.ColumnNotBeNull(...)``
+
+        Examples:
+            >>> import pandas as pd
+            >>> from validoopsie import Validate
+            >>>
+            >>> df = pd.DataFrame({
+            ...     "id": [1, 2, 3],
+            ...     "required_field": ["a", "b", "c"],
+            ...     "optional_field": [None, None, None]
+            ... })
+            >>>
+            >>> # Chain multiple null validations
+            >>> vd = (
+            ...     Validate(df)
+            ...     .NullValidation.ColumnNotBeNull(column="required_field")
+            ...     .NullValidation.ColumnBeNull(column="optional_field")
+            ... )
+            >>> vd.validate()  # Raises exception if any validations fail
+            >>>
+            >>> # With threshold allowing some null values
+            >>> df_partial = pd.DataFrame({
+            ...     "name": ["John", "Jane", None]
+            ... })
+            >>> vd2 = (
+            ...     Validate(df_partial)
+            ...     .NullValidation.ColumnNotBeNull(
+            ...         column="name",
+            ...         threshold=0.4  # Allow 40% null values
+            ...     )
+            ... )
+            >>> vd2.validate()  # Passes because only 33% are null
+
+        """
         @staticmethod
         def ColumnBeNull(
             column: str,
@@ -334,6 +394,73 @@ class Validate:
             """
 
     class StringValidation:
+        r"""String validation methods for DataFrame columns.
+
+        This class provides static methods for validating string data in DataFrame
+        columns. All methods return a Validate object that can be chained with other
+        validations or used to check validation results.
+
+        The class includes validations for:
+        - String length validation (exact length, length ranges)
+        - Pattern matching using regular expressions
+        - Pattern exclusion validation
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).StringValidation.PatternMatch(...)``
+
+        Examples:
+            >>> import pandas as pd
+            >>> from validoopsie import Validate
+            >>>
+            >>> df = pd.DataFrame({
+            ...     "email": ["user1@example.com", "user2@example.com"],
+            ...     "username": ["user1", "user2"],
+            ...     "password": ["pass123", "secret456"],
+            ...     "comment": ["Great product!", "Normal comment"]
+            ... })
+            >>>
+            >>> # Chain multiple string validations
+            >>> vd = (
+            ...     Validate(df)
+            ...     .StringValidation.PatternMatch(
+            ...         column="email",
+            ...         pattern=r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            ...     )
+            ...     .StringValidation.LengthToBeBetween(
+            ...         column="password",
+            ...         min_value=6,
+            ...         max_value=20
+            ...     )
+            ...     .StringValidation.NotPatternMatch(
+            ...         column="comment",
+            ...         pattern=r"password|secret"
+            ...     )
+            ... )
+            >>> vd.validate()  # Raises exception if any validations fail
+            >>>
+            >>> # With threshold allowing some validation failures
+            >>> df_mixed = pd.DataFrame({
+            ...     "codes": ["ABC123", "XY789", "TOOLONG123"]
+            ... })
+            >>> vd2 = (
+            ...     Validate(df_mixed)
+            ...     .StringValidation.LengthToBeBetween(
+            ...         column="codes",
+            ...         min_value=3,
+            ...         max_value=6,
+            ...         threshold=0.4  # Allow 40% to fail length check
+            ...     )
+            ... )
+            >>> vd2.validate()  # Passes because only 33% fail
+
+        """
         @staticmethod
         def LengthToBeBetween(
             column: str,
@@ -523,6 +650,77 @@ class Validate:
             """
 
     class TypeValidation:
+        """Type validation methods for DataFrame columns.
+
+        This class provides static methods for validating data types in DataFrame columns.
+        All methods return a Validate object that can be chained with other validations or
+        used to check validation results.
+
+        The class includes validations for:
+        - Single column type validation
+        - Multi-column schema validation using frame schema definitions
+        - Flexible type checking with configurable thresholds
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).TypeValidation.TypeCheck(...)``
+
+        Examples:
+            >>> import pandas as pd
+            >>> from validoopsie import Validate
+            >>> from narwhals.dtypes import IntegerType, FloatType, String
+            >>>
+            >>> df = pd.DataFrame({
+            ...     "id": [1001, 1002, 1003],
+            ...     "name": ["Alice", "Bob", "Charlie"],
+            ...     "balance": [100.50, 250.75, 0.00],
+            ...     "active": [True, False, True]
+            ... })
+            >>>
+            >>> # Validate entire DataFrame schema
+            >>> vd = (
+            ...     Validate(df)
+            ...     .TypeValidation.TypeCheck(
+            ...         frame_schema_definition={
+            ...             "id": IntegerType,
+            ...             "name": String,
+            ...             "balance": FloatType
+            ...         }
+            ...     )
+            ... )
+            >>> vd.validate()  # Raises exception if any validations fail
+            >>>
+            >>> # Validate single column type
+            >>> vd2 = (
+            ...     Validate(df)
+            ...     .TypeValidation.TypeCheck(
+            ...         column="name",
+            ...         column_type=String
+            ...     )
+            ... )
+            >>> vd2.validate()
+            >>>
+            >>> # With threshold allowing some type mismatches
+            >>> df_mixed = pd.DataFrame({
+            ...     "values": [1, 2, "3", 4, 5]  # Mixed types
+            ... })
+            >>> vd3 = (
+            ...     Validate(df_mixed)
+            ...     .TypeValidation.TypeCheck(
+            ...         column="values",
+            ...         column_type=IntegerType,
+            ...         threshold=0.3  # Allow 30% non-integer values
+            ...     )
+            ... )
+            >>> vd3.validate()  # Passes because only 20% are non-integer
+
+        """
         @staticmethod
         def TypeCheck(
             column: str | None = None,
@@ -578,6 +776,72 @@ class Validate:
             """
 
     class UniqueValidation:
+        """Uniqueness validation methods for DataFrame columns.
+
+        This class provides static methods for validating uniqueness constraints and value
+        distributions in DataFrame columns. All methods return a Validate object that can
+        be chained with other validations or used to check validation results.
+
+        The class includes validations for:
+        - Multi-column unique combinations (composite keys)
+        - Unique value count validation within specified ranges
+        - Unique value membership validation against allowed lists
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).UniqueValidation.ColumnUniquePair(...)``
+
+        Examples:
+            >>> import pandas as pd
+            >>> from validoopsie import Validate
+            >>>
+            >>> df = pd.DataFrame({
+            ...     "student_id": [101, 102, 103, 104],
+            ...     "course_id": [201, 202, 203, 201],
+            ...     "status": ["active", "inactive", "pending", "active"],
+            ...     "grade": ["A", "B", "A", "C"]
+            ... })
+            >>>
+            >>> # Chain multiple uniqueness validations
+            >>> vd = (
+            ...     Validate(df)
+            ...     .UniqueValidation.ColumnUniquePair(
+            ...         column_list=["student_id", "course_id"]
+            ...     )
+            ...     .UniqueValidation.ColumnUniqueValueCountToBeBetween(
+            ...         column="grade",
+            ...         min_value=2,
+            ...         max_value=5
+            ...     )
+            ...     .UniqueValidation.ColumnUniqueValuesToBeInList(
+            ...         column="status",
+            ...         values=["active", "inactive", "pending", "suspended"]
+            ...     )
+            ... )
+            >>> vd.validate()  # Raises exception if any validations fail
+            >>>
+            >>> # With threshold allowing some constraint violations
+            >>> df_duplicates = pd.DataFrame({
+            ...     "user_email": ["user1@test.com", "user2@test.com", "user1@test.com"]
+            ... })
+            >>> vd2 = (
+            ...     Validate(df_duplicates)
+            ...     .UniqueValidation.ColumnUniqueValueCountToBeBetween(
+            ...         column="user_email",
+            ...         min_value=3,  # Expect 3 unique emails
+            ...         max_value=3,
+            ...         threshold=0.5  # Allow 50% deviation from expected unique count
+            ...     )
+            ... )
+            >>> # This would pass with threshold, but fail without it
+
+        """
         @staticmethod
         def ColumnUniquePair(
             column_list: list[str] | tuple[str],
@@ -723,6 +987,85 @@ class Validate:
             """
 
     class ValuesValidation:
+        """Value range and sum validation methods for DataFrame columns.
+
+        This class provides static methods for validating numerical values and column
+        combinations in DataFrame columns. All methods return a Validate object that can
+        be chained with other validations or used to check validation results.
+
+        The class includes validations for:
+        - Individual column value range validation
+        - Multi-column sum range validation
+        - Multi-column exact sum validation
+
+        All validation methods support:
+        - Configurable failure thresholds (allowing some percentage of failures)
+        - Impact levels for prioritizing validation failures
+        - Detailed result reporting with success/failure counts
+
+        Note:
+            This class is typically accessed through a Validate instance rather than
+            directly:
+            ``Validate(df).ValuesValidation.ColumnValuesToBeBetween(...)``
+
+        Examples:
+            >>> import pandas as pd
+            >>> from validoopsie import Validate
+            >>>
+            >>> df = pd.DataFrame({
+            ...     "age": [25, 30, 42, 18, 65],
+            ...     "income": [45000, 55000, 75000, 35000, 85000],
+            ...     "taxes": [9000, 11000, 15000, 7000, 17000],
+            ...     "net_income": [36000, 44000, 60000, 28000, 68000]
+            ... })
+            >>>
+            >>> # Chain multiple value validations
+            >>> vd = (
+            ...     Validate(df)
+            ...     .ValuesValidation.ColumnValuesToBeBetween(
+            ...         column="age",
+            ...         min_value=18,
+            ...         max_value=65
+            ...     )
+            ...     .ValuesValidation.ColumnsSumToBeBetween(
+            ...         columns_list=["taxes", "net_income"],
+            ...         min_sum_value=30000,
+            ...         max_sum_value=90000
+            ...     )
+            ... )
+            >>> vd.validate()  # Raises exception if any validations fail
+            >>>
+            >>> # Validate budget allocation sums to 100%
+            >>> budget_df = pd.DataFrame({
+            ...     "marketing": [0.30, 0.25, 0.35],
+            ...     "development": [0.40, 0.45, 0.35],
+            ...     "operations": [0.30, 0.30, 0.30]
+            ... })
+            >>> vd2 = (
+            ...     Validate(budget_df)
+            ...     .ValuesValidation.ColumnsSumToBeEqualTo(
+            ...         columns_list=["marketing", "development", "operations"],
+            ...         sum_value=1.0
+            ...     )
+            ... )
+            >>> vd2.validate()
+            >>>
+            >>> # With threshold allowing some range violations
+            >>> scores_df = pd.DataFrame({
+            ...     "test_score": [85, 92, 78, 105, 88]  # One score over 100
+            ... })
+            >>> vd3 = (
+            ...     Validate(scores_df)
+            ...     .ValuesValidation.ColumnValuesToBeBetween(
+            ...         column="test_score",
+            ...         min_value=0,
+            ...         max_value=100,
+            ...         threshold=0.25  # Allow 25% of values outside range
+            ...     )
+            ... )
+            >>> vd3.validate()  # Passes because only 20% are out of range
+
+        """
         @staticmethod
         def ColumnValuesToBeBetween(
             column: str,
