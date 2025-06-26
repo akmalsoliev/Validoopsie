@@ -3,14 +3,13 @@ from __future__ import annotations
 import importlib
 import inspect
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING, Callable, cast
 
 import narwhals as nw
 from loguru import logger
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import IntoFrame
 
 from validoopsie.base.results_typedict import (
-    ResultsTypedDict,
     ResultValidationTypedDict,
     SummaryTypedDict,
     ValidationTypedDict,
@@ -21,20 +20,22 @@ if TYPE_CHECKING:
 
 
 class Validate:
-    def __into_narwhalsframe__(self, frame: IntoFrame) -> Frame:
+    def __into_narwhalsframe__(self, frame: IntoFrame) -> IntoFrame:
         """Convert a native frame to a narwhals frame."""
         return nw.from_native(frame)
 
     def __init__(self, frame: IntoFrame) -> None:
-        summary = SummaryTypedDict(
+        self.summary = SummaryTypedDict(
             passed=None,
-            validations="No validation checks were added.",
+            validations=[],
+            failed_validation=[],
         )
 
-        self.results = ResultsTypedDict(
-            Summary=summary,
-        )
-        self.frame: Frame = self.__into_narwhalsframe__(frame)
+        self.results: dict[str, SummaryTypedDict | ValidationTypedDict] = {
+            "Summary": self.summary,
+        }
+
+        self.frame: IntoFrame = self.__into_narwhalsframe__(frame)
         self.__generate_validation_attributes__()
 
     def __generate_validation_attributes__(self) -> None:
@@ -117,20 +118,20 @@ class Validate:
         # If No validations are added, the result will be None
         # If all validations pass, the result will be Success
         if status == "Fail":
-            self.results["Summary"]["passed"] = False
-            if "failed_validation" not in self.results["Summary"]:
-                self.results["Summary"]["failed_validation"] = [name]
+            self.summary["passed"] = False
+            if "failed_validation" not in self.summary:
+                self.summary["failed_validation"] = [name]
             else:
-                self.results["Summary"]["failed_validation"].append(name)
-        elif self.results["Summary"]["passed"] is None and status == "Success":
-            self.results["Summary"]["passed"] = True
+                self.summary["failed_validation"].append(name)
+        elif self.summary["passed"] is None and status == "Success":
+            self.summary["passed"] = True
 
-        if isinstance(self.results["Summary"]["validations"], str):
-            self.results["Summary"]["validations"] = [name]
+        if isinstance(self.summary["validations"], str):
+            self.summary["validations"] = [name]
         else:
-            self.results["Summary"]["validations"].append(name)
+            self.summary["validations"].append(name)
 
-        # appending the results to the results dictionary
+        # appending the results to the list of all validations
         self.results[name] = result_dict
 
     def add_validation(
@@ -272,51 +273,52 @@ class Validate:
             validator.validate()  # Raises ValueError if high-impact checks fail
             validator.validate(raise_results=True)  # Includes detailed results error
         """
-        if self.results.keys().__len__() == 1:
+        if len(self.summary["validations"]) == 0:
             msg = "No validation checks were added."
             raise ValueError(msg)
-        failed_validations: list[str] = []
-        for key in self.results:
+
+        list_of_failed_validations_string: list[str] = []
+        for name in self.results:
             # Skip the overall result, as it is not a validation check
-            if key == "Summary":
+            if name == "Summary":
                 continue
 
-            impact = self.results[key].get("impact", "high")
+            validation: ValidationTypedDict = cast(
+                "ValidationTypedDict", self.results[name]
+            )
+
+            assert "validation" in validation
+
+            impact = validation.get("impact", "high").lower()
 
             # Check if the validation failed and if it is high impact then it
             # should raise an error
-            failed = self.results[key]["result"]["status"] == "Fail"
-            high_impact = impact.lower() == "high"
-            medium_impact = impact.lower() == "medium"
+            failed = validation["result"]["status"] == "Fail"
 
-            if failed and high_impact:
-                failed_validations.append(key)
-                warning_msg = (
-                    f"Failed validation: {key} - {self.results[key]['result']['message']}"
-                )
-                logger.critical(warning_msg)
-            elif failed and medium_impact:
-                warning_msg = (
-                    f"Failed validation: {key} - {self.results[key]['result']['message']}"
-                )
-                logger.error(warning_msg)
-            elif failed:
-                warning_msg = (
-                    f"Failed validation: {key} - {self.results[key]['result']['message']}"
-                )
-                logger.warning(warning_msg)
+            if failed:
+                message = validation["result"]["message"]
+                warning_msg = f"Failed validation: {name} - {message}"
+                if impact == "high":
+                    list_of_failed_validations_string.append(name)
+                    logger.critical(warning_msg)
+                elif impact == "medium":
+                    logger.error(warning_msg)
+                elif impact == "low":
+                    logger.warning(warning_msg)
+                else:
+                    msg = "impact is not set, this is an error please open an issue"
+                    raise KeyError(msg)
             else:
-                info_msg = f"Passed validation: {key}"
+                info_msg = f"Passed validation: {validation}"
                 logger.info(info_msg)
-        if failed_validations:
-            value_error_msg = f"Failed Validation(s): {failed_validations}"
+
+        if list_of_failed_validations_string:
+            value_error_msg = f"Failed Validation(s): {list_of_failed_validations_string}"
 
             if raise_results:
                 import json  # noqa: PLC0415
 
-                keys = ["Summary", *failed_validations]
-                filtered_results = {key: self.results[key] for key in keys}
-                json_results = json.dumps(filtered_results, indent=4)
+                json_results = json.dumps(self.results, indent=4)
                 value_error_msg = f"{value_error_msg}\n{json_results}"
 
             raise ValueError(value_error_msg)

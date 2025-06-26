@@ -18,7 +18,7 @@ def sample_data() -> dict[str, list]:
 def test_vd_initialization(sample_data: ReturnT) -> None:
     vd = Validate(frame=sample_data)
     assert vd.results["Summary"]["passed"] is None
-    assert vd.results["Summary"]["validations"] == "No validation checks were added."
+    assert vd.results["Summary"]["validations"] == []
 
 
 def test_vd_result(sample_data: ReturnT) -> None:
