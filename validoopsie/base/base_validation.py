@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import TYPE_CHECKING, Any, Literal, cast
+from typing import Literal, cast
 
 import narwhals as nw
 from narwhals.dataframe import DataFrame
@@ -72,7 +72,7 @@ class BaseValidation:
 
             # Execution of the validation
             validated_frame: Frame = self(frame)
-            collected_frame: DataFrame[Any] = collect_frame(validated_frame)
+            collected_frame: DataFrame = collect_frame(validated_frame)
 
             if self.schema_length is not None:
                 og_frame_rows_number = self.schema_length

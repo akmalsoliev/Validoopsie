@@ -13,7 +13,7 @@ else:
 class SummaryTypedDict(TypedDict):
     passed: bool | None
     validations: list[str] | str
-    failed_validation: NotRequired[list[str]]
+    failed_validation: list[str]
 
 
 class ResultValidationTypedDict(TypedDict):
@@ -33,10 +33,6 @@ class ValidationTypedDict(TypedDict):
     timestamp: str
     column: str
     result: ResultValidationTypedDict
-
-
-class ResultsTypedDict(TypedDict):
-    Summary: SummaryTypedDict
 
 
 class KwargsParams(TypedDict, total=False):
