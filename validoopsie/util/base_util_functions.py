@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 import narwhals as nw
 from loguru import logger
@@ -45,7 +45,7 @@ def get_length(nw_frame: IntoFrame) -> int:
     return result
 
 
-def get_count(nw_input_frame: DataFrame, column: str) -> int:
+def get_count(nw_input_frame: DataFrame[Any], column: str) -> int:
     result = int(
         nw.to_py_scalar(
             nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
@@ -92,7 +92,7 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def collect_frame(frame: IntoFrame) -> DataFrame:
+def collect_frame(frame: IntoFrame) -> DataFrame[Any]:
     if isinstance(frame, nw.LazyFrame):
         return frame.collect()
     error_msg = "The frame is not a valid type."
