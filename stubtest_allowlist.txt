@@ -50,3 +50,5 @@ validoopsie.util.base_util_functions.DataFrame.iter_rows
 # Any type annotation issues
 validoopsie.base.base_validation.Any
 validoopsie.util.base_util_functions.Any
+validoopsie.base.base_validation.Any.__new__
+validoopsie.util.base_util_functions.Any.__new__
