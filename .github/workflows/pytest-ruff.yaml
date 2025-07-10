@@ -31,11 +31,13 @@ jobs:
       run: uv sync --all-extras --dev
 
     - uses: actions/setup-java@v4
+      if: runner.os == 'Windows'
       with:
         java-version: '21'
         distribution: temurin
 
     - uses: vemonet/setup-spark@v1
+      if: runner.os == 'Windows'
       with:
         spark-version: '4.0.0'
         hadoop-version: '3'
