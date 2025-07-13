@@ -30,11 +30,12 @@ jobs:
     - name: Install the project
       run: uv sync --all-extras --dev
 
-    - uses: actions/setup-java@v4
+    - name: Install Java 17
       if: runner.os == 'Windows'
+      uses: actions/setup-java@v4
       with:
-        java-version: '21'
-        distribution: temurin
+        distribution: zulu
+        java-version: 17
 
     - uses: vemonet/setup-spark@v1
       if: runner.os == 'Windows'
