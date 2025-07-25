@@ -104,4 +104,3 @@ def test_raise_results_with_multiple_failures(sample_data: ReturnT) -> None:
 
     # Check that only the failed validations plus Summary are included
     assert len(json_data) == 3
-
