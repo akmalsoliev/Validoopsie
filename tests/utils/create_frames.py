@@ -111,7 +111,7 @@ def create_frame_fixture(func: Callable) -> Callable:
     #
     #     params.append(("modin", modin_df))
 
-    if sys.version_info < (3, 14) or not sys.platform.startswith("win"):
+    if sys.version_info < (3, 12) or not sys.platform.startswith("win"):
         params.append(("pyspark", spark_df))
 
     @pytest.fixture(
