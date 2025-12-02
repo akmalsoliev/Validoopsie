@@ -3,68 +3,68 @@ on:
   push:
     branches: [main, dev]
     paths:
-    - "tests/**"
-    - "validoopsie/**"
-    - ".github/**"
+      - "tests/**"
+      - "validoopsie/**"
+      - ".github/**"
   pull_request:
     paths:
-    - "tests/**"
-    - "validoopsie/**"
+      - "tests/**"
+      - "validoopsie/**"
 jobs:
   tests:
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13"]
         os: ["ubuntu-latest", "windows-latest"]
     runs-on: ${{ matrix.os }}
     env:
       PYSPARK_PYTHON: python
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install the project
-      run: uv sync --all-extras --dev
+      - name: Install the project
+        run: uv sync --all-extras --dev
 
-    - name: Install Java 17
-      if: runner.os == 'Windows'
-      uses: actions/setup-java@v4
-      with:
-        distribution: zulu
-        java-version: 17
+      - name: Install Java 17
+        if: runner.os == 'Windows'
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
 
-    - uses: vemonet/setup-spark@v1
-      if: runner.os == 'Windows'
-      with:
-        spark-version: '4.0.0'
-        hadoop-version: '3'
+      - uses: vemonet/setup-spark@v1
+        if: runner.os == 'Windows'
+        with:
+          spark-version: "4.0.0"
+          hadoop-version: "3"
 
-    # Linter
-    - name: Run Ruff
-      run: uv run ruff check validoopsie/
-      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+      # Linter
+      - name: Run Ruff
+        run: uv run ruff check validoopsie/
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-    - name: Run Mypy
-      run: uv run mypy validoopsie/
-      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+      - name: Run Mypy
+        run: uv run mypy validoopsie/
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-    # Tests
-    # No need to run it everytime
-    - name: Run stubtests
-      run: uv run stubtest validoopsie --allowlist stubtest_allowlist.txt
-      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+      # Tests
+      # No need to run it everytime
+      - name: Run stubtests
+        run: uv run stubtest validoopsie --allowlist stubtest_allowlist.txt
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-    - name: Run Pytests with doctests
-      run: uv run pytest validoopsie --doctest-modules
-      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+      - name: Run Pytests with doctests
+        run: uv run pytest validoopsie --doctest-modules
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-    - name: Run doctest on stub
-      run: uv run python -m doctest validoopsie/validate.pyi
-      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
+      - name: Run doctest on stub
+        run: uv run python -m doctest validoopsie/validate.pyi
+        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 
-    - name: Run pytests
-      run: uv run pytest tests
+      - name: Run pytests
+        run: uv run pytest tests

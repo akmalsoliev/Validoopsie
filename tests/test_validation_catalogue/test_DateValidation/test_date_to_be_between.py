@@ -70,6 +70,7 @@ def test_date_to_be_between_fail_with_low_threshold(sample_date_data: Frame) -> 
     result = ds.__execute_check__(frame=sample_date_data)
     assert result["result"]["status"] == "Fail"
 
+
 def test_date_to_be_between_success(sample_date_data: Frame) -> None:
     ds = DateToBeBetween(
         "dates2",

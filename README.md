@@ -1,7 +1,7 @@
 <h1 align="center">
-    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validoopsie-text.png?raw=true">
+    <img width="400" alt="validoopsie" src=./docs/assets/validoopsie-text.png>
     <p style="font-size: 16px; font-weight: bold;">A simple and easy to use Data Validation library for Python.</p>
-    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/logo.png?raw=true">
+    <img width="400" alt="validoopsie" src=./docs/assets/logo.png>
 </h1>
 
 <p align="center">
@@ -10,9 +10,6 @@
   </a>
   <a href="https://pepy.tech/projects/validoopsie">
     <img src="https://static.pepy.tech/badge/validoopsie" alt="PyPI Downloads">
-  </a>
-  <a href="https://www.repostatus.org/#active">
-    <img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo Status">
   </a>
   <a href="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml">
     <img src="https://github.com/akmalsoliev/Validoopsie/actions/workflows/pytest-ruff.yaml/badge.svg" alt="Tests and Linters" />
@@ -34,21 +31,21 @@ Thanks to the excellent work by
 [Narwhals](https://github.com/narwhals-dev/narwhals), Validoopsie incorporates
 the "Bring Your Own DataFrame" (BYOD) concept. This flexibility allows you to
 use any DataFrame that Narwhals supports for your data validation tasks. To
-explore the full range of supported DataFrames, you can visit [this
-link](https://narwhals-dev.github.io/narwhals/extending/).
+explore the full range of supported DataFrames, you can visit
+[this link](https://narwhals-dev.github.io/narwhals/extending/).
 
 The syntax of Validoopsie has been thoughtfully crafted to ensure ease of use.
 Every validation function is encapsulated in its own method, which can be
 seamlessly linked together. This method-specific design prioritizes simplicity
 and readability, freeing you from the need to adapt to a new API each time you
-switch libraries. It allows you to focus on maintaining clean and
-understandable code.
+switch libraries. It allows you to focus on maintaining clean and understandable
+code.
 
 Validoopsie draws significant inspiration from the Great Expectations library.
-It strives to distill the data validation process into something
-straightforward and efficient. Whether you're checking data integrity or
-ensuring compliance with data standards, Validoopsie provides a streamlined yet
-powerful solution to make these tasks accessible and straightforward.
+It strives to distill the data validation process into something straightforward
+and efficient. Whether you're checking data integrity or ensuring compliance
+with data standards, Validoopsie provides a streamlined yet powerful solution to
+make these tasks accessible and straightforward.
 
 ## Table of Contents
 
@@ -61,7 +58,11 @@ powerful solution to make these tasks accessible and straightforward.
 
 - pip
 
-    `pip install Validoopsie`
+  `pip install Validoopsie`
+
+- uv
+
+  `uv add Validoopsie`
 
 ## Getting Started
 
@@ -70,7 +71,7 @@ powerful solution to make these tasks accessible and straightforward.
 - [🎯 Threshold Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/threshold_levels.html)
 - [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
 - [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
-- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingValidationCustom.html)
+- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/custom_validations/DevelopingValidationCustom.html)
 - [🗂️ Validation Catalog](https://akmalsoliev.github.io/Validoopsie/validation_catalogue/Date%20Validation.html)
 
 Validoopsie is incredibly easy to use, so much so that you could do it
@@ -115,65 +116,99 @@ vd.results
 
 ```json
 {
-    "Summary": {
-        "passed": false,
-        "validations": [
-            "PairColumnEquality_name",
-            "ColumnUniqueValuesToBeInList_last_name",
-            "ColumnValuesToBeBetween_age"
-        ],
-        "failed_validation": [
-            "PairColumnEquality_name"
-        ]
-    },
-    "PairColumnEquality_name": {
-        "validation": "PairColumnEquality",
-        "impact": "high",
-        "timestamp": "2025-03-17T10:28:08.258604+01:00",
-        "column": "name",
-        "result": {
-            "status": "Fail",
-            "threshold_pass": false,
-            "message": "The column 'name' is not equal to the column'age'.",
-            "failing_items": [
-                "Doe - column name - column age - 30",
-                "Jane - column name - column age - 35",
-                "John - column name - column age - 25"
-            ],
-            "failed_number": 3,
-            "frame_row_number": 3,
-            "threshold": 0.0,
-            "failed_percentage": 1.0
-        }
-    },
-    "ColumnUniqueValuesToBeInList_last_name": {
-        "validation": "ColumnUniqueValuesToBeInList",
-        "impact": "low",
-        "timestamp": "2025-03-17T10:28:08.265990+01:00",
-        "column": "last_name",
-        "result": {
-            "status": "Success",
-            "threshold_pass": true,
-            "message": "All items passed the validation.",
-            "frame_row_number": 3,
-            "threshold": 0.0
-        }
-    },
-    "ColumnValuesToBeBetween_age": {
-        "validation": "ColumnValuesToBeBetween",
-        "impact": "low",
-        "timestamp": "2025-03-17T10:28:08.267564+01:00",
-        "column": "age",
-        "result": {
-            "status": "Success",
-            "threshold_pass": true,
-            "message": "All items passed the validation.",
-            "frame_row_number": 3,
-            "threshold": 0.0
-        }
+  "Summary": {
+    "passed": false,
+    "validations": [
+      "PairColumnEquality_name",
+      "ColumnUniqueValuesToBeInList_last_name",
+      "ColumnValuesToBeBetween_age"
+    ],
+    "failed_validation": ["PairColumnEquality_name"]
+  },
+  "PairColumnEquality_name": {
+    "validation": "PairColumnEquality",
+    "impact": "high",
+    "timestamp": "2025-10-07T11:25:04.213211+02:00",
+    "column": "name",
+    "result": {
+      "status": "Fail",
+      "threshold_pass": false,
+      "message": "The column 'name' is not equal to the column'age'.",
+      "failing_items": [
+        "Doe - column name - column age - 30",
+        "Jane - column name - column age - 35",
+        "John - column name - column age - 25"
+      ],
+      "failed_number": 3,
+      "frame_row_number": 3,
+      "threshold": 0.0,
+      "failed_percentage": 1.0
     }
+  },
+  "ColumnUniqueValuesToBeInList_last_name": {
+    "validation": "ColumnUniqueValuesToBeInList",
+    "impact": "low",
+    "timestamp": "2025-10-07T11:25:04.216417+02:00",
+    "column": "last_name",
+    "result": {
+      "status": "Success",
+      "threshold_pass": true,
+      "message": "All items passed the validation.",
+      "frame_row_number": 3,
+      "threshold": 0.0
+    }
+  },
+  "ColumnValuesToBeBetween_age": {
+    "validation": "ColumnValuesToBeBetween",
+    "impact": "low",
+    "timestamp": "2025-10-07T11:25:04.217300+02:00",
+    "column": "age",
+    "result": {
+      "status": "Success",
+      "threshold_pass": true,
+      "message": "All items passed the validation.",
+      "frame_row_number": 3,
+      "threshold": 0.0
+    }
+  }
 }
 ```
+
+You can also display the validation results in a formatted table using the
+`display_summary` method, which provides a clean and readable view of your
+validation results:
+
+```py
+vd.display_summary()
+```
+
+![default display_summary](./docs/assets/display_summary_default.png)
+
+### Display a full detailed table with all available information
+
+```py
+vd.display_summary(information="full")
+```
+
+![full display_summary](./docs/assets/display_summary_full.png)
+
+### Customize the table format (supports tabulate formatting options)
+
+```py
+vd.display_summary(tablefmt="pipe", maxcolwidths=20)
+```
+
+![kwargs display_summary](./docs/assets/display_summary_pipe.png)
+
+The `display_summary` method supports two information levels:
+
+- `"short"` (default): Shows key metrics like timestamp, impact, status,
+  validation type, column, threshold, and failure details
+- `"full"`: Shows all available validation and result fields
+
+You can also customize the table appearance using any `tabulate` formatting
+options such as `tablefmt` for different table styles (e.g., "github", "grid",
+"pipe", "html") and `maxcolwidths` to control column width.
 
 To ensure that all your validations have been correctly executed and to handle
 any potential errors that may arise during the validation process, you can use
@@ -217,7 +252,7 @@ Thanks to [loguru](https://github.com/Delgan/loguru) output will provide a very
 condenced information on validations and their status in a colorful way.
 
 <p align="left">
-    <img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
+    <img width="1000" alt="validation output" src=./docs/assets/validate.png>
 </p>
 
 ## Development
@@ -238,7 +273,8 @@ make test
 make all
 ```
 
-For more information on development, check the [contribution guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html).
+For more information on development, check the
+[contribution guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html).
 
 ## License
 

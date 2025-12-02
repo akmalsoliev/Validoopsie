@@ -1,7 +1,7 @@
 <h1 align="center">
-    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validoopsie-text.png?raw=true">
+    <img width="400" alt="validoopsie" src=./assets/validoopsie-text.png>
     <p style="font-size: 16px; font-weight: bold;">A simple and easy to use Data Validation library for Python.</p>
-    <img width="400" alt="validoopsie" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/logo.png?raw=true">
+    <img width="400" alt="validoopsie" src=./assets/logo.png>
 </h1>
 
 <p align="center">
@@ -31,37 +31,37 @@ Thanks to the excellent work by
 [Narwhals](https://github.com/narwhals-dev/narwhals), Validoopsie incorporates
 the "Bring Your Own DataFrame" (BYOD) concept. This flexibility allows you to
 use any DataFrame that Narwhals supports for your data validation tasks. To
-explore the full range of supported DataFrames, you can visit [this
-link](https://narwhals-dev.github.io/narwhals/extending/).
+explore the full range of supported DataFrames, you can visit
+[this link](https://narwhals-dev.github.io/narwhals/extending/).
 
 The syntax of Validoopsie has been thoughtfully crafted to ensure ease of use.
 Every validation function is encapsulated in its own method, which can be
 seamlessly linked together. This method-specific design prioritizes simplicity
 and readability, freeing you from the need to adapt to a new API each time you
-switch libraries. It allows you to focus on maintaining clean and
-understandable code.
+switch libraries. It allows you to focus on maintaining clean and understandable
+code.
 
 Validoopsie draws significant inspiration from the Great Expectations library.
-It strives to distill the data validation process into something
-straightforward and efficient. Whether you're checking data integrity or
-ensuring compliance with data standards, Validoopsie provides a streamlined yet
-powerful solution to make these tasks accessible and straightforward.
+It strives to distill the data validation process into something straightforward
+and efficient. Whether you're checking data integrity or ensuring compliance
+with data standards, Validoopsie provides a streamlined yet powerful solution to
+make these tasks accessible and straightforward.
 
 ## Installation
 
 - pip
 
-    `pip install Validoopsie`
+  `pip install Validoopsie`
 
 ## Getting Started
 
-- [📖 Documentation](https://akmalsoliev.github.io/Validoopsie/)
-- [🚨 Impact Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/impact_levels.html)
-- [🎯 Threshold Levels in Validoopsie](https://akmalsoliev.github.io/Validoopsie/threshold_levels.html)
-- [🛠️ Contribution Guidelines](https://akmalsoliev.github.io/Validoopsie/contributing/CONTRIBUTING.html)
-- [✨ Contributing a new Validation to Validoopsie](https://akmalsoliev.github.io/Validoopsie/contributing/DevelopingValidation.html)
-- [🧑‍💻 Develop your own custom validation](https://akmalsoliev.github.io/Validoopsie/DevelopingValidationCustom.html)
-- [🗂️ Validation Catalog](https://akmalsoliev.github.io/Validoopsie/validation_catalogue/Date%20Validation.html)
+- [📖 Documentation](./index.md)
+- [🚨 Impact Levels in Validoopsie](./impact_levels.md)
+- [🎯 Threshold Levels in Validoopsie](./threshold_levels.md)
+- [🛠️ Contribution Guidelines](./contributing/CONTRIBUTING.md)
+- [✨ Contributing a new Validation to Validoopsie](./contributing/DevelopingValidation.md)
+- [🧑‍💻 Develop your own custom v alidation](./custom_validations/DevelopingValidationCustom.md)
+- [🗂️ Validation Catalog](./validation_catalogue/Date Validation.md)
 
 Validoopsie is incredibly easy to use, so much so that you could do it
 half-asleep. The simplicity of the library is enhanced by the BYOD (Bring Your
@@ -93,64 +93,111 @@ vd.EqualityValidation.PairColumnEquality(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
-    "age",
-    20,
-    40,
+    column="age",
+    min_value=20,
+    max_value=40,
 )
 
 vd.results
 ```
 
-<details>
-  <summary>
-    <strong>OUTPUT</strong>
-  </summary>
+**OUTPUT:**
 
-    ```json
-    {
-      "Summary": {
-        "passed": false,
-        "validations": [
-          "PairColumnEquality_name",
-          "ColumnUniqueValuesToBeInList_last_name"
-        ]
-      },
-      "PairColumnEquality_name": {
-        "validation": "PairColumnEquality",
-        "impact": "low",
-        "timestamp": "2025-01-03T22:28:02.497324+01:00",
-        "column": "name",
-        "result": {
-          "status": "Fail",
-          "threshold pass": false,
-          "message": "The column 'name' is not equal to the column'age'.",
-          "failing items": [
-            "Doe - column name - column age - 30",
-            "Jane - column name - column age - 35",
-            "John - column name - column age - 25"
-          ],
-          "failed number": 3,
-          "frame row number": 3,
-          "threshold": 0.0,
-          "failed percentage": 1.0
-        }
-      },
-      "ColumnUniqueValuesToBeInList_last_name": {
-        "validation": "ColumnUniqueValuesToBeInList",
-        "impact": "low",
-        "timestamp": "2025-01-03T22:28:02.499192+01:00",
-        "column": "last_name",
-        "result": {
-          "status": "Success",
-          "threshold pass": true,
-          "message": "All items passed the validation.",
-          "frame row number": 3,
-          "threshold": 0.0
-        }
-      }
+```json
+{
+  "Summary": {
+    "passed": false,
+    "validations": [
+      "PairColumnEquality_name",
+      "ColumnUniqueValuesToBeInList_last_name",
+      "ColumnValuesToBeBetween_age"
+    ],
+    "failed_validation": ["PairColumnEquality_name"]
+  },
+  "PairColumnEquality_name": {
+    "validation": "PairColumnEquality",
+    "impact": "high",
+    "timestamp": "2025-10-07T11:25:04.213211+02:00",
+    "column": "name",
+    "result": {
+      "status": "Fail",
+      "threshold_pass": false,
+      "message": "The column 'name' is not equal to the column'age'.",
+      "failing_items": [
+        "Doe - column name - column age - 30",
+        "Jane - column name - column age - 35",
+        "John - column name - column age - 25"
+      ],
+      "failed_number": 3,
+      "frame_row_number": 3,
+      "threshold": 0.0,
+      "failed_percentage": 1.0
     }
-    ```
-</details>
+  },
+  "ColumnUniqueValuesToBeInList_last_name": {
+    "validation": "ColumnUniqueValuesToBeInList",
+    "impact": "low",
+    "timestamp": "2025-10-07T11:25:04.216417+02:00",
+    "column": "last_name",
+    "result": {
+      "status": "Success",
+      "threshold_pass": true,
+      "message": "All items passed the validation.",
+      "frame_row_number": 3,
+      "threshold": 0.0
+    }
+  },
+  "ColumnValuesToBeBetween_age": {
+    "validation": "ColumnValuesToBeBetween",
+    "impact": "low",
+    "timestamp": "2025-10-07T11:25:04.217300+02:00",
+    "column": "age",
+    "result": {
+      "status": "Success",
+      "threshold_pass": true,
+      "message": "All items passed the validation.",
+      "frame_row_number": 3,
+      "threshold": 0.0
+    }
+  }
+}
+```
+
+You can also display the validation results in a formatted table using the
+`display_summary` method, which provides a clean and readable view of your
+validation results:
+
+```py
+vd.display_summary()
+```
+
+![default display_summary](./assets/display_summary_default.png)
+
+### Display a full detailed table with all available information
+
+```py
+vd.display_summary(information="full")
+```
+
+![full display_summary](./assets/display_summary_full.png)
+
+### Customize the table format (supports tabulate formatting options)
+
+```py
+vd.display_summary(tablefmt="pipe", maxcolwidths=20)
+```
+
+![kwargs display_summary](./assets/display_summary_pipe.png)
+
+The `display_summary` method supports two information levels:
+
+- `"short"` (default): Shows key metrics like timestamp, impact, status,
+  validation type, column, threshold, and failure details
+- `"full"`: Shows all available validation and result fields
+
+You can also customize the table appearance using any `tabulate` formatting
+options such as `tablefmt` for different table styles (e.g., "github", "grid",
+"pipe", "html") and `maxcolwidths` to control column width.
 
 To ensure that all your validations have been correctly executed and to handle
 any potential errors that may arise during the validation process, you can use
@@ -184,9 +231,9 @@ vd.EqualityValidation.PairColumnEquality(
     column="last_name",
     values=["Smith"],
 ).ValuesValidation.ColumnValuesToBeBetween(
-    "age",
-    20,
-    40,
+    column="age",
+    min_value=20,
+    max_value=40,
 ).validate()
 ```
 
@@ -194,7 +241,7 @@ Thanks to [loguru](https://github.com/Delgan/loguru) output will provide a very
 condenced information on validations and their status in a colorful way.
 
 <p align="left">
-    <img width="1000" alt="validation output" src="https://github.com/akmalsoliev/Validoopsie/blob/14ac7fff59d8e02f6af61c22991888064a45575a/assets/validate.png?raw=true">
+    <img width="1000" alt="validation output" src=./assets/validate.png>
 </p>
 
 ## License

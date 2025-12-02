@@ -66,18 +66,22 @@ class BaseValidation:
         """Execute the validation check on the provided frame."""
         current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
         class_name = self.__class__.__name__
+
+        # Convert frame to Narwhals type for consistent API usage.
+        # Note: This conversion is included in the Validate class (rather than
+        # only in the wrapper) to support operators who need to run validation
+        # independently.
+        nw_frame: Frame = nw.from_native(frame)
         try:
-            # Just in case if the frame is not converted into Narwhals
-            frame = nw.from_native(frame)
-
             # Execution of the validation
-            validated_frame: Frame = self(frame)
-            collected_frame: DataFrame[Any] = collect_frame(validated_frame)
+            validated_frame = self(nw_frame)
+            collected_frame = collect_frame(validated_frame)
 
+            og_frame_rows_number: int
             if self.schema_length is not None:
                 og_frame_rows_number = self.schema_length
             else:
-                og_frame_rows_number = get_length(frame)
+                og_frame_rows_number = get_length(nw_frame)
 
             vf_row_number: int = get_length(collected_frame)
             vf_count_number: int = get_count(collected_frame, self.column)
