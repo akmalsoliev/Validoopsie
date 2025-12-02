@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import sys
-from typing import Callable, Union
+from collections.abc import Callable
+from typing import Union
 
 import duckdb
 import modin.pandas as mpd
@@ -80,7 +81,7 @@ def spark_df(data: dict[str, list], session=None) -> DataFrame:
     partitions = 1 if len(data[next(iter(data))]) < 1000 else 2
 
     sp_df = (
-        spark.createDataFrame([*zip(*data.values())], schema=[*data.keys()])
+        spark.createDataFrame([*zip(*data.values(), strict=False)], schema=[*data.keys()])
         .repartition(partitions)
         .orderBy(index_col_name)
         .drop(index_col_name)

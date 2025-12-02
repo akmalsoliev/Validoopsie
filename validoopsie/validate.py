@@ -2,12 +2,13 @@ from __future__ import annotations
 
 import importlib
 import inspect
+from collections.abc import Callable, Iterable
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, cast
+from typing import TYPE_CHECKING, Literal, cast
 
 import narwhals as nw
 from loguru import logger
-from narwhals.typing import IntoFrame
+from narwhals.typing import Frame, IntoFrame
 
 from validoopsie.base.results_typedict import (
     ResultValidationTypedDict,
@@ -20,10 +21,6 @@ if TYPE_CHECKING:
 
 
 class Validate:
-    def __into_narwhalsframe__(self, frame: IntoFrame) -> IntoFrame:
-        """Convert a native frame to a narwhals frame."""
-        return nw.from_native(frame)
-
     def __init__(self, frame: IntoFrame) -> None:
         self.summary = SummaryTypedDict(
             passed=None,
@@ -35,7 +32,9 @@ class Validate:
             "Summary": self.summary,
         }
 
-        self.frame: IntoFrame = self.__into_narwhalsframe__(frame)
+        # ensuring that the Frame is of Narwhals type
+        self.frame: Frame = nw.from_native(frame)
+
         self.__generate_validation_attributes__()
 
     def __generate_validation_attributes__(self) -> None:
@@ -47,8 +46,11 @@ class Validate:
 
         for subdir in subdirectories:
             subclass_name = subdir.name
-            subclass = type(subclass_name, (), {})
-            subclass.__doc__ = f"Validation checks for {subclass_name}"
+            subclass = type(
+                subclass_name,
+                (),
+                {"__doc__": f"Validation checks for {subclass_name}"},
+            )
 
             # List of Python files in the subdirectory, excluding __init__.py
             py_files = [f for f in subdir.glob("*.py") if f.name != "__init__.py"]
@@ -236,6 +238,87 @@ class Validate:
 
         self.__parse_results__(output_name, result)
         return self
+
+    def display_summary(
+        self,
+        information: Literal["short", "full"] = "short",
+        **kwargs: dict[str, str | bool | Iterable],
+    ) -> None:
+        """Display validation results in a formatted table.
+
+        Presents validation check results in a tabular format with customizable
+        display options. The method supports both short and full information
+        views, and allows customization of the table format through additional
+        keyword arguments.
+
+        Args:
+            information: Level of detail to display in the table. Options are:
+                - "short": Shows key validation metrics including timestamp,
+                  impact, status, validation type, column, threshold,
+                  threshold_pass, and failed_number.
+                - "full": Shows all available validation and result fields.
+                Defaults to "short".
+            **kwargs: Additional keyword arguments passed to `tabulate.tabulate()`.
+                Common options include:
+                - tablefmt: Table format style (e.g., "github", "grid", "pipe",
+                    "html"). Defaults to "simple_grid".
+                - maxcolwidths: Maximum column widths. Defaults to 15.
+                See tabulate documentation for full list of options.
+
+        Raises:
+            ValueError: If no validation checks have been added to the Validate instance.
+        """
+        from tabulate import tabulate  # noqa: PLC0415
+
+        if len(self.summary["validations"]) == 0:
+            msg = "No validation checks were added."
+            raise ValueError(msg)
+
+        table = []
+        for key in self.results:
+            if key == "Summary":
+                continue
+
+            validation: ValidationTypedDict = self.results[
+                key
+            ].copy()  # pyrefly: ignore[bad-assignment]
+            result: ResultValidationTypedDict = validation["result"]
+            del validation["result"]  # type: ignore[typeddict-item]
+
+            row: dict[str, object] = {}
+
+            if information == "short":
+                row = {
+                    "timestamp": validation["timestamp"],
+                    "impact": validation["impact"],
+                    "status": result["status"],
+                    "validation": validation["validation"],
+                    "column": validation["column"],
+                    "threshold": result["threshold"],
+                    "threshold_pass": result["threshold_pass"],
+                    "failed_number": result.get("failed_number", ""),
+                }
+            elif information == "full":
+                result_keys = list(ResultValidationTypedDict.__annotations__.keys())
+                # sometimes result doesn't have a key, hence, need to set a
+                # default of empty string, otherwise tabulate will crash
+                row = {
+                    **validation,
+                    **{key: result.get(key, "") for key in result_keys},
+                }
+
+            table.append(row)
+
+        kwargs.setdefault("tablefmt", "simple_grid")
+        kwargs.setdefault("maxcolwidths", 15)
+
+        print(  # noqa: T201
+            tabulate(
+                table,
+                headers="keys",
+                **kwargs,
+            )
+        )
 
     def validate(self, *, raise_results: bool = False) -> None:
         """Validate the dataset by running all configured validation checks.

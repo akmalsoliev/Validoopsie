@@ -1,15 +1,11 @@
-from __future__ import annotations
-
 import re
-from typing import TYPE_CHECKING, Literal
+from typing import Literal
 
 import narwhals as nw
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
-
-if TYPE_CHECKING:
-    from validoopsie.base.results_typedict import KwargsParams
+from validoopsie.base.results_typedict import KwargsParams
 
 
 class ColumnMatchDateFormat(BaseValidation):
@@ -82,11 +78,11 @@ class ColumnMatchDateFormat(BaseValidation):
         date_patterns = re.findall(r"[Ymd]+", self.date_format)
         separators = re.findall(r"[^Ymd]+", self.date_format)
 
-        pattern_parts = []
+        pattern_parts: list[str] = []
         for i, date_p in enumerate(date_patterns):
-            pattern_parts.append(rf"\d{{{len(date_p)}}}")
+            pattern_parts.append(str(rf"\d{{{len(date_p)}}}"))
             if i < len(separators):
-                pattern_parts.append(re.escape(separators[i]))
+                pattern_parts.append(str(re.escape(separators[i])))
 
         pattern = "^" + "".join(pattern_parts) + "$"
         exp = nw.col(self.column).cast(nw.String).str.contains(pattern).alias("contains")

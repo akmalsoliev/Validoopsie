@@ -1,10 +1,14 @@
 # Naming Conventions for Custom Validations
 
-When creating custom validations for Validoopsie, following a consistent naming convention helps maintain code readability and ensures your validations integrate seamlessly with the library. This guide outlines the recommended naming patterns.
+When creating custom validations for Validoopsie, following a consistent naming
+convention helps maintain code readability and ensures your validations
+integrate seamlessly with the library. This guide outlines the recommended
+naming patterns.
 
 ## Class Naming Convention
 
-Custom validation classes should follow PascalCase (also known as UpperCamelCase) naming:
+Custom validation classes should follow PascalCase (also known as
+UpperCamelCase) naming:
 
 ```python
 class ColumnValuesToBeBetween(BaseValidationParameters):
@@ -19,7 +23,8 @@ The class name should be descriptive and indicate:
 
 ## File Naming Convention
 
-Files containing validation classes should follow snake_case naming and match the class name:
+Files containing validation classes should follow snake_case naming and match
+the class name:
 
 - Class: `ColumnValuesToBeBetween`
 - File: `column_values_to_be_between.py`
@@ -76,7 +81,8 @@ my_project/
 
 ## Registering Custom Validations
 
-When registering custom validations with Validoopsie, use a descriptive name that follows the same convention:
+When registering custom validations with Validoopsie, use a descriptive name
+that follows the same convention:
 
 ```python
 from validoopsie import Validate
@@ -120,4 +126,6 @@ When adding type hints, follow this pattern:
         # Implementation
 ```
 
-By following these naming conventions, you ensure that your custom validations are easily understood by other developers and integrate well with Validoopsie's existing validation structure.
+By following these naming conventions, you ensure that your custom validations
+are easily understood by other developers and integrate well with Validoopsie's
+existing validation structure.
