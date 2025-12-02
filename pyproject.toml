@@ -30,7 +30,7 @@ dev = [
   "duckdb>=1.1.3",
   "flake8-pyi>=24.9.0",
   "marimo>=0.10.17",
-  "modin[all]>=0.32.0; python_version < '3.13'",
+  # "modin[all]>=0.32.0; python_version < '3.13' and sys_platform != 'win32'",
   "mypy>=1.19.0",
   "pandas>=2.2.3",
   "pendulum>=3.0.0",
