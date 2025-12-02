@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from datetime import date, datetime
 from typing import Any, Literal, Union
 
@@ -46,6 +47,11 @@ class Validate:
     def __init__(self, frame: IntoFrame) -> None: ...
     def validate(self, *, raise_results: bool = False) -> Validate: ...
     def add_validation(self, validation: BaseValidation) -> Validate: ...
+    def display_summary(
+        self,
+        information: Literal["short", "full"] = "short",
+        **kwargs: dict[str, str | bool | Iterable[Any]],
+    ) -> None: ...
 
     class DateValidation:
         """Date validation methods for DataFrame columns.

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import sys
-from typing import Callable, Union
+from collections.abc import Callable
+from typing import Union
 
 import duckdb
-import modin.pandas as mpd
 import narwhals as nw
 import pandas as pd
 import polars as pl
@@ -33,10 +33,6 @@ def pandas_df(data: dict[str, list]) -> pd.DataFrame:
 
 def pyarrow_array(data: dict[str, list]) -> pa.Table:
     return pa.Table.from_pydict(data)
-
-
-def modin_df(data: dict[str, list]) -> mpd.DataFrame:
-    return mpd.DataFrame(data)
 
 
 @pytest.fixture(scope="session")
@@ -80,7 +76,7 @@ def spark_df(data: dict[str, list], session=None) -> DataFrame:
     partitions = 1 if len(data[next(iter(data))]) < 1000 else 2
 
     sp_df = (
-        spark.createDataFrame([*zip(*data.values())], schema=[*data.keys()])
+        spark.createDataFrame([*zip(*data.values(), strict=False)], schema=[*data.keys()])
         .repartition(partitions)
         .orderBy(index_col_name)
         .drop(index_col_name)
@@ -106,6 +102,15 @@ def create_frame_fixture(func: Callable) -> Callable:
         ("pyarrow_array", pyarrow_array),
         ("duckdb_df", duckdb_df),
     ]
+    # NOTE: Implement this in future
+    # if not sys.version_info > (3, 12):
+    #     import modin.pandas as mpd  # noqa: PLC0415
+    #
+    #     def modin_df(data: dict[str, list]) -> mpd.DataFrame:
+    #         return mpd.DataFrame(data)
+    #
+    #     params.append(("modin", modin_df))
+
     if sys.version_info < (3, 12) or not sys.platform.startswith("win"):
         params.append(("pyspark", spark_df))
 

@@ -14,7 +14,6 @@ validoopsie.validate.Validate.StringValidation
 validoopsie.validate.Validate.TypeValidation
 validoopsie.validate.Validate.UniqueValidation
 validoopsie.validate.Validate.ValuesValidation
-validoopsie.validation_catalogue.DateValidation.column_match_date_format.KwargsParams
 validoopsie.validation_catalogue.DateValidation.date_to_be_between.KwargsParams
 validoopsie.validation_catalogue.EqualityValidation.pair_column_equality.KwargsParams
 validoopsie.validation_catalogue.NullValidation.column_be_null.KwargsParams
@@ -23,7 +22,6 @@ validoopsie.validation_catalogue.StringValidation.length_to_be_between.KwargsPar
 validoopsie.validation_catalogue.StringValidation.length_to_be_equal_to.KwargsParams
 validoopsie.validation_catalogue.StringValidation.not_pattern_match.KwargsParams
 validoopsie.validation_catalogue.StringValidation.pattern_match.KwargsParams
-validoopsie.validation_catalogue.TypeValidation.type_check.KwargsParams
 validoopsie.validation_catalogue.UniqueValidation.column_unique_pair.KwargsParams
 validoopsie.validation_catalogue.UniqueValidation.column_unique_value_count_to_be_between.KwargsParams
 validoopsie.validation_catalogue.UniqueValidation.column_unique_values_to_be_in_list.KwargsParams
@@ -34,18 +32,12 @@ validoopsie.validation_catalogue.ValuesValidation.columns_sum_to_be_equal_to.Kwa
 # Private methods that are in the implementation but not in the stub
 validoopsie.Validate.__create_validation_class__
 validoopsie.Validate.__generate_validation_attributes__
-validoopsie.Validate.__into_narwhalsframe__
 validoopsie.Validate.__make_validation_method__
 validoopsie.Validate.__parse_results__
 validoopsie.validate.Validate.__create_validation_class__
 validoopsie.validate.Validate.__generate_validation_attributes__
-validoopsie.validate.Validate.__into_narwhalsframe__
 validoopsie.validate.Validate.__make_validation_method__
 validoopsie.validate.Validate.__parse_results__
-
-# External library methods with default arguments
-validoopsie.base.base_validation.DataFrame.iter_rows
-validoopsie.util.base_util_functions.DataFrame.iter_rows
 
 # Any type annotation issues
 validoopsie.base.base_validation.Any

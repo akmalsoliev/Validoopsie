@@ -5,7 +5,7 @@ from typing import Any, Literal
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
-from narwhals.typing import IntoFrame
+from narwhals.typing import Frame
 
 from validoopsie.base.results_typedict import (
     ResultValidationTypedDict,
@@ -14,7 +14,7 @@ from validoopsie.base.results_typedict import (
 
 
 def get_items(
-    nw_frame: IntoFrame,
+    nw_frame: DataFrame[Any],
     column: str,
 ) -> list[str | int | float]:
     if isinstance(nw_frame, nw.LazyFrame):
@@ -34,7 +34,7 @@ def get_items(
     raise TypeError(msg)
 
 
-def get_length(nw_frame: IntoFrame) -> int:
+def get_length(nw_frame: Frame | DataFrame[Any]) -> int:
     result: int | None = None
     if isinstance(nw_frame, nw.LazyFrame):
         result = int(nw.to_py_scalar(nw_frame.select(nw.len()).collect().item()))
@@ -92,7 +92,7 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def collect_frame(frame: IntoFrame) -> DataFrame[Any]:
+def collect_frame(frame: Frame) -> DataFrame[Any]:
     if isinstance(frame, nw.LazyFrame):
         return frame.collect()
     error_msg = "The frame is not a valid type."

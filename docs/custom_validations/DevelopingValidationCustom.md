@@ -71,7 +71,8 @@ class MyCustomValidation(BaseValidation):
 
 ## 1. Define the Validation Class
 
-To create a custom validation, start by defining a new class that inherits from `BaseValidation`:
+To create a custom validation, start by defining a new class that inherits from
+`BaseValidation`:
 
 ```python
 from typing import Literal
@@ -83,9 +84,9 @@ class MyCustomValidation(BaseValidation):
 
 ## 2. Add a Docstring
 
-While not strictly required, adding a docstring is best practice, especially
-for team collaboration and future maintenance. The docstring should describe
-the purpose of the validation and explain the parameters.
+While not strictly required, adding a docstring is best practice, especially for
+team collaboration and future maintenance. The docstring should describe the
+purpose of the validation and explain the parameters.
 
 Example:
 
@@ -104,8 +105,8 @@ Args:
 ## 3. Define the `__init__` Method
 
 The `__init__` method initializes your validation class. It should include at
-least the `column` parameter, along with impact and threshold parameters. The base class
-requires these parameters to be passed explicitly.
+least the `column` parameter, along with impact and threshold parameters. The
+base class requires these parameters to be passed explicitly.
 
 Example:
 
@@ -121,9 +122,9 @@ Example:
 
 ## 4. Add a Fail Message
 
-The fail message is used in the output report if the validation fails. Define
-it using a property method to provide a meaningful message that aids in
-diagnosing issues.
+The fail message is used in the output report if the validation fails. Define it
+using a property method to provide a meaningful message that aids in diagnosing
+issues.
 
 Example:
 
@@ -174,7 +175,8 @@ Example:
 
 **Notes:**
 
-- Ensure that the logic correctly identifies and returns only the failing records.
+- Ensure that the logic correctly identifies and returns only the failing
+  records.
 
 ## 6. Add the Validation to the Pipeline
 
@@ -211,30 +213,28 @@ After running the validation, you can expect an output similar to the following:
 
 ```json
 {
-    "Summary": {
-        "passed": true,
-        "validations": [
-            "MyCustomValidation_date"
-        ]
-    },
-    "MyCustomValidation_date": {
-        "validation": "MyCustomValidation",
-        "impact": "low",
-        "timestamp": "2025-01-10T17:54:14.035378+01:00",
-        "column": "date",
-        "result": {
-            "status": "Success",
-            "threshold pass": true,
-            "message": "All items passed the validation.",
-            "frame row number": 4,
-            "threshold": 0.0
-        }
+  "Summary": {
+    "passed": true,
+    "validations": ["MyCustomValidation_date"]
+  },
+  "MyCustomValidation_date": {
+    "validation": "MyCustomValidation",
+    "impact": "low",
+    "timestamp": "2025-01-10T17:54:14.035378+01:00",
+    "column": "date",
+    "result": {
+      "status": "Success",
+      "threshold pass": true,
+      "message": "All items passed the validation.",
+      "frame row number": 4,
+      "threshold": 0.0
     }
+  }
 }
 ```
 
 ---
 
 With this guide, you should be able to create custom validations tailored to
-your specific data quality requirements. Remember to thoroughly test your
-custom validation to ensure it behaves as expected in all scenarios.
+your specific data quality requirements. Remember to thoroughly test your custom
+validation to ensure it behaves as expected in all scenarios.
