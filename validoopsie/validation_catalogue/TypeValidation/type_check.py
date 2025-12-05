@@ -115,7 +115,7 @@ class TypeCheck(BaseValidation):
 
     def __call__(self, frame: Frame) -> Frame:
         """Validate the data type of the column(s)."""
-        schema = frame.schema
+        schema = frame.collect_schema()
         # Introduction of a new structure where the schema len will be used a frame length
         self.schema_length = schema.len()
         failed_columns = []

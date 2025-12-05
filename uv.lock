@@ -2354,6 +2354,7 @@ dependencies = [
     { name = "narwhals" },
     { name = "pyarrow" },
     { name = "tabulate" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.dev-dependencies]
@@ -2374,7 +2375,6 @@ dev = [
     { name = "ruff" },
     { name = "twine" },
     { name = "types-tabulate" },
-    { name = "typing-extensions" },
 ]
 docs = [
     { name = "markdown-exec" },
@@ -2389,6 +2389,7 @@ requires-dist = [
     { name = "narwhals", specifier = ">=2.7.0" },
     { name = "pyarrow", specifier = ">=11.0.0" },
     { name = "tabulate", specifier = ">=0.9.0" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.0.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -2409,7 +2410,6 @@ dev = [
     { name = "ruff", specifier = ">=0.2.2" },
     { name = "twine", specifier = ">=6.0.1" },
     { name = "types-tabulate", specifier = ">=0.9.0.20241207" },
-    { name = "typing-extensions", specifier = ">=4.0.0" },
 ]
 docs = [
     { name = "markdown-exec", specifier = ">=1.10.0" },

@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import importlib
 import inspect
-from collections.abc import Callable, Iterable
+import sys
+from collections.abc import Callable
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal, Unpack, cast
+from typing import TYPE_CHECKING, Literal, cast
 
 import narwhals as nw
 from loguru import logger
@@ -17,9 +18,12 @@ from validoopsie.base.results_typedict import (
     ValidationTypedDict,
 )
 
-if TYPE_CHECKING:
-    from tabulate import TableFormat
+if sys.version_info < (3, 11):
+    from typing_extensions import Unpack
+else:
+    from typing import Unpack
 
+if TYPE_CHECKING:
     from validoopsie.base import BaseValidation
 
 
