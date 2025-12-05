@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import importlib
 import inspect
-from collections.abc import Callable, Iterable
+import sys
+from collections.abc import Callable
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal, cast
 
@@ -13,8 +14,14 @@ from narwhals.typing import Frame, IntoFrame
 from validoopsie.base.results_typedict import (
     ResultValidationTypedDict,
     SummaryTypedDict,
+    TabulateKwargs,
     ValidationTypedDict,
 )
+
+if sys.version_info < (3, 11):
+    from typing_extensions import Unpack
+else:
+    from typing import Unpack
 
 if TYPE_CHECKING:
     from validoopsie.base import BaseValidation
@@ -242,7 +249,7 @@ class Validate:
     def display_summary(
         self,
         information: Literal["short", "full"] = "short",
-        **kwargs: dict[str, str | bool | Iterable],
+        **kwargs: Unpack[TabulateKwargs],
     ) -> None:
         """Display validation results in a formatted table.
 
@@ -279,11 +286,7 @@ class Validate:
             if key == "Summary":
                 continue
 
-            validation: ValidationTypedDict = self.results[
-                key
-            ].copy()  # pyrefly: ignore[bad-assignment]
-            result: ResultValidationTypedDict = validation["result"]
-            del validation["result"]  # type: ignore[typeddict-item]
+            validation = cast("ValidationTypedDict", self.results[key].copy())
 
             row: dict[str, object] = {}
 
@@ -291,20 +294,20 @@ class Validate:
                 row = {
                     "timestamp": validation["timestamp"],
                     "impact": validation["impact"],
-                    "status": result["status"],
+                    "status": validation["result"]["status"],
                     "validation": validation["validation"],
                     "column": validation["column"],
-                    "threshold": result["threshold"],
-                    "threshold_pass": result["threshold_pass"],
-                    "failed_number": result.get("failed_number", ""),
+                    "threshold": validation["result"].get("threshold"),
+                    "threshold_pass": validation["result"].get("threshold_pass"),
+                    "failed_number": validation["result"].get("failed_number"),
                 }
             elif information == "full":
                 result_keys = list(ResultValidationTypedDict.__annotations__.keys())
                 # sometimes result doesn't have a key, hence, need to set a
                 # default of empty string, otherwise tabulate will crash
                 row = {
-                    **validation,
-                    **{key: result.get(key, "") for key in result_keys},
+                    **validation["result"],
+                    **{key: validation["result"].get(key, "") for key in result_keys},
                 }
 
             table.append(row)

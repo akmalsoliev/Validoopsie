@@ -18,8 +18,8 @@ setup:
 	uv sync --upgrade --all-groups
 
 lint:
-	echo "Running mypy on src/ directory"
-	$(UV_RUN) mypy $(SRC_DIR)
+	echo "Running pyrefly on src/ directory"
+	$(UV_RUN) pyrefly check $(SRC_DIR)
 	echo "Running ruff check"
 	$(UV_RUN) ruff check $(SRC_DIR)
 	echo "Running ruff format"
