@@ -1,4 +1,4 @@
-name: Pytests and Linters
+name: Tests
 
 on:
   push:
