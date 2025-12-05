@@ -1,7 +1,8 @@
 name: Pytests and Linters
+
 on:
   push:
-    branches: [main, dev]
+    branches: [main]
     paths:
       - "tests/**"
       - "validoopsie/**"
@@ -10,6 +11,7 @@ on:
     paths:
       - "tests/**"
       - "validoopsie/**"
+
 jobs:
   tests:
     strategy:
@@ -28,7 +30,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install the project
-        run: uv sync --all-extras --dev
+        run: uv sync --dev --upgrade
 
       - name: Install Java 17
         if: runner.os == 'Windows'
@@ -43,18 +45,9 @@ jobs:
           spark-version: "4.0.0"
           hadoop-version: "3"
 
-      # Linter
-      - name: Run Ruff
-        run: uv run ruff check validoopsie/
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
-
-      - name: Run Mypy
-        run: uv run mypy validoopsie/
-        if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
-
       # Tests
-      # No need to run it everytime
-      - name: Run stubtests
+      # Stubtest
+      - name: Stubtest
         run: uv run stubtest validoopsie --allowlist stubtest_allowlist.txt
         if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'
 

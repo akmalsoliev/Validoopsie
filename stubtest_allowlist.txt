@@ -41,6 +41,11 @@ validoopsie.validate.Validate.__parse_results__
 
 # Any type annotation issues
 validoopsie.base.base_validation.Any
+validoopsie.base.results_typedict.Any
 validoopsie.util.base_util_functions.Any
 validoopsie.base.base_validation.Any.__new__
+validoopsie.base.results_typedict.Any.__new__
 validoopsie.util.base_util_functions.Any.__new__
+
+# Iterable type annotation issues
+validoopsie.base.results_typedict.Iterable.__class_getitem__

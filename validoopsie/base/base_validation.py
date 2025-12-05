@@ -61,7 +61,7 @@ class BaseValidation:
 
     def __execute_check__(
         self,
-        frame: IntoFrame,
+        frame: Frame,
     ) -> ValidationTypedDict:
         """Execute the validation check on the provided frame."""
         current_time_str = dt.now(tz=timezone.utc).astimezone().isoformat()
