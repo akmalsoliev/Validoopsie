@@ -3,11 +3,10 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import Any, Literal, cast
+from typing import Literal, cast
 
 import narwhals as nw
-from narwhals.dataframe import DataFrame
-from narwhals.typing import Frame, IntoFrame
+from narwhals.typing import Frame
 
 from validoopsie.base.results_typedict import (
     KwargsParams,
