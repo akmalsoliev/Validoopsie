@@ -40,8 +40,6 @@ validoopsie.validate.Validate.__make_validation_method__
 validoopsie.validate.Validate.__parse_results__
 
 # Any type annotation issues
-validoopsie.base.base_validation.Any
-validoopsie.base.base_validation.Any.__new__
 validoopsie.base.results_typedict.Any
 validoopsie.base.results_typedict.Any.__new__
 validoopsie.util.base_util_functions.Any

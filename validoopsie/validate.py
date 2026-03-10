@@ -44,6 +44,21 @@ class Validate:
 
         self.__generate_validation_attributes__()
 
+    def __repr__(self) -> str:
+        from validoopsie.util.base_util_functions import get_length  # noqa: PLC0415
+
+        num_validations = len(self.summary["validations"])
+        num_rows = get_length(self.frame)
+        return f"Validate(rows={num_rows}, validations={num_validations})"
+
+    def __str__(self) -> str:
+        num_validations = len(self.summary["validations"])
+        passed = self.summary["passed"]
+        return f"Validate: {num_validations} validation(s), passed={passed}"
+
+    def __len__(self) -> int:
+        return len(self.summary["validations"])
+
     def __generate_validation_attributes__(self) -> None:
         validoopsie_dir = Path(__file__).parent
         oops_catalogue_dir = validoopsie_dir / "validation_catalogue"
