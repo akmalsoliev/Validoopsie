@@ -24,6 +24,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: actions/cache@v5
+        if: runner.os == 'Windows'
+        with:
+          path: |
+            ~/spark
+            ${{ env.JAVA_HOME }}
+          key: spark-4.0.0-java-17-windows
+
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
@@ -45,14 +53,6 @@ jobs:
         with:
           spark-version: "4.0.0"
           hadoop-version: "3"
-
-      - uses: actions/cache@v5
-        if: runner.os == 'Windows'
-        with:
-          path: |
-            ~/spark
-            ${{ env.JAVA_HOME }}
-          key: spark-4.0.0-java-17-windows
 
       # Tests
       # Stubtest
