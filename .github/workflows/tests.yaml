@@ -24,16 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Cache Java and Spark
-        if: runner.os == 'Windows'
-        uses: actions/cache@v5
-        id: cache-spark
-        with:
-          path: |
-            ~/spark
-            ${{ env.JAVA_HOME }}
-          key: spark-4.0.0-java-17-windows
-
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
@@ -43,19 +33,15 @@ jobs:
       - name: Install the project
         run: uv sync --dev --upgrade
 
-      - name: Install Java 17
-        if: runner.os == 'Windows' && steps.cache-spark.outputs.cache-hit != 'true'
-        uses: actions/setup-java@v5
-        with:
-          distribution: zulu
-          java-version: 17
-
-      - name: Setup Spark
-        if: runner.os == 'Windows' && steps.cache-spark.outputs.cache-hit != 'true'
-        uses: vemonet/setup-spark@v1
-        with:
-          spark-version: "4.0.0"
-          hadoop-version: "3"
+      - name: Setup Hadoop winutils
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $url = "https://github.com/cdarlint/winutils/raw/master/hadoop-3.3.6/bin/winutils.exe"
+          $dir = "C:\hadoop\bin"
+          New-Item -ItemType Directory -Force -Path $dir
+          Invoke-WebRequest -Uri $url -OutFile "$dir\winutils.exe"
+          echo "HADOOP_HOME=C:\hadoop" >> $env:GITHUB_ENV
 
       # Tests
       # Stubtest
