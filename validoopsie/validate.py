@@ -45,8 +45,10 @@ class Validate:
         self.__generate_validation_attributes__()
 
     def __repr__(self) -> str:
+        from validoopsie.util.base_util_functions import get_length  # noqa: PLC0415
+
         num_validations = len(self.summary["validations"])
-        num_rows = self.frame.shape[0]
+        num_rows = get_length(self.frame)
         return f"Validate(rows={num_rows}, validations={num_validations})"
 
     def __str__(self) -> str:
