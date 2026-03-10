@@ -24,8 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/cache@v5
+      - name: Cache Java and Spark
         if: runner.os == 'Windows'
+        uses: actions/cache@v5
+        id: cache-spark
         with:
           path: |
             ~/spark
@@ -42,14 +44,15 @@ jobs:
         run: uv sync --dev --upgrade
 
       - name: Install Java 17
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && steps.cache-spark.outputs.cache-hit != 'true'
         uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 17
 
-      - uses: vemonet/setup-spark@v1
-        if: runner.os == 'Windows'
+      - name: Setup Spark
+        if: runner.os == 'Windows' && steps.cache-spark.outputs.cache-hit != 'true'
+        uses: vemonet/setup-spark@v1
         with:
           spark-version: "4.0.0"
           hadoop-version: "3"
