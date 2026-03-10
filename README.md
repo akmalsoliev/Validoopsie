@@ -51,8 +51,11 @@ make these tasks accessible and straightforward.
 
 1. [Installation](#installation)
 2. [Getting Started](#getting-started)
-3. [Development](#development)
-4. [License](#license)
+3. [Version](#version)
+4. [Dunder Methods](#dunder-methods)
+5. [Validate Method](#validate-method)
+6. [Development](#development)
+7. [License](#license)
 
 ## Installation
 
@@ -209,6 +212,43 @@ The `display_summary` method supports two information levels:
 You can also customize the table appearance using any `tabulate` formatting
 options such as `tablefmt` for different table styles (e.g., "github", "grid",
 "pipe", "html") and `maxcolwidths` to control column width.
+
+## Version
+
+You can check the installed version of Validoopsie at any time:
+
+```py
+from validoopsie import __version__
+
+print(__version__)
+```
+
+## Dunder Methods
+
+The `Validate` class supports several Python dunder methods for convenience:
+
+- `repr(vd)` — returns a summary string with row count and number of validations:
+
+  ```py
+  >>> repr(vd)
+  'Validate(rows=3, validations=3)'
+  ```
+
+- `str(vd)` — returns a human-readable status string:
+
+  ```py
+  >>> str(vd)
+  'Validate: 3 validation(s), passed=False'
+  ```
+
+- `len(vd)` — returns the number of validations:
+
+  ```py
+  >>> len(vd)
+  3
+  ```
+
+## Validate Method
 
 To ensure that all your validations have been correctly executed and to handle
 any potential errors that may arise during the validation process, you can use
