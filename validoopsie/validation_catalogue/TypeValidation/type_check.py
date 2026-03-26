@@ -1,7 +1,5 @@
 from typing import Literal
 
-import narwhals as nw
-import pyarrow as pa
 from narwhals.dtypes import DType
 from narwhals.typing import Frame
 
@@ -113,14 +111,13 @@ class TypeCheck(BaseValidation):
             f"expected type: {self.column_type}."
         )
 
-    def __call__(self, frame: Frame) -> Frame:
+    def __call__(self, frame: Frame) -> dict:
         """Validate the data type of the column(s)."""
         schema = frame.collect_schema()
         # Introduction of a new structure where the schema len will be used a frame length
         self.schema_length = schema.len()
         failed_columns = []
         for column_name in self.frame_schema_definition:
-            # Should this be raised or not?
             if column_name not in schema:
                 failed_columns.append(column_name)
                 continue
@@ -131,6 +128,7 @@ class TypeCheck(BaseValidation):
             if not issubclass(column_type.__class__, defined_type):
                 failed_columns.append(column_name)
 
-        return nw.from_native(pa.table({self.column: failed_columns})).with_columns(
-            nw.lit(1).alias(f"{self.column}-count"),
-        )
+        return {
+            self.column: failed_columns,
+            f"{self.column}-count": len(failed_columns),
+        }
