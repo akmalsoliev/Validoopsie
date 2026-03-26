@@ -3,9 +3,10 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import Literal, cast
+from typing import Any, Literal, cast
 
 import narwhals as nw
+from narwhals import DataFrame
 from narwhals.typing import Frame
 
 from validoopsie.base.results_typedict import (
@@ -55,7 +56,7 @@ class BaseValidation:
         """Return the fail message, that will be used in the report."""
 
     @abstractmethod
-    def __call__(self, frame: Frame) -> Frame:
+    def __call__(self, frame: Frame) -> Frame | dict:
         """Return the fail message, that will be used in the report."""
 
     def __execute_check__(
@@ -71,19 +72,32 @@ class BaseValidation:
         # only in the wrapper) to support operators who need to run validation
         # independently.
         nw_frame: Frame = nw.from_native(frame)
+        items: list[str | int | float] | None = None
+        collected_frame: DataFrame[Any] | None = None
         try:
             # Execution of the validation
-            validated_frame = self(nw_frame)
-            collected_frame = collect_frame(validated_frame)
+            validated_result = self(nw_frame)
+
+            if isinstance(validated_result, dict):
+                assert all(
+                    [
+                        self.column in validated_result,
+                        f"{self.column}-count" in validated_result,
+                    ]
+                )
+                vf_row_number: int = len(validated_result[self.column])
+                vf_count_number: int = validated_result[f"{self.column}-count"]
+                items = sorted(set(validated_result[self.column]))
+            else:
+                collected_frame = collect_frame(validated_result)
+                vf_row_number: int = get_length(collected_frame)
+                vf_count_number: int = get_count(collected_frame, self.column)
 
             og_frame_rows_number: int
             if self.schema_length is not None:
                 og_frame_rows_number = self.schema_length
             else:
                 og_frame_rows_number = get_length(nw_frame)
-
-            vf_row_number: int = get_length(collected_frame)
-            vf_count_number: int = get_count(collected_frame, self.column)
 
         except Exception as e:
             name = type(e).__name__
@@ -103,7 +117,9 @@ class BaseValidation:
         threshold_pass: bool = failed_percentage <= self.threshold
 
         if vf_row_number > 0:
-            items: list[str | int | float] = get_items(collected_frame, self.column)
+            if not items:
+                assert isinstance(collected_frame, DataFrame)
+                items = get_items(collected_frame, self.column)
             status: str = "Fail"
             if threshold_pass:
                 status = "Success"
