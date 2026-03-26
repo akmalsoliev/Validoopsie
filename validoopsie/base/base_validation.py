@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import abstractmethod
 from datetime import datetime as dt
 from datetime import timezone
-from typing import Any, Literal, cast
+from typing import Literal, cast
 
 import narwhals as nw
 from narwhals import DataFrame
@@ -73,7 +73,7 @@ class BaseValidation:
         # independently.
         nw_frame: Frame = nw.from_native(frame)
         items: list[str | int | float] | None = None
-        collected_frame: DataFrame[Any] | None = None
+        collected_frame: DataFrame | None = None
         try:
             # Execution of the validation
             validated_result = self(nw_frame)
@@ -90,8 +90,8 @@ class BaseValidation:
                 items = sorted(set(validated_result[self.column]))
             else:
                 collected_frame = collect_frame(validated_result)
-                vf_row_number: int = get_length(collected_frame)
-                vf_count_number: int = get_count(collected_frame, self.column)
+                vf_row_number = get_length(collected_frame)
+                vf_count_number = get_count(collected_frame, self.column)
 
             og_frame_rows_number: int
             if self.schema_length is not None:
