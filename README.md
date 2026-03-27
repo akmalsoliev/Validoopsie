@@ -1,7 +1,7 @@
 <h1 align="center">
-    <img width="400" alt="validoopsie" src=./docs/assets/validoopsie-text.png>
+    <img width="400" alt="validoopsie" src=https://raw.githubusercontent.com/akmalsoliev/Validoopsie/refs/heads/main/docs/assets/validoopsie-text.png>
     <p style="font-size: 16px; font-weight: bold;">A simple and easy to use Data Validation library for Python.</p>
-    <img width="400" alt="validoopsie" src=./docs/assets/logo.png>
+    <img width="400" alt="validoopsie" src=https://raw.githubusercontent.com/akmalsoliev/Validoopsie/refs/heads/main/docs/assets/logo.png>
 </h1>
 
 <p align="center">
