@@ -77,7 +77,7 @@ class TypeCheck(BaseValidation):
         else:
             error_message = (
                 "Either `column` and `validation_type` should be provided or "
-                "`frame_schema_definition` should be provided.",
+                "`frame_schema_definition` should be provided."
             )
             raise ValueError(error_message)
 
