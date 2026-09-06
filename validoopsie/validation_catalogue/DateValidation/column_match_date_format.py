@@ -74,7 +74,13 @@ class ColumnMatchDateFormat(BaseValidation):
         return f"The column '{self.column}' has unique values that are not in the list."
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the values in a column match the date format."""
+        """Check if the values in a column match the date format.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         date_patterns = re.findall(r"[Ymd]+", self.date_format)
         separators = re.findall(r"[^Ymd]+", self.date_format)
 

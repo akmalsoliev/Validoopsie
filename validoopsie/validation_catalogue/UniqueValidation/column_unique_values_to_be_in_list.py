@@ -63,7 +63,13 @@ class ColumnUniqueValuesToBeInList(BaseValidation):
         return f"The column '{self.column}' has unique values that are not in the list."
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the unique values are in the list."""
+        """Check if the unique values are in the list.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             frame.group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))

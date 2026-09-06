@@ -58,7 +58,13 @@ class ColumnNotBeNull(BaseValidation):
         return f"The column '{self.column}' has values that are null."
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the values in a column are not null."""
+        """Check if the values in a column are not null.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         null_count_col = f"{self.column}-count"
         return (
             frame.filter(

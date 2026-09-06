@@ -66,7 +66,13 @@ class LengthToBeEqualTo(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Expect the column entries to be strings with length equal to `value`."""
+        """Expect the column entries to be strings with length equal to `value`.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             frame.filter(
                 nw.col(self.column).str.len_chars() != self.value,

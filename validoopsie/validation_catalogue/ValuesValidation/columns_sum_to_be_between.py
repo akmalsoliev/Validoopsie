@@ -85,7 +85,13 @@ class ColumnsSumToBeBetween(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the sum of columns is greater than or equal to `max_sum`."""
+        """Check if the sum of columns is greater than or equal to `max_sum`.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         summed_frame = frame.select(self.columns_list).with_columns(

@@ -72,7 +72,13 @@ class ColumnUniquePair(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the unique values are in the list."""
+        """Check if the unique values are in the list.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             frame.with_columns(
                 nw.concat_str(

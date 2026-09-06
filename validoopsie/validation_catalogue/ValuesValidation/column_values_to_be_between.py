@@ -80,7 +80,13 @@ class ColumnValuesToBeBetween(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the values in a column are between a range."""
+        """Check if the values in a column are between a range.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             min_max_filter(
                 frame,
