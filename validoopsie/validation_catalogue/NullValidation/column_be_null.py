@@ -58,7 +58,13 @@ class ColumnBeNull(BaseValidation):
         return f"The column '{self.column}' doesn't have values that are null."
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the values in a column are null."""
+        """Check if the values in a column are null.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             frame.select(self.column)
             .filter(

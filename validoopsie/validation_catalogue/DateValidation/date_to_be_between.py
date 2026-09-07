@@ -86,7 +86,13 @@ class DateToBeBetween(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the string lengths are between the specified range."""
+        """Check if the string lengths are between the specified range.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             min_max_filter(
                 frame,

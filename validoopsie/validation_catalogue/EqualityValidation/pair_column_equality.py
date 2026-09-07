@@ -71,7 +71,13 @@ class PairColumnEquality(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the pair of columns are equal."""
+        """Check if the pair of columns are equal.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         select_columns = [self.column, f"{self.column}-count"]
         gb_cols = (
             [self.column, self.target_column] if self.group_by_combined else [self.column]

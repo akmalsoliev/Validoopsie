@@ -67,7 +67,13 @@ class ColumnsSumToBeEqualTo(BaseValidation):
         return f"The columns {self.columns_list} do not sum to {self.sum_value}."
 
     def __call__(self, frame: Frame) -> Frame:
-        """Check if the sum of the columns is equal to a specific value."""
+        """Check if the sum of the columns is equal to a specific value.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         return (

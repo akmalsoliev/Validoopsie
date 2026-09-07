@@ -79,7 +79,13 @@ class ColumnUniqueValueCountToBeBetween(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Validate the number of unique values in the column."""
+        """Validate the number of unique values in the column.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         unique_value_counts = frame.group_by(self.column).agg(
             nw.col(self.column).count().alias(f"{self.column}-count"),
         )

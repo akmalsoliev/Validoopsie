@@ -66,7 +66,13 @@ class PatternMatch(BaseValidation):
         )
 
     def __call__(self, frame: Frame) -> Frame:
-        """Expect the column entries to be strings that pattern matches."""
+        """Expect the column entries to be strings that pattern matches.
+
+        Args:
+            frame (Frame): Input data frame to validate.
+
+        Returns:
+            Frame: Data frame with the validation results attached."""
         return (
             frame.filter(
                 nw.col(self.column).cast(nw.String).str.contains(self.pattern) == False,
