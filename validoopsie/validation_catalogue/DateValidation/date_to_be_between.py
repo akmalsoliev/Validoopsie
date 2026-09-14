@@ -92,7 +92,8 @@ class DateToBeBetween(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         return (
             min_max_filter(
                 frame,

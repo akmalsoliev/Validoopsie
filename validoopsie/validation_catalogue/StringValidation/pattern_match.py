@@ -72,7 +72,8 @@ class PatternMatch(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         return (
             frame.filter(
                 nw.col(self.column).cast(nw.String).str.contains(self.pattern) == False,

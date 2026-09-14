@@ -78,7 +78,8 @@ class ColumnUniquePair(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         return (
             frame.with_columns(
                 nw.concat_str(
