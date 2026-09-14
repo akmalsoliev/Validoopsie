@@ -7,11 +7,12 @@ from typing import Literal, cast
 
 import narwhals as nw
 from narwhals import DataFrame
-from narwhals.typing import Frame
+from narwhals.typing import Frame, IntoDataFrame
 
 from validoopsie.base.results_typedict import (
     KwargsParams,
     ResultValidationTypedDict,
+    SchemaValidationResult,
     ValidationTypedDict,
 )
 from validoopsie.util.base_util_functions import (
@@ -56,7 +57,7 @@ class BaseValidation:
         """Return the fail message, that will be used in the report."""
 
     @abstractmethod
-    def __call__(self, frame: Frame) -> Frame | dict:
+    def __call__(self, frame: Frame) -> Frame | SchemaValidationResult:
         """Return the fail message, that will be used in the report."""
 
     def __execute_check__(
@@ -73,21 +74,20 @@ class BaseValidation:
         # independently.
         nw_frame: Frame = nw.from_native(frame)
         items: list[str | int | float] | None = None
-        collected_frame: DataFrame | None = None
+        collected_frame: DataFrame[IntoDataFrame] | None = None
         try:
             # Execution of the validation
             validated_result = self(nw_frame)
 
             if isinstance(validated_result, dict):
-                assert all(
-                    [
-                        self.column in validated_result,
-                        f"{self.column}-count" in validated_result,
-                    ]
-                )
-                vf_row_number: int = len(validated_result[self.column])
-                vf_count_number: int = validated_result[f"{self.column}-count"]
-                items = sorted(set(validated_result[self.column]))
+                failing_columns = validated_result[self.column]
+                failing_count = validated_result[f"{self.column}-count"]
+                assert isinstance(failing_columns, list)
+                assert isinstance(failing_count, int)
+
+                vf_row_number: int = len(failing_columns)
+                vf_count_number: int = failing_count
+                items = sorted(set(failing_columns))
             else:
                 collected_frame = collect_frame(validated_result)
                 vf_row_number = get_length(collected_frame)

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import Any, Literal
+from typing import Literal, cast
 
 import narwhals as nw
 from loguru import logger
 from narwhals.dataframe import DataFrame
-from narwhals.typing import Frame
+from narwhals.typing import Frame, IntoDataFrame
 
 from validoopsie.base.results_typedict import (
     ResultValidationTypedDict,
@@ -14,19 +14,23 @@ from validoopsie.base.results_typedict import (
 
 
 def get_items(
-    nw_frame: DataFrame[Any],
+    nw_frame: DataFrame[IntoDataFrame],
     column: str,
 ) -> list[str | int | float]:
     if isinstance(nw_frame, nw.LazyFrame):
-        return (
+        return cast(
+            "list[str | int | float]",
             nw_frame.select(nw.col(column).unique())
             .collect()
             .get_column(column)
             .sort()
-            .to_list()
+            .to_list(),
         )
     if isinstance(nw_frame, nw.DataFrame):
-        return nw_frame.get_column(column).sort().unique().to_list()
+        return cast(
+            "list[str | int | float]",
+            nw_frame.get_column(column).sort().unique().to_list(),
+        )
     msg = (
         f"The frame is not a valid type. {type(nw_frame)}, if "
         "you reached this point please open an issue."
@@ -34,7 +38,7 @@ def get_items(
     raise TypeError(msg)
 
 
-def get_length(nw_frame: Frame | DataFrame[Any]) -> int:
+def get_length(nw_frame: Frame | DataFrame[IntoDataFrame]) -> int:
     result: int | None = None
     if isinstance(nw_frame, nw.LazyFrame):
         result = int(nw.to_py_scalar(nw_frame.select(nw.len()).collect().item()))
@@ -45,7 +49,7 @@ def get_length(nw_frame: Frame | DataFrame[Any]) -> int:
     return result
 
 
-def get_count(nw_input_frame: DataFrame[Any], column: str) -> int:
+def get_count(nw_input_frame: DataFrame[IntoDataFrame], column: str) -> int:
     result = int(
         nw.to_py_scalar(
             nw_input_frame.select(nw.col(f"{column}-count").sum()).item(),
@@ -92,7 +96,7 @@ def check__threshold(threshold: float) -> None:
     assert 0 <= threshold <= 1, fail_message
 
 
-def collect_frame(frame: Frame) -> DataFrame[Any]:
+def collect_frame(frame: Frame) -> DataFrame[IntoDataFrame]:
     if isinstance(frame, nw.LazyFrame):
         return frame.collect()
     error_msg = "The frame is not a valid type."

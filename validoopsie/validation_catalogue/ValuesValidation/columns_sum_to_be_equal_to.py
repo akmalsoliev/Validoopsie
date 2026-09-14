@@ -73,7 +73,8 @@ class ColumnsSumToBeEqualTo(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         # This is just in case if there is some weird column name, such as "sum"
         col_name = "-".join(self.columns_list) + "-sum"
         return (

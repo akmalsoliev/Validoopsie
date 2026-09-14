@@ -72,7 +72,8 @@ class LengthToBeEqualTo(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         return (
             frame.filter(
                 nw.col(self.column).str.len_chars() != self.value,

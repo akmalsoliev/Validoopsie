@@ -11,6 +11,12 @@ else:
     from typing_extensions import NotRequired
 
 
+# Returned by validations that report failures as a plain mapping instead of a
+# frame, i.e. TypeCheck. Keys are dynamic (`column` and `f"{column}-count"`), so a
+# TypedDict can't express it.
+SchemaValidationResult = dict[str, "list[str] | int"]
+
+
 class SummaryTypedDict(TypedDict):
     passed: bool | None
     validations: list[str] | str

@@ -69,7 +69,8 @@ class ColumnUniqueValuesToBeInList(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         return (
             frame.group_by(self.column)
             .agg(nw.col(self.column).count().alias(f"{self.column}-count"))

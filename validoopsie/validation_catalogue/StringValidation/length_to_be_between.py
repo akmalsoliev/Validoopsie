@@ -86,7 +86,8 @@ class LengthToBeBetween(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         transformed_frame = frame.with_columns(
             nw.col(self.column).str.len_chars().alias(f"{self.column}-length"),
         )

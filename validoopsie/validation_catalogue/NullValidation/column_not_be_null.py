@@ -64,7 +64,8 @@ class ColumnNotBeNull(BaseValidation):
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            Frame: Data frame with the validation results attached.
+        """
         null_count_col = f"{self.column}-count"
         return (
             frame.filter(

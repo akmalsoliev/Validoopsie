@@ -111,7 +111,7 @@ class Validate:
         self,
         class_obj: type,
     ) -> Callable[..., Validate]:
-        def validation_method(*args, **kwargs) -> Validate:
+        def validation_method(*args: object, **kwargs: object) -> Validate:
             return self.__create_validation_class__(
                 class_obj,
                 *args,
@@ -126,8 +126,8 @@ class Validate:
     def __create_validation_class__(
         self,
         validation_class: type,
-        *args: list[object],
-        **kwargs: dict[str, object],
+        *args: object,
+        **kwargs: object,
     ) -> Validate:
         args = args[1:]
         validation = validation_class(*args, **kwargs)

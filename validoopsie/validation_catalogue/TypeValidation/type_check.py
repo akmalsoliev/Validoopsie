@@ -4,7 +4,7 @@ from narwhals.dtypes import DType
 from narwhals.typing import Frame
 
 from validoopsie.base import BaseValidation
-from validoopsie.base.results_typedict import KwargsParams
+from validoopsie.base.results_typedict import KwargsParams, SchemaValidationResult
 
 
 class TypeCheck(BaseValidation):
@@ -111,18 +111,20 @@ class TypeCheck(BaseValidation):
             f"expected type: {self.column_type}."
         )
 
-    def __call__(self, frame: Frame) -> dict:
+    def __call__(self, frame: Frame) -> SchemaValidationResult:
         """Validate the data type of the column(s).
 
         Args:
             frame (Frame): Input data frame to validate.
 
         Returns:
-            Frame: Data frame with the validation results attached."""
+            SchemaValidationResult: Mapping of the failing column names under
+                `self.column` and their number under `f"{self.column}-count"`.
+        """
         schema = frame.collect_schema()
         # Introduction of a new structure where the schema len will be used a frame length
         self.schema_length = schema.len()
-        failed_columns = []
+        failed_columns: list[str] = []
         for column_name in self.frame_schema_definition:
             if column_name not in schema:
                 failed_columns.append(column_name)
